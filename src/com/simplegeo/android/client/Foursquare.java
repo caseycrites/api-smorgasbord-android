@@ -10,8 +10,23 @@ public class Foursquare extends AbstractHttpClient {
 	public Bundle apiEndpoints;
 	
 	public Foursquare() {
+		apiEndpoints.putString("getUser", "users/%s");
+		apiEndpoints.putString("getLeaderboard", "users/leaderboard");
+		apiEndpoints.putString("getFriendRequests", "users/leaderboard");
+		apiEndpoints.putString("getUsersBadges", "users/%s/badges");
+		apiEndpoints.putString("getUsersCheckins", "users/%s/checkins");
+		apiEndpoints.putString("getUsersFriends", "users/%s/friends");
+		apiEndpoints.putString("getUsersMayorships", "users/%s/mayorships");
+		apiEndpoints.putString("getUsersTips", "users/%s/tips");
+		apiEndpoints.putString("getUsersTodos", "users/%s/todos");
+		apiEndpoints.putString("getUsersVenueHistory", "users/%s/venuehistory");
+		apiEndpoints.putString("sendFriendRequest", "users/%s/request");
+		apiEndpoints.putString("unfriendUser", "users/%s/unfriend");
+		apiEndpoints.putString("approveFriendRequest", "users/%s/approve");
+		apiEndpoints.putString("denyFriendRequest", "users/%s/deny");
+		apiEndpoints.putString("setPings", "users/%s/setpings");
 		apiEndpoints.putString("getVenue", "venues/%s");
-		apiEndpoints.putString("getVenue", "venues/add");
+		apiEndpoints.putString("addVenue", "venues/add");
 		apiEndpoints.putString("getCategories", "venues/categories");
 		apiEndpoints.putString("exploreVenues", "venues/explore");
 		apiEndpoints.putString("searchVenues", "venues/search");
@@ -45,6 +60,160 @@ public class Foursquare extends AbstractHttpClient {
 
 	// Users endpoints
 	
+	/**
+	 * Get a user.
+	 * 
+	 * @param userId A String id of a user.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUser(String userId, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get the users leaderboard.
+	 * 
+	 * @param params A Bundle containing optional key neighbors.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getLeaderboard(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+		
+	/**
+	 * Get the users friend requests.
+	 * 
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getFriendRequests(SmorgasbordCallback callback) {
+		// HttpGet
+	}
+		
+	/**
+	 * Get the users badges.
+	 * 
+	 * @param userId A String id of a user.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUsersBadges(String userId, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get the users checkins.
+	 * 
+	 * @param userId A String id of a user.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUsersCheckins(String userId, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get the users friends.
+	 * 
+	 * @param userId A String id of a user.
+	 * @param params A Bundle containing optional keys limit, offset.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUsersFriends(String userId, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}	
+	
+	/**
+	 * Get the users mayorships.
+	 * 
+	 * @param userId A String id of a user.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUsersMayorships(String userId, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get the users tips.
+	 * 
+	 * @param userId A String id of a user.
+	 * @param params A Bundle containing optional keys sort, ll, limit, offset.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUsersTips(String userId, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get the users to-dos.
+	 * 
+	 * @param userId A String id of a user.
+	 * @param params A Bundle containing optional keys sort, ll.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUsersTodos(String userId, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get the users venue history.
+	 * 
+	 * @param userId A String id of a user.
+	 * @param params A Bundle containing optional keys beforeTimestamp, afterTimestamp, categoryId.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUsersVenueHistory(String userId, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Send a friend request.
+	 * 
+	 * @param userId A String id of a user whose friendship to request.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void sendFriendRequest(String userId, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Unfriend a user.
+	 * 
+	 * @param userId A String id of a user to unfriend.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void unfriendUser(String userId, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Approve a friend request.
+	 * 
+	 * @param userId A String id of a user whose friend request should be approved.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void approveFriendRequest(String userId, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Deny a friend request.
+	 * 
+	 * @param userId A String id of a user whose friend request should be denied.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void denyFriendRequest(String userId, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Turn pings on or off.
+	 * 
+	 * @param userId A String id of a user whose friend request should be denied.
+	 * @param setPings A Boolean.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void setPings(String userId, boolean setPings, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
 	// Venues endpoints
 	
 	/**
@@ -62,10 +231,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * 
 	 * @param name A String name of the venue.
 	 * @param latLon A String of the form lat,lon.
-	 * @param extraParams A Bundle containing optional keys address, crossStreet, city, state, zip, phone, primaryCategoryId.
+	 * @param params A Bundle containing optional keys address, crossStreet, city, state, zip, phone, primaryCategoryId.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void addVenue(String name, String latLon, Bundle extraParams, SmorgasbordCallback callback) {
+	public void addVenue(String name, String latLon, Bundle params, SmorgasbordCallback callback) {
 		// HttpPost
 	}
 	
@@ -82,10 +251,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Explore nearby venues.
 	 * 
 	 * @param latLon A String of the form lat,lon.
-	 * @param extraParams A Bundle containing optional keys llAcc, alt, altAcc, radius, section, query, limit, basis.
+	 * @param params A Bundle containing optional keys llAcc, alt, altAcc, radius, section, query, limit, basis.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void exploreVenues(String latLon, Bundle extraParams, SmorgasbordCallback callback) {
+	public void exploreVenues(String latLon, Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
 	
@@ -93,10 +262,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Search nearby venues.
 	 * 
 	 * @param latLon A String of the form lat,lon.
-	 * @param extraParams A Bundle containing optional keys llAcc, alt, altAcc, radius, section, query, limit, basis.
+	 * @param params A Bundle containing optional keys llAcc, alt, altAcc, radius, section, query, limit, basis.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void searchVenues(String latLon, Bundle extraParams, SmorgasbordCallback callback) {
+	public void searchVenues(String latLon, Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
 		
@@ -104,10 +273,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Return trending venues.
 	 * 
 	 * @param latLon A String of the form lat,lon.
-	 * @param extraParams A Bundle containing optional keys limit, radius.
+	 * @param params A Bundle containing optional keys limit, radius.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void trendingVenues(String latLon, Bundle extraParams, SmorgasbordCallback callback) {
+	public void trendingVenues(String latLon, Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
 	
@@ -115,10 +284,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Retrieve who's at this venue now.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param extraParams A Bundle containing optional keys limit, offset, afterTimestamp.
+	 * @param params A Bundle containing optional keys limit, offset, afterTimestamp.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void hereNow(String venueId, Bundle extraParams, SmorgasbordCallback callback) {
+	public void hereNow(String venueId, Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
 	
@@ -126,10 +295,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Retrieve who's at this venue now.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param extraParams A Bundle containing optional keys sort, limit, offset.
+	 * @param params A Bundle containing optional keys sort, limit, offset.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void venueTips(String venueId, Bundle extraParams, SmorgasbordCallback callback) {
+	public void venueTips(String venueId, Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
 	
@@ -137,10 +306,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Retrieve photos of this venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param extraParams A Bundle containing optional keys group, limit, offset.
+	 * @param params A Bundle containing optional keys group, limit, offset.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void venuePhotos(String venueId, Bundle extraParams, SmorgasbordCallback callback) {
+	public void venuePhotos(String venueId, Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
 	
@@ -158,10 +327,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Mark this venue as a to-do and optionally set a tip.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param extraParams A Bundle containing optional key text.
+	 * @param params A Bundle containing optional key text.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void markVenueToDo(String venueId, Bundle extraParams, SmorgasbordCallback callback) {
+	public void markVenueToDo(String venueId, Bundle params, SmorgasbordCallback callback) {
 		// HttpPost
 	}
 		
@@ -169,10 +338,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Flag this venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param extraParams A Bundle containing optional key problem.
+	 * @param params A Bundle containing optional key problem.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void flagVenue(String venueId, Bundle extraParams, SmorgasbordCallback callback) {
+	public void flagVenue(String venueId, Bundle params, SmorgasbordCallback callback) {
 		// HttpPost
 	}
 	
@@ -180,10 +349,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Edit this venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param extraParams A Bundle containing optional keys name, address, crossStreet, city, state, zip, phone, ll, categoryId.
+	 * @param params A Bundle containing optional keys name, address, crossStreet, city, state, zip, phone, ll, categoryId.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void editVenue(String venueId, Bundle extraParams, SmorgasbordCallback callback) {
+	public void editVenue(String venueId, Bundle params, SmorgasbordCallback callback) {
 		// HttpPost
 	}
 		
@@ -191,10 +360,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Propose an edit this venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param extraParams A Bundle containing optional keys name, address, crossStreet, city, state, zip, phone, ll, primaryCategoryId.
+	 * @param params A Bundle containing optional keys name, address, crossStreet, city, state, zip, phone, ll, primaryCategoryId.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void proposeEditVenue(String venueId, Bundle extraParams, SmorgasbordCallback callback) {
+	public void proposeEditVenue(String venueId, Bundle params, SmorgasbordCallback callback) {
 		// HttpPost
 	}
 	
@@ -204,10 +373,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Get checkin details.
 	 * 
 	 * @param checkinId A string id of the checkin.
-	 * @param extraParams A Bundle containing optional key signature.
+	 * @param params A Bundle containing optional key signature.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void getCheckin(String checkinId, Bundle extraParams, SmorgasbordCallback callback) {
+	public void getCheckin(String checkinId, Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
 	
@@ -216,10 +385,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * 
 	 * @param venueId A String id of a venue.
 	 * @param broadcast A String list telling foursquare who to tell about this checkin.  private|public|public,facebook
-	 * @param extraParams A Bundle containing optional keys ll, llAcc, alt, altAcc.
+	 * @param params A Bundle containing optional keys ll, llAcc, alt, altAcc.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void checkin(String venueId, boolean broadcast, Bundle extraParams, SmorgasbordCallback callback) {
+	public void checkin(String venueId, boolean broadcast, Bundle params, SmorgasbordCallback callback) {
 		// HttpPost
 	}
 		
@@ -228,10 +397,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * 
 	 * @param venueName A String name of a venue.
 	 * @param broadcast A String list telling foursquare who to tell about this checkin.  private|public|public,facebook
-	 * @param extraParams A Bundle containing optional keys ll, llAcc, alt, altAcc.
+	 * @param params A Bundle containing optional keys ll, llAcc, alt, altAcc.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void checkinToVenueWithoutId(String venueName, boolean broadcast, Bundle extraParams, SmorgasbordCallback callback) {
+	public void checkinToVenueWithoutId(String venueName, boolean broadcast, Bundle params, SmorgasbordCallback callback) {
 		// HttpPost
 	}
 		
@@ -240,10 +409,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * 
 	 * @param shout A String of a shout.
 	 * @param broadcast A String list telling foursquare who to tell about this checkin.  private|public|public,facebook
-	 * @param extraParams A Bundle containing optional keys ll, llAcc, alt, altAcc.
+	 * @param params A Bundle containing optional keys ll, llAcc, alt, altAcc.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void shout(String shout, boolean broadcast, Bundle extraParams, SmorgasbordCallback callback) {
+	public void shout(String shout, boolean broadcast, Bundle params, SmorgasbordCallback callback) {
 		// HttpPost
 	}
 	
@@ -296,10 +465,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * 
 	 * @param venueId A String id of the venue.
 	 * @param text A String of the tip text.
-	 * @param extraParams A Bundle containing optional key url.
+	 * @param params A Bundle containing optional key url.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void addTip(String venueId, String text, Bundle extraParams, SmorgasbordCallback callback) {
+	public void addTip(String venueId, String text, Bundle params, SmorgasbordCallback callback) {
 		// HttpPost
 	}
 		
@@ -307,10 +476,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Retrieves a list of tips near the specified location.
 	 * 
 	 * @param latLon A String of the form lat,lon
-	 * @param extraParams An Bundle of extra params. Accepted keys are limit, offset, filter and query.
+	 * @param params An Bundle of extra params. Accepted keys are limit, offset, filter and query.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void searchTips(String latLon, Bundle extraParams, SmorgasbordCallback callback) {
+	public void searchTips(String latLon, Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
 	
@@ -440,10 +609,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Retrieves a list of specials near the specified location.
 	 * 
 	 * @param latLon A String of the form lat,lon
-	 * @param extraParams An Bundle of extra params. Accepted keys are llAcc, alt, altAcc and limit.
+	 * @param params An Bundle of extra params. Accepted keys are llAcc, alt, altAcc and limit.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void searchSpecials(String latLon, Bundle extraParams, SmorgasbordCallback callback) {
+	public void searchSpecials(String latLon, Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
 	
