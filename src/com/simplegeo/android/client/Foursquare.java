@@ -207,10 +207,10 @@ public class Foursquare extends AbstractHttpClient {
 	 * Turn pings on or off.
 	 * 
 	 * @param userId A String id of a user whose friend request should be denied.
-	 * @param setPings A Boolean.
+	 * @param value A Boolean.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void setPings(String userId, boolean setPings, SmorgasbordCallback callback) {
+	public void setPings(String userId, boolean value, SmorgasbordCallback callback) {
 		// HttpPost
 	}
 	
