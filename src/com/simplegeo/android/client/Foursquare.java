@@ -18,7 +18,7 @@ public class Foursquare extends AbstractHttpClient {
 		apiEndpoints.putString("getUsersFriends", "users/%s/friends");
 		apiEndpoints.putString("getUsersMayorships", "users/%s/mayorships");
 		apiEndpoints.putString("getUsersTips", "users/%s/tips");
-		apiEndpoints.putString("getUsersTodos", "users/%s/todos");
+		apiEndpoints.putString("getUsersToDos", "users/%s/todos");
 		apiEndpoints.putString("getUsersVenueHistory", "users/%s/venuehistory");
 		apiEndpoints.putString("sendFriendRequest", "users/%s/request");
 		apiEndpoints.putString("unfriendUser", "users/%s/unfriend");
@@ -148,7 +148,7 @@ public class Foursquare extends AbstractHttpClient {
 	 * @param params A Bundle containing optional keys sort, ll.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void getUsersTodos(String userId, Bundle params, SmorgasbordCallback callback) {
+	public void getUsersToDos(String userId, Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
 	
