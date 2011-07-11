@@ -69,11 +69,11 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Set the trend location.
 	 * 
-	 * @param trendLocation A String of A Yahoo! Where On Earth ID to use as the user's default trending location.
+	 * @param trendLocation A String of A @see <a href="http://developer.yahoo.com/geo/geoplanet/guide/concepts.html">Yahoo! Where On Earth ID</a> to use as the user's default trending location.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void setTrendLocation(String trendLocation, SmorgasbordCallback callback) {
-		Bundle trendBundle = new Bundle();
+		Bundle trendBundle = new Bundle(1);
 		trendBundle.putString("trend_location_woeid", trendLocation);
 		setSettings(trendBundle, callback);
 	}
@@ -86,7 +86,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void enableSleepTime(int startSleepTime, int endSleepTime, SmorgasbordCallback callback) {
-		Bundle sleepBundle = new Bundle();
+		Bundle sleepBundle = new Bundle(3);
 		sleepBundle.putBoolean("sleep_time_enabled", true);
 		sleepBundle.putString("start_sleep_time", String.valueOf(startSleepTime));
 		sleepBundle.putString("end_sleep_time", String.valueOf(endSleepTime));
@@ -99,8 +99,8 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void disableSleepTime(SmorgasbordCallback callback) {
-		Bundle sleepBundle = new Bundle();
-		sleepBundle.putBoolean("sleep_time_enable", false);
+		Bundle sleepBundle = new Bundle(1);
+		sleepBundle.putBoolean("sleep_time_enabled", false);
 		setSettings(sleepBundle, callback);
 	}
 	
@@ -111,7 +111,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void setTimeZone(String timeZone, SmorgasbordCallback callback) {
-		Bundle timeZoneBundle = new Bundle();
+		Bundle timeZoneBundle = new Bundle(1);
 		timeZoneBundle.putString("time_zone", timeZone);
 		setSettings(timeZoneBundle, callback);
 	}
@@ -123,9 +123,122 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void setLanguage(String lang, SmorgasbordCallback callback) {
-		Bundle langBundle = new Bundle();
+		Bundle langBundle = new Bundle(1);
 		langBundle.putString("lang", lang);
 		setSettings(langBundle, callback);
+	}
+	
+	/**
+	 * Update whether a user receives SMS alerts or not.
+	 * 
+	 * @param device A String of either sms or none.
+	 * @param params A {@link Bundle} containing optional key include_entities.
+	 * @param callback
+	 */
+	public void updateDeliveryDevice(String device, Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Update the user's profile.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys name, url, location, description, include_entities, skip_status.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void updateProfile(Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Update the user's full name.
+	 * 
+	 * @param name A String of the user's full name. Must be 20 characters or less.
+	 * @param callback {@link SmorgasbordCallback}.
+	 */
+	public void updateName(String name, SmorgasbordCallback callback) {
+		Bundle nameBundle = new Bundle(1);
+		nameBundle.putString("name", name);
+		updateProfile(nameBundle, callback);
+	}
+		
+	/**
+	 * Update the user's url.
+	 * 
+	 * @param url A String of the user's url.
+	 * @param callback {@link SmorgasbordCallback}.
+	 */
+	public void updateUrl(String url, SmorgasbordCallback callback) {
+		Bundle urlBundle = new Bundle(1);
+		urlBundle.putString("url", url);
+		updateProfile(urlBundle, callback);
+	}
+	
+	/**
+	 * Update the user's location.
+	 * 
+	 * @param location A String of the user's location. Must be 30 characters or less.
+	 * @param callback {@link SmorgasbordCallback}.
+	 */
+	public void updateLocation(String location, SmorgasbordCallback callback) {
+		Bundle locationBundle = new Bundle(1);
+		locationBundle.putString("location", location);
+		updateProfile(locationBundle, callback);
+	}
+		
+	/**
+	 * Update the user's description.
+	 * 
+	 * @param description A String of the user's description. Must be 160 characters or less.
+	 * @param callback {@link SmorgasbordCallback}.
+	 */
+	public void updateDescription(String description, SmorgasbordCallback callback) {
+		Bundle descriptionBundle = new Bundle(1);
+		descriptionBundle.putString("description", description);
+		updateProfile(descriptionBundle, callback);
+	}
+	
+	/**
+	 * Enable tweet entities, which will include a node called entities with each tweet that involves metadata about the tweet.
+	 * 
+	 * @param callback {@link SmorgasbordCallback}.
+	 */
+	public void enableTweetEntities(SmorgasbordCallback callback) {
+		Bundle tweetEntitiesBundle = new Bundle(1);
+		tweetEntitiesBundle.putBoolean("include_entities", true);
+		updateProfile(tweetEntitiesBundle, callback);
+	}
+		
+	/**
+	 * Disable tweet entities.
+	 * 
+	 * @param callback {@link SmorgasbordCallback}.
+	 */
+	public void disableTweetEntities(SmorgasbordCallback callback) {
+		Bundle tweetEntitiesBundle = new Bundle(1);
+		tweetEntitiesBundle.putBoolean("include_entities", false);
+		updateProfile(tweetEntitiesBundle, callback);
+	}
+		
+	/**
+	 * Enable skip status, which will remove statuses from returned user objects.
+	 * 
+	 * @param callback {@link SmorgasbordCallback}.
+	 */
+	public void enableSkipStatus(SmorgasbordCallback callback) {
+		Bundle statusBundle = new Bundle(1);
+		statusBundle.putBoolean("skip_status", true);
+		updateProfile(statusBundle, callback);
+	}
+		
+	/**
+	 * Disable skip status.
+	 * 
+	 * @param callback {@link SmorgasbordCallback}.
+	 */
+	public void disableSkipStatus(SmorgasbordCallback callback) {
+		Bundle statusBundle = new Bundle(1);
+		statusBundle.putBoolean("skip_status", false);
+		updateProfile(statusBundle, callback);
 	}
 	
 	// Block endpoints
