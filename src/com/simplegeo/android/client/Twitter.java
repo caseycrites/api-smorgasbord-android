@@ -1,5 +1,6 @@
 package com.simplegeo.android.client;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.simplegeo.android.callback.SmorgasbordCallback;
@@ -15,6 +16,21 @@ public class Twitter extends AbstractClient {
 		apiEndpoints.putString("rateLimitStatus", "account/rate_limit_status."+responseFormat);
 		apiEndpoints.putString("totals", "account/totals."+responseFormat);
 		apiEndpoints.putString("settings", "account/settings."+responseFormat);
+		apiEndpoints.putString("updateDeliveryDevice", "account/update_delivery_device."+responseFormat);
+		apiEndpoints.putString("updateProfile", "account/update_profile."+responseFormat);
+		apiEndpoints.putString("updateProfileBackgroundImage", "account/update_profile_background_image."+responseFormat);
+		apiEndpoints.putString("updateProfileColors", "account/update_profile_colors."+responseFormat);
+		apiEndpoints.putString("updateProfileImage", "account/update_profile_image."+responseFormat);
+		apiEndpoints.putString("getBlockedUsers", "blocks/blocking."+responseFormat);
+		apiEndpoints.putString("getBlockedUsersIds", "blocks/blocking/ids."+responseFormat);
+		apiEndpoints.putString("doesBlockExist", "blocks/exists."+responseFormat);
+		apiEndpoints.putString("createBlock", "blocks/create."+responseFormat);
+		apiEndpoints.putString("destroyBlock", "blocks/destroy."+responseFormat);
+		apiEndpoints.putString("getDirectMessages", "direct_messages."+responseFormat);
+		apiEndpoints.putString("getSentDirectMessages", "direct_messages/sent."+responseFormat);
+		apiEndpoints.putString("destroyDirectMessage", "direct_messages/delete/%s."+responseFormat);
+		apiEndpoints.putString("sendDirectMessage", "direct_messages/new."+responseFormat);
+		apiEndpoints.putString("getDirectMessage", "direct_messages/%s."+responseFormat);
 	}
 			
 	// Account endpoints
@@ -57,7 +73,7 @@ public class Twitter extends AbstractClient {
 	}
 		
 	/**
-	 * Sets the users account settings.
+	 * Sets the users account settings.  Use this to update a bunch of user settings at once.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys trend_location_woeid, sleep_time_enabled, start_sleep_time, end_sleep_time, time_zone, lang.
 	 * @param callback A {@link SmorgasbordCallback}.
@@ -140,7 +156,7 @@ public class Twitter extends AbstractClient {
 	}
 	
 	/**
-	 * Update the user's profile.
+	 * Update the user's profile.  Use this method to update a bunch of profile settings at once.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys name, url, location, description, include_entities, skip_status.
 	 * @param callback A {@link SmorgasbordCallback}.
@@ -198,50 +214,348 @@ public class Twitter extends AbstractClient {
 	}
 	
 	/**
-	 * Enable tweet entities, which will include a node called entities with each tweet that involves metadata about the tweet.
+	 * Update the user's profile background image.
 	 * 
-	 * @param callback {@link SmorgasbordCallback}.
+	 * @param image A Bitmap of the desired background image.
+	 * @param params A {@link Bundle} containing optional keys tile, include_entities, skip_status.
+	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void enableTweetEntities(SmorgasbordCallback callback) {
-		Bundle tweetEntitiesBundle = new Bundle(1);
-		tweetEntitiesBundle.putBoolean("include_entities", true);
-		updateProfile(tweetEntitiesBundle, callback);
+	public void updateProfileBackgroundImage(Bitmap image, Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
 	}
-		
+	
 	/**
-	 * Disable tweet entities.
+	 * Update the users's profile colors.  Use this method to update a bunch of profile colors at once.
 	 * 
-	 * @param callback {@link SmorgasbordCallback}.
+	 * @param params A {@link Bundle} containing at least one of the keys profile_background_color, profile_link_color, profile_sidebar_border_color, profile_sidebar_fill_color, profile_text_color, include_entities, skip_status.
+	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void disableTweetEntities(SmorgasbordCallback callback) {
-		Bundle tweetEntitiesBundle = new Bundle(1);
-		tweetEntitiesBundle.putBoolean("include_entities", false);
-		updateProfile(tweetEntitiesBundle, callback);
+	public void updateProfileColors(Bundle params, SmorgasbordCallback callback) {
+		
 	}
-		
+
 	/**
-	 * Enable skip status, which will remove statuses from returned user objects.
+	 * Update the user's profile background color.
 	 * 
-	 * @param callback {@link SmorgasbordCallback}.
+	 * @param backgroundColor A String of length 3 or 6 in hexadecimal of the desired color.
+	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void enableSkipStatus(SmorgasbordCallback callback) {
-		Bundle statusBundle = new Bundle(1);
-		statusBundle.putBoolean("skip_status", true);
-		updateProfile(statusBundle, callback);
+	public void updateProfileBackgroundColor(String backgroundColor, SmorgasbordCallback callback) {
+		Bundle bgBundle = new Bundle(1);
+		bgBundle.putString("profile_background_color", backgroundColor);
+		updateProfile(bgBundle, callback);
 	}
-		
+	
 	/**
-	 * Disable skip status.
+	 * Update the user's profile link color.
 	 * 
-	 * @param callback {@link SmorgasbordCallback}.
+	 * @param linkColor A String of length 3 or 6 in hexadecimal of the desired color.
+	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void disableSkipStatus(SmorgasbordCallback callback) {
-		Bundle statusBundle = new Bundle(1);
-		statusBundle.putBoolean("skip_status", false);
-		updateProfile(statusBundle, callback);
+	public void updateProfileLinkColor(String linkColor, SmorgasbordCallback callback) {
+		Bundle linkBundle = new Bundle(1);
+		linkBundle.putString("profile_link_color", linkColor);
+		updateProfile(linkBundle, callback);
+	}
+	
+	/**
+	 * Update the user's profile sidebar border color.
+	 * 
+	 * @param borderColor A String of length 3 or 6 in hexadecimal of the desired color.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void updateProfileSidebarBorderColor(String borderColor, SmorgasbordCallback callback) {
+		Bundle borderBundle = new Bundle(1);
+		borderBundle.putString("profile_sidebar_border_color", borderColor);
+		updateProfile(borderBundle, callback);
+	}
+	
+	/**
+	 * Update the user's profile sidebar fill color.
+	 * 
+	 * @param borderColor A String of length 3 or 6 in hexadecimal of the desired color.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void updateProfileSidebarFillColor(String fillColor, SmorgasbordCallback callback) {
+		Bundle fillBundle = new Bundle(1);
+		fillBundle.putString("profile_sidebar_fill_color", fillColor);
+		updateProfile(fillBundle, callback);
+	}
+	
+	/**
+	 * Update the user's profile text color.
+	 * 
+	 * @param borderColor A String of length 3 or 6 in hexadecimal of the desired color.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void updateProfileTextColor(String textColor, SmorgasbordCallback callback) {
+		Bundle textBundle = new Bundle(1);
+		textBundle.putString("profile_text_color", textColor);
+		updateProfile(textBundle, callback);
+	}
+	
+	/**
+	 * Update the user's profile image.
+	 * 
+	 * @param image A Bitmap of the desired image.
+	 * @param params A {@link Bundle} containing optional keys include_entities, skip_status.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void updateProfileImage(Bitmap image, Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
 	}
 	
 	// Block endpoints
+	
+	/**
+	 * Get a list of users that this user has blocked.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys page, per_page, include_entities and skip_status. This can be null.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getBlockedUsers(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get a list of users ids that this user has blocked.
+	 * 
+	 * @param stringifyIds A boolean that tells the API whether or not to stringify the Ids it returns.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void getBlockedUsersIds(Boolean stringifyIds, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Checks to see if the authenticated user blocks the target user. Returns the user if yes, else 404's.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys screen_name, user_id, include_entities, skip_status. Exactly one of screen_name or user_id must be supplied.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void doesBlockExist(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Checks to see if the authenticated user blocks a user with the supplied screen name.  Returns the user if yes, else 404's.
+	 * 
+	 * @param username A String of the desired screen name.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void doesBlockExistByScreenName(String screenName, SmorgasbordCallback callback) {
+		Bundle screenNameBundle = new Bundle(1);
+		screenNameBundle.putString("screen_name", screenName);
+		doesBlockExist(screenNameBundle, callback);
+	}
+		
+	/**
+	 * Checks to see if the authenticated user blocks a user with the supplied user id.  Returns the user if yes, else 404's.
+	 * 
+	 * @param userId A String of the desired user id.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void doesBlockExistByUserId(String userId, SmorgasbordCallback callback) {
+		Bundle userIdBundle = new Bundle(1);
+		userIdBundle.putString("user_id", userId);
+		doesBlockExist(userIdBundle, callback);
+	}
+	
+	/**
+	 * Block the specified user.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys screen_name, user_id, include_entities, skip_status. Exactly one of screen_name or user_id must be supplied.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void createBlock(Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Block the specified user by screen name.
+	 * 
+	 * @param username A String of the desired screen name.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void createBlockByScreenName(String screenName, SmorgasbordCallback callback) {
+		Bundle screenNameBundle = new Bundle(1);
+		screenNameBundle.putString("screen_name", screenName);
+		doesBlockExist(screenNameBundle, callback);
+	}
+		
+	/**
+	 * Block the specified user by user id.
+	 * 
+	 * @param userId A String of the desired user id.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void createBlockByUserId(String userId, SmorgasbordCallback callback) {
+		Bundle userIdBundle = new Bundle(1);
+		userIdBundle.putString("user_id", userId);
+		doesBlockExist(userIdBundle, callback);
+	}
+	
+	/**
+	 * Unblock the specified user.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys screen_name, user_id, include_entities, skip_status. Exactly one of screen_name or user_id must be supplied.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void destroyBlock(Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Unblock the specified user by screen name.
+	 * 
+	 * @param username A String of the desired screen name.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void destroyBlockByScreenName(String screenName, SmorgasbordCallback callback) {
+		Bundle screenNameBundle = new Bundle(1);
+		screenNameBundle.putString("screen_name", screenName);
+		doesBlockExist(screenNameBundle, callback);
+	}
+		
+	/**
+	 * Unblock the specified user by user id.
+	 * 
+	 * @param userId A String of the desired user id.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void destroyBlockByUserId(String userId, SmorgasbordCallback callback) {
+		Bundle userIdBundle = new Bundle(1);
+		userIdBundle.putString("user_id", userId);
+		doesBlockExist(userIdBundle, callback);
+	}
+	
+	// Direct Message endpoints
+	
+	/**
+	 * Get the user's direct messages.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys since_id, max_id, count, page, include_entities, skip_status.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void getDirectMessages(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get user's direct messages that are newer than the supplied id.
+	 * 
+	 * @param sinceId A String direct message id.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void getDirectMessagesSince(String sinceId, SmorgasbordCallback callback) {
+		Bundle sinceBundle = new Bundle(1);
+		sinceBundle.putString("since_id", sinceId);
+		getDirectMessages(sinceBundle, callback);
+	}
+	
+	/**
+	 * Get user's direct messages that are older than the supplied id.
+	 * 
+	 * @param maxId A String direct message id.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void getDirectMessagesBefore(String maxId, SmorgasbordCallback callback) {
+		Bundle maxBundle = new Bundle(1);
+		maxBundle.putString("max_id", maxId);
+		getDirectMessages(maxBundle, callback);
+	}
+		
+	/**
+	 * Get the user's sent direct messages.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys since_id, max_id, count, page, include_entities, skip_status.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void getSentDirectMessages(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get user's sent direct messages that are newer than the supplied id.
+	 * 
+	 * @param sinceId A String direct message id.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void getSentDirectMessagesSince(String sinceId, SmorgasbordCallback callback) {
+		Bundle sinceBundle = new Bundle(1);
+		sinceBundle.putString("since_id", sinceId);
+		getSentDirectMessages(sinceBundle, callback);
+	}
+	
+	/**
+	 * Get user's sent direct messages that are older than the supplied id.
+	 * 
+	 * @param maxId A String direct message id.
+	 * @param callback A {@SmorgasbordCallback}.
+	 */
+	public void getSentDirectMessagesBefore(String maxId, SmorgasbordCallback callback) {
+		Bundle maxBundle = new Bundle(1);
+		maxBundle.putString("max_id", maxId);
+		getSentDirectMessages(maxBundle, callback);
+	}
+	
+	/**
+	 * Delete a direct message.
+	 * 
+	 * @param messageId A String direct message id.
+	 * @param params A {@link Bundle} containing optional key include_entities. Can be null.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void destroyDirectMessage(String messageId, Bundle params, SmorgasbordCallback callback) {
+		// HttpDelete
+	}
+	
+	/**
+	 * Send a new direct message.
+	 * 
+	 * @param text A String direct message.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/new">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void sendDirectMessage(String text, Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Send a new direct message to a screen name.
+	 * 
+	 * @param screenName A String Twitter screen name.
+	 * @param text A String direct message.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void sendDirectMessageByScreenName(String screenName, String text, SmorgasbordCallback callback) {
+		Bundle screenNameBundle = new Bundle(1);
+		screenNameBundle.putString("screen_name", screenName);
+		sendDirectMessage(text, screenNameBundle, callback);
+	}
+	
+	/**
+	 * Send a new direct message to a user id.
+	 * 
+	 * @param screenName A String Twitter user id.
+	 * @param text A String direct message.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void sendDirectMessageByUserId(String userId, String text, SmorgasbordCallback callback) {
+		Bundle userIdBundle = new Bundle(1);
+		userIdBundle.putString("user_id", userId);
+		sendDirectMessage(text, userIdBundle, callback);
+	}
+	
+	/**
+	 * Get a single direct message.
+	 * 
+	 * @param messageId A String direct message id.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getDirectMessage(String messageId, SmorgasbordCallback callback) {
+		// HttpGet
+	}
 	
 	// Timeline endpoints
 	
@@ -258,8 +572,6 @@ public class Twitter extends AbstractClient {
 	// List Member endpoints
 	
 	// List Subscriber endpoints
-	
-	// Direct Message endpoints
 	
 	// Friendship endpoints
 	
