@@ -31,6 +31,10 @@ public class Twitter extends AbstractClient {
 		apiEndpoints.putString("destroyDirectMessage", "direct_messages/delete/%s."+responseFormat);
 		apiEndpoints.putString("sendDirectMessage", "direct_messages/new."+responseFormat);
 		apiEndpoints.putString("getDirectMessage", "direct_messages/%s."+responseFormat);
+		apiEndpoints.putString("getFavorites", "favorites."+responseFormat);
+		apiEndpoints.putString("getUserFavorites", "favorites/%s."+responseFormat);
+		apiEndpoints.putString("favorite", "favorites/create/%s."+responseFormat);
+		apiEndpoints.putString("unfavorite", "favorites/destroy/%s."+responseFormat);
 	}
 			
 	// Account endpoints
@@ -557,6 +561,74 @@ public class Twitter extends AbstractClient {
 		// HttpGet
 	}
 	
+	// Favorites endpoints
+	
+	/**
+	 * Get the authenticated user's favorites.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getFavorites(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get a specified user's favorites.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUserFavorites(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get a user's favorites by screen name.
+	 * 
+	 * @param screenName A String Twitter screen name.
+	 * @param callback A {@link Bundle}.
+	 */
+	public void getUserFavoritesByScreenName(String screenName, SmorgasbordCallback callback) {
+		Bundle screenNameBundle = new Bundle(1);
+		screenNameBundle.putString("screen_name", screenName);
+		getUserFavorites(screenNameBundle, callback);
+	}
+		
+	/**
+	 * Get a user's favorites by user id.
+	 * 
+	 * @param userId A String Twitter user id.
+	 * @param callback A {@link Bundle}.
+	 */
+	public void getUserFavoritesByUserId(String userId, SmorgasbordCallback callback) {
+		Bundle userIdBundle = new Bundle(1);
+		userIdBundle.putString("user_id", userId);
+		getUserFavorites(userIdBundle, callback);
+	}
+	
+	/**
+	 * Favorite a tweet.
+	 * 
+	 * @param tweetId A String tweet id.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/favorites/create/%3Aid">here</a>.
+	 * @param callback A {@link SmorgasbordCallback callback}.
+	 */
+	public void favorite(String tweetId, Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Unfavorite a tweet.
+	 * 
+	 * @param tweetId A String tweet id.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/favorites/destroy/%3Aid">here</a>.
+	 * @param callback A {@link SmorgasbordCallback callback}.
+	 */
+	public void unfavorite(String tweetId, Bundle params, SmorgasbordCallback callback) {
+		// HttpDelete
+	}
+	
 	// Timeline endpoints
 	
 	// Tweet endpoints
@@ -576,9 +648,7 @@ public class Twitter extends AbstractClient {
 	// Friendship endpoints
 	
 	// Friend And Follower endpoints
-	
-	// Favorites endpoints
-	
+
 	// Notification endpoints
 	
 	// Spam Reporting endpoints
