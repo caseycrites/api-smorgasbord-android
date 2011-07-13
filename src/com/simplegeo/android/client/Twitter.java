@@ -351,6 +351,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
 	public void doesBlockExistByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("screen_name", screenName);
 		doesBlockExist(params, callback);
 	}
@@ -363,6 +364,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
 	public void doesBlockExistByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("user_id", userId);
 		doesBlockExist(params, callback);
 	}
@@ -385,6 +387,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
 	public void createBlockByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("screen_name", screenName);
 		doesBlockExist(params, callback);
 	}
@@ -397,6 +400,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
 	public void createBlockByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("user_id", userId);
 		doesBlockExist(params, callback);
 	}
@@ -419,6 +423,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
 	public void destroyBlockByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("screen_name", screenName);
 		doesBlockExist(params, callback);
 	}
@@ -431,6 +436,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
 	public void destroyBlockByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("user_id", userId);
 		doesBlockExist(params, callback);
 	}
@@ -455,6 +461,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
 	public void getDirectMessagesSince(String sinceId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("since_id", sinceId);
 		getDirectMessages(params, callback);
 	}
@@ -467,6 +474,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
 	public void getDirectMessagesBefore(String maxId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("max_id", maxId);
 		getDirectMessages(params, callback);
 	}
@@ -489,6 +497,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
 	public void getSentDirectMessagesSince(String sinceId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("since_id", sinceId);
 		getSentDirectMessages(params, callback);
 	}
@@ -501,6 +510,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
 	public void getSentDirectMessagesBefore(String maxId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("max_id", maxId);
 		getSentDirectMessages(params, callback);
 	}
@@ -536,6 +546,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void sendDirectMessageByScreenName(String screenName, String text, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("screen_name", screenName);
 		sendDirectMessage(text, params, callback);
 	}
@@ -549,6 +560,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void sendDirectMessageByUserId(String userId, String text, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("user_id", userId);
 		sendDirectMessage(text, params, callback);
 	}
@@ -593,6 +605,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link Bundle}.
 	 */
 	public void getUserFavoritesByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("screen_name", screenName);
 		getUserFavorites(params, callback);
 	}
@@ -605,6 +618,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link Bundle}.
 	 */
 	public void getUserFavoritesByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("user_id", userId);
 		getUserFavorites(params, callback);
 	}
@@ -651,6 +665,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getFollowersIdsByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("screen_name", screenName);
 		getFollowersIds(params, callback);
 	}
@@ -663,6 +678,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getFollowersIdsByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("user_id", userId);
 		getFollowersIds(params, callback);
 	}
@@ -685,6 +701,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getFriendsIdsByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("screen_name", screenName);
 		getFollowersIds(params, callback);
 	}
@@ -697,6 +714,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getFriendsIdsByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("user_id", userId);
 		getFollowersIds(params, callback);
 	}
@@ -759,6 +777,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void createFriendshipByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("screen_name", screenName);
 		createFriendship(params, callback);
 	}
@@ -771,6 +790,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void createFriendshipByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("user_id", userId);
 		createFriendship(params, callback);
 	}
@@ -793,6 +813,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void destroyFriendshipByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("screen_name", screenName);
 		destroyFriendship(params, callback);
 	}
@@ -805,6 +826,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void destroyFriendshipByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putString("user_id", userId);
 		destroyFriendship(params, callback);
 	}
@@ -827,6 +849,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void lookupFriendshipByScreenNames(ArrayList<String> screenNames, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putStringArrayList("screen_name", screenNames);
 		lookupFriendship(params, callback);
 	}
@@ -839,6 +862,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void lookupFriendshipByUserIds(ArrayList<String> userIds, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
 		params.putStringArrayList("user_id", userIds);
 		lookupFriendship(params, callback);
 	}
@@ -847,7 +871,7 @@ public class Twitter extends AbstractClient {
 	 * Update what notifications should be shown for a friend.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/update">here</a>.
-	 * @param callback
+	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void updateFriendship(Bundle params, SmorgasbordCallback callback) {
 		// HttpPost
@@ -869,24 +893,26 @@ public class Twitter extends AbstractClient {
 	 * Get lists of the user by screen name.
 	 * 
 	 * @param screenName A String Twitter screen name.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/all">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void getListsByScreenName(String screenName, SmorgasbordCallback callback) {
-		Bundle screenNameBundle = new Bundle(1);
-		screenNameBundle.putString("screen_name", screenName);
-		getLists(screenNameBundle, callback);
+	public void getListsByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
+		params.putString("screen_name", screenName);
+		getLists(params, callback);
 	}
 
 	/**
 	 * Get lists of the user by user id.
 	 * 
 	 * @param userId A String Twitter user id.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/all">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void getListsByUserId(String userId, SmorgasbordCallback callback) {
-		Bundle userIdBundle = new Bundle(1);
-		userIdBundle.putString("user_id", userId);
-		lookupFriendship(userIdBundle, callback);
+	public void getListsByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
+		params.putString("user_id", userId);
+		lookupFriendship(params, callback);
 	}
 	
 	/**
