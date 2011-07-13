@@ -1,5 +1,7 @@
 package com.simplegeo.android.client;
 
+import java.util.ArrayList;
+
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
@@ -629,6 +631,264 @@ public class Twitter extends AbstractClient {
 		// HttpDelete
 	}
 	
+	// Friend And Follower endpoints
+	
+	/**
+	 * Get a list of a user's followers ids.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getFollowersIds(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get a list of a user's follower ids by screen name.
+	 * 
+	 * @param screenName A String Twitter screen name.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getFollowersIdsByScreenName(String screenName, SmorgasbordCallback callback) {
+		Bundle screenNameBundle = new Bundle(1);
+		screenNameBundle.putString("screen_name", screenName);
+		getFollowersIds(screenNameBundle, callback);
+	}
+	
+	/**
+	 * Get a list of a user's follower ids by user id.
+	 * 
+	 * @param userId A String Twitter user id.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getFollowersIdsByUserId(String userId, SmorgasbordCallback callback) {
+		Bundle userIdBundle = new Bundle(1);
+		userIdBundle.putString("user_id", userId);
+		getFollowersIds(userIdBundle, callback);
+	}
+
+	/**
+	 * Get a list of a user's friends ids.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getFriendsIds(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get a list of a user's friend ids by screen name.
+	 * 
+	 * @param screenName A String Twitter screen name.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getFriendsIdsByScreenName(String screenName, SmorgasbordCallback callback) {
+		Bundle screenNameBundle = new Bundle(1);
+		screenNameBundle.putString("screen_name", screenName);
+		getFollowersIds(screenNameBundle, callback);
+	}
+	
+	/**
+	 * Get a list of a user's friend ids by user id.
+	 * 
+	 * @param userId A String Twitter user id.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getFriendsIdsByUserId(String userId, SmorgasbordCallback callback) {
+		Bundle userIdBundle = new Bundle(1);
+		userIdBundle.putString("user_id", userId);
+		getFollowersIds(userIdBundle, callback);
+	}
+	
+	/**
+	 * Check if a friendship exists between two users.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/exists">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void doesFriendshipExist(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get a list of friend requests for the authenticated user.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/incoming">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getIncomingFriendRequests(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+
+	/**
+	 * Get a list of friend requests made by the authenticated user.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/outgoing">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getOutgoingFriendRequests(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get detailed information about a friendship.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/show">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void showFriendship(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Create a friendship.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void createFriendship(Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Create a friendship by screen name.
+	 * 
+	 * @param screenName A String Twitter screen name.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void createFriendshipByScreenName(String screenName, SmorgasbordCallback callback) {
+		Bundle screenNameBundle = new Bundle(1);
+		screenNameBundle.putString("screen_name", screenName);
+		createFriendship(screenNameBundle, callback);
+	}
+
+	/**
+	 * Create a friendship by user id.
+	 * 
+	 * @param userId A String Twitter user id.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void createFriendshipByUserId(String userId, SmorgasbordCallback callback) {
+		Bundle userIdBundle = new Bundle(1);
+		userIdBundle.putString("user_id", userId);
+		createFriendship(userIdBundle, callback);
+	}
+	
+	/**
+	 * Destroy a friendship.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void destroyFriendship(Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Destroy a friendship by screen name.
+	 * 
+	 * @param screenName A String Twitter screen name.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void destroyFriendshipByScreenName(String screenName, SmorgasbordCallback callback) {
+		Bundle screenNameBundle = new Bundle(1);
+		screenNameBundle.putString("screen_name", screenName);
+		destroyFriendship(screenNameBundle, callback);
+	}
+
+	/**
+	 * Destroy a friendship by user id.
+	 * 
+	 * @param userId A String Twitter user id.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void destroyFriendshipByUserId(String userId, SmorgasbordCallback callback) {
+		Bundle userIdBundle = new Bundle(1);
+		userIdBundle.putString("user_id", userId);
+		destroyFriendship(userIdBundle, callback);
+	}
+	
+	/**
+	 * Look up the relationship between the authenticated user and the list of user ids or screen names.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/lookup">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void lookupFriendship(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Look up the relationship between the authenticated user and the list of screen names.
+	 * 
+	 * @param screenNames An ArrayList<String> of Twitter screen names.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void lookupFriendshipByScreenNames(ArrayList<String> screenNames, SmorgasbordCallback callback) {
+		Bundle screenNameBundle = new Bundle(1);
+		screenNameBundle.putStringArrayList("screen_name", screenNames);
+		lookupFriendship(screenNameBundle, callback);
+	}
+
+	/**
+	 * Look up the relationship between the authenticated user and the list of user ids.
+	 * 
+	 * @param userId An ArrayList<String> of Twitter user ids.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void lookupFriendshipByUserIds(ArrayList<String> userIds, SmorgasbordCallback callback) {
+		Bundle userIdBundle = new Bundle(1);
+		userIdBundle.putStringArrayList("user_id", userIds);
+		lookupFriendship(userIdBundle, callback);
+	}
+	
+	/**
+	 * Update what notifications should be shown for a friend.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/update">here</a>.
+	 * @param callback
+	 */
+	public void updateFriendship(Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	// List endpoints
+	
+	/**
+	 * Get lists of the authenticated user or the specified user.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/all">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getLists(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+		
+	/**
+	 * Get lists of the user by screen name.
+	 * 
+	 * @param screenName A String Twitter screen name.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getListsByScreenName(String screenName, SmorgasbordCallback callback) {
+		Bundle screenNameBundle = new Bundle(1);
+		screenNameBundle.putString("screen_name", screenName);
+		getLists(screenNameBundle, callback);
+	}
+
+	/**
+	 * Get lists of the user by user id.
+	 * 
+	 * @param userId A String Twitter user id.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getListsByUserId(String userId, SmorgasbordCallback callback) {
+		Bundle userIdBundle = new Bundle(1);
+		userIdBundle.putString("user_id", userId);
+		lookupFriendship(userIdBundle, callback);
+	}
+	
 	// Timeline endpoints
 	
 	// Tweet endpoints
@@ -639,16 +899,10 @@ public class Twitter extends AbstractClient {
 	
 	// Local Trends endpoints
 	
-	// List endpoints
-	
 	// List Member endpoints
 	
 	// List Subscriber endpoints
 	
-	// Friendship endpoints
-	
-	// Friend And Follower endpoints
-
 	// Notification endpoints
 	
 	// Spam Reporting endpoints
@@ -658,11 +912,7 @@ public class Twitter extends AbstractClient {
 	// OAuth endpoints
 	
 	// Geo endpoints
-	
-	// Legal endpoints
-	
-	// Help endpoints
-	
+
 	// Search endpoints
 
 }
