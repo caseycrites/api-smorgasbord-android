@@ -32,8 +32,8 @@ public class User {
 	}
 	
 	public Bundle appendToBundle(Bundle params) {
-		if (this.userId != null) { params.putString("user_id", this.userId); }
-		if (this.screenName != null) { params.putString("screen_name", this.screenName); }
+		if (this.userId != null) { params.putString("user_id", this.userId); return params; }
+		if (this.screenName != null) { params.putString("screen_name", this.screenName); return params; }
 		return params;
 	}
 

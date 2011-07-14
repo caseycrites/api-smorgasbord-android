@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.simplegeo.android.callback.SmorgasbordCallback;
 import com.simplegeo.android.type.TwitterList;
 import com.simplegeo.android.type.User;
+import com.simplegeo.android.type.UserCollection;
 
 public class Twitter extends AbstractClient {
 
@@ -709,24 +710,13 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Look up the relationship between the authenticated user and the list of users.
 	 * 
-	 * @param users An ArrayList<{@link User}>.
+	 * @param users An {@link UserCollection}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/lookup">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void lookupFriendship(ArrayList<User> users, Bundle params, SmorgasbordCallback callback) {
+	public void lookupFriendship(UserCollection users, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		// TODO Fix this. Perhaps a Users collection?
-		String key = "user_id";
-		ArrayList<String> userInfo = new ArrayList<String>();
-		for (User user : users) {
-			if (user.getUserId() != null) {
-				userInfo.add(user.getUserId());
-			} else {
-				userInfo.add(user.getScreenName());
-				if ("user_id".equals(key)) { key = "screen_name"; }
-			}
-		}
-		params.putStringArrayList(key, userInfo);
+		params = users.appendToBundle(params);
 		lookupFriendship(params, callback);
 	}
 	
@@ -930,25 +920,14 @@ public class Twitter extends AbstractClient {
 	 * Add multiple users to a list.
 	 * 
 	 * @param list A {@link TwitterList}.
-	 * @param users An ArrayList<{@link User}>.
+	 * @param users An {@link UserCollection}.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void addUsersToList(TwitterList list, ArrayList<User> users, SmorgasbordCallback callback) {
+	public void addUsersToList(TwitterList list, UserCollection users, SmorgasbordCallback callback) {
 		// TODO What's the smallest this Bundle can be?
 		Bundle params = new Bundle();
 		params = list.appendToBundle(params);
-		// TODO Fix this. Perhaps a Users collection?
-		String key = "user_id";
-		ArrayList<String> userInfo = new ArrayList<String>();
-		for (User user : users) {
-			if (user.getUserId() != null) {
-				userInfo.add(user.getUserId());
-			} else {
-				userInfo.add(user.getScreenName());
-				if ("user_id".equals(key)) { key = "screen_name"; }
-			}
-		}
-		params.putStringArrayList(key, userInfo);
+		params = users.appendToBundle(params);
 		addUsersToList(params, callback);
 	}
 	
@@ -1533,25 +1512,13 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Return up to 100 users worth of extended information, specified by either ID, screen name, or combination of the two.
 	 * 
-	 * @param users An ArrayList<{@link User}>.
+	 * @param users {@link UserCollection}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/lookup">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void lookupUsers(ArrayList<User> users, Bundle params, SmorgasbordCallback callback) {
+	public void lookupUsers(UserCollection users, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 2);
-		// TODO Make sure we can use both
-		// TODO Fix this. Perhaps a Users collection?
-		String key = "user_id";
-		ArrayList<String> userInfo = new ArrayList<String>();
-		for (User user : users) {
-			if (user.getUserId() != null) {
-				userInfo.add(user.getUserId());
-			} else {
-				userInfo.add(user.getScreenName());
-				if ("user_id".equals(key)) { key = "screen_name"; }
-			}
-		}
-		params.putStringArrayList(key, userInfo);
+		params = users.appendToBundle(params);
 		lookupUsers(params, callback);
 	}
 	
