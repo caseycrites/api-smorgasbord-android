@@ -12,43 +12,11 @@ import com.simplegeo.android.type.User;
 public class Twitter extends AbstractClient {
 
 	private static final String HTTP_URL = "http://api.twitter.com/1/";
-	private static String responseFormat = "json";
-	public Bundle apiEndpoints;
 	
 	public Twitter(String format) {
-		apiEndpoints.putString("verifyCredentials", "account/verify_credentials."+responseFormat);
-		apiEndpoints.putString("rateLimitStatus", "account/rate_limit_status."+responseFormat);
-		apiEndpoints.putString("totals", "account/totals."+responseFormat);
-		apiEndpoints.putString("settings", "account/settings."+responseFormat);
-		apiEndpoints.putString("updateDeliveryDevice", "account/update_delivery_device."+responseFormat);
-		apiEndpoints.putString("updateProfile", "account/update_profile."+responseFormat);
-		apiEndpoints.putString("updateProfileBackgroundImage", "account/update_profile_background_image."+responseFormat);
-		apiEndpoints.putString("updateProfileColors", "account/update_profile_colors."+responseFormat);
-		apiEndpoints.putString("updateProfileImage", "account/update_profile_image."+responseFormat);
-		apiEndpoints.putString("getBlockedUsers", "blocks/blocking."+responseFormat);
-		apiEndpoints.putString("getBlockedUsersIds", "blocks/blocking/ids."+responseFormat);
-		apiEndpoints.putString("doesBlockExist", "blocks/exists."+responseFormat);
-		apiEndpoints.putString("createBlock", "blocks/create."+responseFormat);
-		apiEndpoints.putString("destroyBlock", "blocks/destroy."+responseFormat);
-		apiEndpoints.putString("getDirectMessages", "direct_messages."+responseFormat);
-		apiEndpoints.putString("getSentDirectMessages", "direct_messages/sent."+responseFormat);
-		apiEndpoints.putString("destroyDirectMessage", "direct_messages/delete/%s."+responseFormat);
-		apiEndpoints.putString("sendDirectMessage", "direct_messages/new."+responseFormat);
-		apiEndpoints.putString("getDirectMessage", "direct_messages/%s."+responseFormat);
-		apiEndpoints.putString("getFavorites", "favorites."+responseFormat);
-		apiEndpoints.putString("getUserFavorites", "favorites/%s."+responseFormat);
-		apiEndpoints.putString("favorite", "favorites/create/%s."+responseFormat);
-		apiEndpoints.putString("unfavorite", "favorites/destroy/%s."+responseFormat);
+		
 	}
-			
-	// Account endpoints
 	
-	/**
-	 * Verify a users supplied credentials.
-	 * 
-	 * @param params A {@link Bundle} containing optional keys include_entities, skip_status.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
 	public void verifyCredentials(Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
@@ -758,7 +726,7 @@ public class Twitter extends AbstractClient {
 				if ("user_id".equals(key)) { key = "screen_name"; }
 			}
 		}
-		params.putStringArrayList("", userInfo);
+		params.putStringArrayList(key, userInfo);
 		lookupFriendship(params, callback);
 	}
 	
@@ -1286,7 +1254,7 @@ public class Twitter extends AbstractClient {
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/home_timeline">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void getStatuses(Bundle params, SmorgasbordCallback callback) {
+	public void getTimeline(Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
 	
@@ -1340,10 +1308,372 @@ public class Twitter extends AbstractClient {
 		// HttpGet
 	}
 	
+	/**
+	 * Returns the most recent tweets of the authenticated user or the specified user.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/user_timeline">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUserStatuses(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+		
+	/**
+	 * Returns the most recent tweets of the specified user.
+	 * 
+	 * @param user A {@link User}.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/user_timeline">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUserStatuses(User user, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 0);
+		params = user.appendToBundle(params);
+		getUserStatuses(params, callback);
+	}
+	
+	/**
+	 * Returns the most recent retweets by the people the specified user follows.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_user">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getRetweetedToUser(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+		
+	/**
+	 * Returns the most recent retweets by the people the specified user follows.
+	 * 
+	 * @param user A {@link User}.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_user">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getRetweetedToUser(User user, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 0);
+		params = user.appendToBundle(params);
+		getRetweetedToUser(params, callback);
+	}
+		
+	/**
+	 * Returns the most recent retweets by the people the specified user follows.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/get/statuses/retweeted_by_user">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getRetweetedByUser(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+		
+	/**
+	 * Returns the most recent retweets by the specified user.
+	 * 
+	 * @param user A {@link User}.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/get/statuses/retweeted_by_user">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getRetweetedByUser(User user, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 0);
+		params = user.appendToBundle(params);
+		getRetweetedByUser(params, callback);
+	}
+	
 	// Trends & Local Trends endpoints
+	
+	/**
+	 * Returns the top 10 trending topics for the given @see <a href="http://developer.yahoo.com/geo/geoplanet/guide/concepts.html">Yahoo! Where On Earth Id</a>.
+	 * 
+	 * @param whereOnEarthId A String Yahoo where on earth id.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getLocalTrends(String whereOnEarthId, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Returns the locations that Twitter has trending topic information for.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/available">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getAvailableTrendLocations(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+		
+	/**
+	 * Returns the top 10 current trending topics on Twitter.
+	 * 
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getTrends(SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Returns the top 10 current trending topics on Twitter.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/current">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getCurrentTrends(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Returns the top 20 trending topics for each hour in a given day.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/current">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getDailyTrends(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Returns the top 30 trending topics for each day in a given week.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/current">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getWeeklyTrends(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
 	
 	// Tweet endpoints
 	
+	/**
+	 * Show user objects of up to 100 members who retweeted the status.
+	 * 
+	 * @param id A String tweet id.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/%3Aid/retweeted_by">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getRetweetedBy(String id, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Show user ids of up to 100 users who retweeted the status.
+	 * 
+	 * @param id A String tweet id.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/%3Aid/retweeted_by/ids">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getRetweetedByIds(String id, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Returns up to 100 of the first retweets of a given tweet.
+	 * 
+	 * @param id A String tweet id.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweets/%3Aid">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getRetweets(String id, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Returns a single status, specified by the id parameter below.
+	 * 
+	 * @param id A String tweet id.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/show/%3Aid">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getTweet(String id, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Delete a tweet made by the authenticated user.
+	 * 
+	 * @param id A String tweet id.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/destroy/%3Aid">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void deleteTweet(String id, Bundle params, SmorgasbordCallback callback) {
+		// HttpDelete
+	}
+	
+	/**
+	 * Retweet.
+	 * 
+	 * @param id A String tweet id.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void retweet(String id, Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+		
+	/**
+	 * Tweet.
+	 * 
+	 * @param text A String status.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void tweet(String text, Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
 	// User endpoints
+	
+	/**
+	 * Return up to 100 users worth of extended information, specified by either ID, screen name, or combination of the two.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/lookup">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void lookupUsers(Bundle params, SmorgasbordCallback callback) {
+		// TODO Make sure we can use both
+		
+	}
+	
+	/**
+	 * Return up to 100 users worth of extended information, specified by either ID, screen name, or combination of the two.
+	 * 
+	 * @param users An ArrayList<{@link User}>.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/lookup">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void lookupUsers(ArrayList<User> users, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 2);
+		// TODO Make sure we can use both
+		// TODO Fix this. Perhaps a Users collection?
+		String key = "user_id";
+		ArrayList<String> userInfo = new ArrayList<String>();
+		for (User user : users) {
+			if (user.getUserId() != null) {
+				userInfo.add(user.getUserId());
+			} else {
+				userInfo.add(user.getScreenName());
+				if ("user_id".equals(key)) { key = "screen_name"; }
+			}
+		}
+		params.putStringArrayList(key, userInfo);
+		lookupUsers(params, callback);
+	}
+	
+	/**
+	 * Access the profile image in various sizes for the user with the indicated screen_name.
+	 * 
+	 * @param screenName A String Twitter screen name.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getProfileImage(String screenName, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Search Twitter users with the given query.
+	 * 
+	 * @param q A String search query.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void searchUsers(String q, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+		
+	/**
+	 * Return the specified user.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUser(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Return the specified user.
+	 * 
+	 * @param user A {@link User}.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUser(User user, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
+		params = user.appendToBundle(params);
+		getUser(params, callback);
+	}
+	
+	/**
+	 * Returns an array of users that the specified user can contribute to.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributees">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getContributees(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Returns an array of users that the specified user can contribute to.
+	 * 
+	 * @param user A {@link User}.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributees">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getContributees(User user, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
+		params = user.appendToBundle(params);
+		getContributees(params, callback);
+	}
+	
+	/**
+	 * Returns an array of users who can contribute to the specified account.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributors">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getContributors(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Returns an array of users who can contribute to the specified account.
+	 * 
+	 * @param user A {@link User}.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributors">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getContributors(User user, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
+		params = user.appendToBundle(params);
+		getContributors(params, callback);
+	}
+	
+	/**
+	 * Returns Twitter's suggested user list.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getSuggestedUsers(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Returns Twitter's suggested user list.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions/%3Aslug">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getSuggestedUsers(String slug, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+		
+	/**
+	 * Return the users in a given category of the Twitter suggested user list and return their most recent status.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions/%3Aslug/members">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getSuggestedUsersWithStatus(String slug, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
 	
 }
