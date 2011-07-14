@@ -1241,16 +1241,109 @@ public class Twitter extends AbstractClient {
 		// HttpDelete
 	}
 	
+	// Search endpoints
+	
+	/**
+	 * Returns tweets that match a specified query.
+	 * 
+	 * @param q A String search query.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/search">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void search(String q, Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+
+	// Spam Reporting endpoints
+	
+	/**
+	 * Report spam and block the specified user.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/report_spam">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void reportSpam(Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Report spam and block the specified user.
+	 * 
+	 * @param user A {@link User}.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void reportSpam(User user, SmorgasbordCallback callback) {
+		Bundle params = new Bundle(1);
+		params = user.appendToBundle(params);
+		reportSpam(params, callback);
+	}
+	
 	// Timeline endpoints
+	
+	/**
+	 * Returns the most recent statuses posted by the authenticated user and the people they follow.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/home_timeline">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getStatuses(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get the authenticated user's most recent mentions.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/mentions">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getMentions(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+		
+	/**
+	 * Returns the most recent public statuses.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/public_timeline">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getPublicStatuses(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Returns the most recent retweets by the authenticated user.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_by_me">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getRetweetedByMe(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Returns the most recent retweets by the people the authenticated user follows.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_me">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getRetweetedToMe(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Returns the most recent retweets of the authenticated user.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweets_of_me">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getRetweetsOfMe(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	// Trends & Local Trends endpoints
 	
 	// Tweet endpoints
 	
 	// User endpoints
 	
-	// Trends & Local Trends endpoints
-
-	// Spam Reporting endpoints
-
-	// Search endpoints
-
 }
