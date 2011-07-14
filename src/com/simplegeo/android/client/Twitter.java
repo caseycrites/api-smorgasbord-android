@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.simplegeo.android.callback.SmorgasbordCallback;
+import com.simplegeo.android.type.TwitterList;
+import com.simplegeo.android.type.User;
 
 public class Twitter extends AbstractClient {
 
@@ -344,103 +346,64 @@ public class Twitter extends AbstractClient {
 	}
 	
 	/**
-	 * Checks to see if the authenticated user blocks a user with the supplied screen name.  Returns the user if yes, else 404's.
+	 * Checks to see if the authenticated user blocks the supplied user.
 	 * 
-	 * @param username A String of the desired screen name.
+	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/exists">here</a>.
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
-	public void doesBlockExistByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+	public void doesBlockExist(User user, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("screen_name", screenName);
+		params = user.appendToBundle(params);
 		doesBlockExist(params, callback);
 	}
-		
-	/**
-	 * Checks to see if the authenticated user blocks a user with the supplied user id.  Returns the user if yes, else 404's.
-	 * 
-	 * @param userId A String of the desired user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/exists">here</a>.
-	 * @param callback A {@SmorgasbordCallback}.
-	 */
-	public void doesBlockExistByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 1);
-		params.putString("user_id", userId);
-		doesBlockExist(params, callback);
-	}
-	
+
 	/**
 	 * Block the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/create">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void createBlock(Bundle params, SmorgasbordCallback callback) {
+	public void block(Bundle params, SmorgasbordCallback callback) {
 		// HttpPost
 	}
 	
 	/**
-	 * Block the specified user by screen name.
+	 * Block the specified user by user.
 	 * 
-	 * @param username A String of the desired screen name.
+	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/create">here</a>.
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
-	public void createBlockByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+	public void block(User user, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("screen_name", screenName);
-		doesBlockExist(params, callback);
+		params = user.appendToBundle(params);
+		block(params, callback);
 	}
-		
-	/**
-	 * Block the specified user by user id.
-	 * 
-	 * @param userId A String of the desired user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/create">here</a>.
-	 * @param callback A {@SmorgasbordCallback}.
-	 */
-	public void createBlockByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 1);
-		params.putString("user_id", userId);
-		doesBlockExist(params, callback);
-	}
-	
+
 	/**
 	 * Unblock the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void destroyBlock(Bundle params, SmorgasbordCallback callback) {
+	public void unblock(Bundle params, SmorgasbordCallback callback) {
 		// HttpPost
 	}
 	
 	/**
-	 * Unblock the specified user by screen name.
+	 * Unblock the specified user by user.
 	 * 
-	 * @param username A String of the desired screen name.
+	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/destroy">here</a>.
 	 * @param callback A {@SmorgasbordCallback}.
 	 */
-	public void destroyBlockByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+	public void unblock(User user, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("screen_name", screenName);
-		doesBlockExist(params, callback);
+		params = user.appendToBundle(params);
+		unblock(params, callback);
 	}
-		
-	/**
-	 * Unblock the specified user by user id.
-	 * 
-	 * @param userId A String of the desired user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/destroy">here</a>.
-	 * @param callback A {@SmorgasbordCallback}.
-	 */
-	public void destroyBlockByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 1);
-		params.putString("user_id", userId);
-		doesBlockExist(params, callback);
-	}
-	
+
 	// Direct Message endpoints
 	
 	/**
@@ -540,31 +503,17 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Send a new direct message to a screen name.
 	 * 
-	 * @param screenName A String Twitter screen name.
+	 * @param user A {@link User}.
 	 * @param text A String direct message.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/new">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void sendDirectMessageByScreenName(String screenName, String text, Bundle params, SmorgasbordCallback callback) {
+	public void sendDirectMessage(User user, String text, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("screen_name", screenName);
+		params = user.appendToBundle(params);
 		sendDirectMessage(text, params, callback);
 	}
-	
-	/**
-	 * Send a new direct message to a user id.
-	 * 
-	 * @param screenName A String Twitter user id.
-	 * @param text A String direct message.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/new">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void sendDirectMessageByUserId(String userId, String text, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 1);
-		params.putString("user_id", userId);
-		sendDirectMessage(text, params, callback);
-	}
-	
+
 	/**
 	 * Get a single direct message.
 	 * 
@@ -596,30 +545,17 @@ public class Twitter extends AbstractClient {
 	public void getUserFavorites(Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
-	
+
 	/**
-	 * Get a user's favorites by screen name.
+	 * Get a user's favorites by user.
 	 * 
-	 * @param screenName A String Twitter screen name.
+	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">here</a>.
 	 * @param callback A {@link Bundle}.
 	 */
-	public void getUserFavoritesByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+	public void getUserFavorites(User user, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("screen_name", screenName);
-		getUserFavorites(params, callback);
-	}
-		
-	/**
-	 * Get a user's favorites by user id.
-	 * 
-	 * @param userId A String Twitter user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">here</a>.
-	 * @param callback A {@link Bundle}.
-	 */
-	public void getUserFavoritesByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 1);
-		params.putString("user_id", userId);
+		params = user.appendToBundle(params);
 		getUserFavorites(params, callback);
 	}
 	
@@ -656,30 +592,17 @@ public class Twitter extends AbstractClient {
 	public void getFollowersIds(Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
-	
+
 	/**
-	 * Get a list of a user's follower ids by screen name.
+	 * Get a list of a user's follower ids by user.
 	 * 
-	 * @param screenName A String Twitter screen name.
+	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void getFollowersIdsByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+	public void getFollowersIds(User user, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("screen_name", screenName);
-		getFollowersIds(params, callback);
-	}
-	
-	/**
-	 * Get a list of a user's follower ids by user id.
-	 * 
-	 * @param userId A String Twitter user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void getFollowersIdsByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 1);
-		params.putString("user_id", userId);
+		params = user.appendToBundle(params);
 		getFollowersIds(params, callback);
 	}
 
@@ -692,30 +615,17 @@ public class Twitter extends AbstractClient {
 	public void getFriendsIds(Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
-	
+
 	/**
-	 * Get a list of a user's friend ids by screen name.
+	 * Get a list of a user's friend ids by user.
 	 * 
-	 * @param screenName A String Twitter screen name.
+	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void getFriendsIdsByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+	public void getFriendsIds(User user, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("screen_name", screenName);
-		getFollowersIds(params, callback);
-	}
-	
-	/**
-	 * Get a list of a user's friend ids by user id.
-	 * 
-	 * @param userId A String Twitter user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void getFriendsIdsByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 1);
-		params.putString("user_id", userId);
+		params = user.appendToBundle(params);
 		getFollowersIds(params, callback);
 	}
 	
@@ -727,6 +637,19 @@ public class Twitter extends AbstractClient {
 	 */
 	public void doesFriendshipExist(Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
+	}
+		
+	/**
+	 * Check if a friendship exists between two users.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/exists">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void doesFriendshipExist(User userA, User userB, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 2);
+		params = userA.appendToBundle(params);
+		params = userB.appendToBundle(params);
+		doesFriendshipExist(params, callback);
 	}
 	
 	/**
@@ -770,35 +693,22 @@ public class Twitter extends AbstractClient {
 	}
 	
 	/**
-	 * Create a friendship by screen name.
+	 * Create a friendship by user.
 	 * 
-	 * @param screenName A String Twitter screen name.
+	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void createFriendshipByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+	public void createFriendship(User user, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("screen_name", screenName);
-		createFriendship(params, callback);
-	}
-
-	/**
-	 * Create a friendship by user id.
-	 * 
-	 * @param userId A String Twitter user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void createFriendshipByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 1);
-		params.putString("user_id", userId);
+		params = user.appendToBundle(params);
 		createFriendship(params, callback);
 	}
 	
 	/**
 	 * Destroy a friendship.
 	 * 
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void destroyFriendship(Bundle params, SmorgasbordCallback callback) {
@@ -806,28 +716,15 @@ public class Twitter extends AbstractClient {
 	}
 	
 	/**
-	 * Destroy a friendship by screen name.
+	 * Destroy a friendship by user.
 	 * 
-	 * @param screenName A String Twitter screen name.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
+	 * @param user A {@link User}.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void destroyFriendshipByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+	public void destroyFriendship(User user, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("screen_name", screenName);
-		destroyFriendship(params, callback);
-	}
-
-	/**
-	 * Destroy a friendship by user id.
-	 * 
-	 * @param userId A String Twitter user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void destroyFriendshipByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 1);
-		params.putString("user_id", userId);
+		params = user.appendToBundle(params);
 		destroyFriendship(params, callback);
 	}
 	
@@ -842,28 +739,26 @@ public class Twitter extends AbstractClient {
 	}
 	
 	/**
-	 * Look up the relationship between the authenticated user and the list of screen names.
+	 * Look up the relationship between the authenticated user and the list of users.
 	 * 
-	 * @param screenNames An ArrayList<String> of Twitter screen names.
+	 * @param users An ArrayList<{@link User}>.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/lookup">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void lookupFriendshipByScreenNames(ArrayList<String> screenNames, Bundle params, SmorgasbordCallback callback) {
+	public void lookupFriendship(ArrayList<User> users, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putStringArrayList("screen_name", screenNames);
-		lookupFriendship(params, callback);
-	}
-
-	/**
-	 * Look up the relationship between the authenticated user and the list of user ids.
-	 * 
-	 * @param userIds An ArrayList<String> of Twitter user ids.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/lookup">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void lookupFriendshipByUserIds(ArrayList<String> userIds, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 1);
-		params.putStringArrayList("user_id", userIds);
+		// TODO Fix this. Perhaps a Users collection?
+		String key = "user_id";
+		ArrayList<String> userInfo = new ArrayList<String>();
+		for (User user : users) {
+			if (user.getUserId() != null) {
+				userInfo.add(user.getUserId());
+			} else {
+				userInfo.add(user.getScreenName());
+				if ("user_id".equals(key)) { key = "screen_name"; }
+			}
+		}
+		params.putStringArrayList("", userInfo);
 		lookupFriendship(params, callback);
 	}
 	
@@ -885,34 +780,21 @@ public class Twitter extends AbstractClient {
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/all">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void getLists(Bundle params, SmorgasbordCallback callback) {
+	public void getSubscribedLists(Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
-		
+	
 	/**
-	 * Get lists of the user by screen name.
+	 * Get lists of the user by user.
 	 * 
-	 * @param screenName A String Twitter screen name.
+	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/all">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void getListsByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
+	public void getSubscribedLists(User user, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("screen_name", screenName);
-		getLists(params, callback);
-	}
-
-	/**
-	 * Get lists of the user by user id.
-	 * 
-	 * @param userId A String Twitter user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/all">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void getListsByUserId(String userId, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 1);
-		params.putString("user_id", userId);
-		lookupFriendship(params, callback);
+		params = user.appendToBundle(params);
+		getSubscribedLists(params, callback);
 	}
 	
 	/**
@@ -928,46 +810,16 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Get statuses of the specified list by id.
 	 * 
-	 * @param listId A String Twitter list id.
+	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/statuses">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void getListStatusesById(String listId, Bundle params, SmorgasbordCallback callback) {
+	public void getListStatuses(TwitterList list, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("list_id", listId);
+		params = list.appendToBundle(params);
 		getListStatuses(params, callback);
 	}
-	
-	/**
-	 * Get statuses of the specified list by slug and screen name.
-	 * 
-	 * @param slug A String Twitter list slug.
-	 * @param ownerId A String Twitter user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/statuses">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void getListStatusesBySlugAndScreenName(String slug, String screenName, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 2);
-		params.putString("slug", slug);
-		params.putString("owner_screen_name", screenName);
-		getListStatuses(params, callback);
-	}
-	
-	/**
-	 * Get statuses of the specified list by slug and ownerId.
-	 * 
-	 * @param slug A String Twitter list slug.
-	 * @param ownerId A String Twitter user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/statuses">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void getListStatusesBySlugAndOwnerId(String slug, String ownerId, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 2);
-		params.putString("slug", slug);
-		params.putString("owner_id", ownerId);
-		getListStatuses(params, callback);
-	}
-	
+
 	/**
 	 * Remove a member from a list.
 	 * 
@@ -976,6 +828,22 @@ public class Twitter extends AbstractClient {
 	 */
 	public void removeMemberFromList(Bundle params, SmorgasbordCallback callback) {
 		// HttpDelete
+	}
+
+	/**
+	 * Remove a member from a list by list.
+	 * 
+	 * @param list A {@TwitterList}.
+	 * @param user A {@User}.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/destroy">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void removeMemberFromList(TwitterList list, User user, SmorgasbordCallback callback) {
+		// TODO What's the smallest this Bundle can be and still fit everything?
+		Bundle params = new Bundle();
+		params = list.appendToBundle(params);
+		params = user.appendToBundle(params);
+		removeMemberFromList(params, callback);
 	}
 	
 	/**
@@ -991,29 +859,16 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Get the lists the user is a member of by id.
 	 * 
-	 * @param userId A String Twitter user id.
+	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/memberships">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void getUsersListMembershipsById(String userId, Bundle params, SmorgasbordCallback callback) {
+	public void getUsersListMemberships(User user, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("user_id", userId);
+		params = user.appendToBundle(params);
 		getUsersListMemberships(params, callback);
 	}
-		
-	/**
-	 * Get the lists the user is a member of by screen name.
-	 * 
-	 * @param screenName A String Twitter screen name.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/memberships">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void getUsersListMembershipsByScreenName(String screenName, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 1);
-		params.putString("screen_name", screenName);
-		getUsersListMemberships(params, callback);
-	}
-		
+	
 	/**
 	 * Get a lists subscribers.
 	 * 
@@ -1025,48 +880,18 @@ public class Twitter extends AbstractClient {
 	}
 	
 	/**
-	 * Get a lists subscribers by id.
+	 * Get a lists subscribers.
 	 * 
-	 * @param listId A String Twitter list id.
+	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscriptions">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void getListSubscribersById(String listId, Bundle params, SmorgasbordCallback callback) {
+	public void getListSubscribers(TwitterList list, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("list_id", listId);
+		params = list.appendToBundle(params);
 		getListSubscribers(params, callback);
 	}
-	
-	/**
-	 * Get a lists subscribers by slug and screen name.
-	 * 
-	 * @param slug A String Twitter list slug.
-	 * @param screenName A String Twitter screen name.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/statuses">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void getListSubscribersBySlugAndScreenName(String slug, String screenName, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 2);
-		params.putString("slug", slug);
-		params.putString("owner_screen_name", screenName);
-		getListSubscribers(params, callback);
-	}
-	
-	/**
-	 * Get a lists subscribers by slug and owner id.
-	 * 
-	 * @param slug A String Twitter list slug.
-	 * @param ownerId A String Twitter user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/statuses">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void getListSubscribersBySlugAndOwnerId(String slug, String ownerId, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 2);
-		params.putString("slug", slug);
-		params.putString("owner_id", ownerId);
-		getListStatuses(params, callback);
-	}
-	
+
 	/**
 	 * Subscribe the authenticated user to a list.
 	 * 
@@ -1078,48 +903,18 @@ public class Twitter extends AbstractClient {
 	}
 	
 	/**
-	 * Subscribe the authenticated user to a list by id.
+	 * Subscribe the authenticated user to a list.
 	 * 
-	 * @param listId A String Twitter list id.
+	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/create">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void subscribeToListById(String listId, Bundle params, SmorgasbordCallback callback) {
+	public void subscribeToList(TwitterList list, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("list_id", listId);
+		params = list.appendToBundle(params);
 		subscribeToList(params, callback);
 	}
-	
-	/**
-	 * Subscribe the authenticated user to a list by slug and screen name.
-	 * 
-	 * @param slug A String Twitter list slug.
-	 * @param screenName A String Twitter screen name.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscriptions">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void subscribeToListBySlugAndScreenName(String slug, String screenName, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 2);
-		params.putString("slug", slug);
-		params.putString("owner_screen_name", screenName);
-		subscribeToList(params, callback);
-	}
-	
-	/**
-	 * Subscribe the authenticated user to a list by slug and owner id.
-	 * 
-	 * @param slug A String Twitter list slug.
-	 * @param ownerId A String Twitter user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/statuses">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void subscribeToListBySlugAndOwnerId(String slug, String ownerId, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 2);
-		params.putString("slug", slug);
-		params.putString("owner_id", ownerId);
-		subscribeToList(params, callback);
-	}
-	
+
 	/**
 	 * Check if the specified user is a member of the list.
 	 * 
@@ -1141,46 +936,309 @@ public class Twitter extends AbstractClient {
 	}
 	
 	/**
-	 * Unsubscribe the authenticated user from a list by id.
+	 * Unsubscribe the authenticated user from a list.
 	 * 
-	 * @param listId A String Twitter list id.
+	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void unsubscribeFromListById(String listId, Bundle params, SmorgasbordCallback callback) {
+	public void unsubscribeFromList(TwitterList list, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 1);
-		params.putString("list_id", listId);
+		params = list.appendToBundle(params);
 		unsubscribeFromList(params, callback);
+	}
+
+	/**
+	 * Add multiple users to a list.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/create_all">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void addUsersToList(Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
 	}
 	
 	/**
-	 * Unsubscribe the authenticated user from a list by slug and screen name.
+	 * Add multiple users to a list.
 	 * 
-	 * @param slug A String Twitter list slug.
-	 * @param screenName A String Twitter screen name.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/destroy">here</a>.
+	 * @param list A {@link TwitterList}.
+	 * @param users An ArrayList<{@link User}>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void unsubscribeFromListBySlugAndScreenName(String slug, String screenName, Bundle params, SmorgasbordCallback callback) {
-		params = AbstractClient.initBundle(params, 2);
-		params.putString("slug", slug);
-		params.putString("owner_screen_name", screenName);
-		unsubscribeFromList(params, callback);
+	public void addUsersToList(TwitterList list, ArrayList<User> users, SmorgasbordCallback callback) {
+		// TODO What's the smallest this Bundle can be?
+		Bundle params = new Bundle();
+		params = list.appendToBundle(params);
+		// TODO Fix this. Perhaps a Users collection?
+		String key = "user_id";
+		ArrayList<String> userInfo = new ArrayList<String>();
+		for (User user : users) {
+			if (user.getUserId() != null) {
+				userInfo.add(user.getUserId());
+			} else {
+				userInfo.add(user.getScreenName());
+				if ("user_id".equals(key)) { key = "screen_name"; }
+			}
+		}
+		params.putStringArrayList(key, userInfo);
+		addUsersToList(params, callback);
 	}
 	
 	/**
-	 * Unsubscribe the authenticated user from a list by slug and owner id.
+	 * Delete list.
 	 * 
-	 * @param slug A String Twitter list slug.
-	 * @param ownerId A String Twitter user id.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/destroy">here</a>.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
-	public void unsubscribeFromListBySlugAndOwnerId(String slug, String ownerId, Bundle params, SmorgasbordCallback callback) {
+	public void deleteList(Bundle params, SmorgasbordCallback callback) {
+		// HttpDelete
+	}
+		
+	/**
+	 * Delete list.
+	 * 
+	 * @param list A {@link TwitterList}.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/destroy">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void deleteList(TwitterList list, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
+		params = list.appendToBundle(params);
+		deleteList(params, callback);
+	}
+
+	/**
+	 * Update a list.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/update">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void updateList(Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Update a list.
+	 * 
+	 * @param list A {@link TwitterList}.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/update">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void updateList(TwitterList list, Bundle params, SmorgasbordCallback callback) {
 		params = AbstractClient.initBundle(params, 2);
-		params.putString("slug", slug);
-		params.putString("owner_id", ownerId);
-		unsubscribeFromList(params, callback);
+		params = list.appendToBundle(params);
+		updateList(params, callback);
+	}
+	
+	/**
+	 * Create a list.
+	 * 
+	 * @param name A String Twitter list name.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/create">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void createList(String name, Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Get lists owned by the specified user.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUsersLists(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get lists owned by the specified user.
+	 * 
+	 * @param user A {@link User}.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getUsersLists(User user, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
+		params = user.appendToBundle(params);
+		getUsersLists(params, callback);
+	}
+	
+	/**
+	 * Get a list.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/show">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getList(Bundle params, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Get a list.
+	 * 
+	 * @param list A {@link TwitterList}.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/show">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getList(TwitterList list, Bundle params, SmorgasbordCallback callback) {
+		params = AbstractClient.initBundle(params, 1);
+		params = list.appendToBundle(params);
+		getList(params, callback);
+	}
+		
+	// Notification endpoints
+	
+	/**
+	 * Enables device notifications for updates from the specified user. Returns the specified user when successful.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/notifications/follow">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void followNotifications(Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Enables device notifications for updates from the specified user. Returns the specified user when successful.
+	 * 
+	 * @param user A {@link User}.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void followNotifications(User user, SmorgasbordCallback callback) {
+		Bundle params = new Bundle(1);
+		params = user.appendToBundle(params);
+		followNotifications(params, callback);
+	}
+		
+	/**
+	 * Disables device notifications for updates from the specified user. Returns the specified user when successful.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/notifications/follow">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void unfollowNotifications(Bundle params, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+	
+	/**
+	 * Disables device notifications for updates from the specified user. Returns the specified user when successful.
+	 * 
+	 * @param user A {@link User}.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void unfollowNotifications(User user, SmorgasbordCallback callback) {
+		Bundle params = new Bundle(1);
+		params = user.appendToBundle(params);
+		unfollowNotifications(params, callback);
+	}
+	
+	// Places & Geo endpoints
+	
+	/**
+	 * Get all information about a place.
+	 * 
+	 * @param placeId A String id that can be retrieved from reverseGeocode.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getPlace(String placeId, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Searches for up to 20 places to be used as a place_id.
+	 * 
+	 * @param lat A String latitude.
+	 * @param lon A String longitude.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/geo/reverse_geocode">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void reverseGeocode(String lat, String lon, Bundle params, SmorgasbordCallback callback) {
+		// TODO Need to remember lon should be sent as long
+		// HttpGet
+	}
+	
+	/**
+	 * Search nearby places.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/geo/search">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void searchNearby(Bundle params, SmorgasbordCallback callback) {
+		// TODO Need to remember lon should be sent as long
+		// TODO Do we need to create a Geo pojo? lat, long, ip, query
+		// HttpGet
+	}
+	
+	/**
+	 * Locates places near the given coordinates which are similar in name.
+	 * 
+	 * @param lat A String latitude.
+	 * @param lon A String longitude.
+	 * @param name A String of the name of the place.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/geo/search">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void similarPlaces(String lat, String lon, String name, Bundle params, SmorgasbordCallback callback) {
+		// TODO Need to remember lon should be sent as long
+		// HttpGet
+	}
+	
+	/**
+	 * Creates a new place object at the given latitude and longitude.
+	 * 
+	 * @param name A String of the name of the place.
+	 * @param containedWithin A String of the place_id that this place is within.
+	 * @param token A String token found in the response from similarPlaces.
+	 * @param lat A String latitude.
+	 * @param lon A String longitude.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/geo/place">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void createPlace(String name, String containedWithin, String token, String lat, String lon, Bundle params, SmorgasbordCallback callback) {
+		// TODO Need to remember lon should be sent as long
+		// HttpPost
+	}
+		
+	// Saved Searches endpoints
+	
+	/**
+	 * Returns the authenticated users saved search queries.
+	 * 
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getSavedSearches(SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Retrieve the information for the saved search represented by the given id.
+	 * 
+	 * @param id A String id of the saved search query.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void showSavedSearch(String id, SmorgasbordCallback callback) {
+		// HttpGet
+	}
+	
+	/**
+	 * Create a new saved search.
+	 * 
+	 * @param query A String search query.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void createSavedSearch(String query, SmorgasbordCallback callback) {
+		// HttpPost
+	}
+		
+	/**
+	 * Delete a saved search.
+	 * 
+	 * @param id A String id of the saved search query.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void deleteSavedSearch(String id, SmorgasbordCallback callback) {
+		// HttpDelete
 	}
 	
 	// Timeline endpoints
@@ -1189,19 +1247,9 @@ public class Twitter extends AbstractClient {
 	
 	// User endpoints
 	
-	// Trends endpoints
-	
-	// Local Trends endpoints
+	// Trends & Local Trends endpoints
 
-	// Notification endpoints
-	
 	// Spam Reporting endpoints
-	
-	// Saved Searches endpoints
-	
-	// OAuth endpoints
-	
-	// Geo endpoints
 
 	// Search endpoints
 
