@@ -74,7 +74,7 @@ public class Foursquare extends AbstractClient {
 	/**
 	 * Get the users leaderboard.
 	 * 
-	 * @param params A {@link Bundle} containing optional key neighbors.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/leaderboard.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getLeaderboard(Bundle params, SmorgasbordCallback callback) {
@@ -114,7 +114,7 @@ public class Foursquare extends AbstractClient {
 	 * Get the users friends.
 	 * 
 	 * @param userId A String id of a user.
-	 * @param params A {@link Bundle} containing optional keys limit, offset.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/friends.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersFriends(String userId, Bundle params, SmorgasbordCallback callback) {
@@ -135,7 +135,7 @@ public class Foursquare extends AbstractClient {
 	 * Get the users tips.
 	 * 
 	 * @param userId A String id of a user.
-	 * @param params A {@link Bundle} containing optional keys sort, ll, limit, offset.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/tips.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersTips(String userId, Bundle params, SmorgasbordCallback callback) {
@@ -146,7 +146,7 @@ public class Foursquare extends AbstractClient {
 	 * Get the users to-dos.
 	 * 
 	 * @param userId A String id of a user.
-	 * @param params A {@link Bundle} containing optional keys sort, ll.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/todos.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersToDos(String userId, Bundle params, SmorgasbordCallback callback) {
@@ -157,7 +157,7 @@ public class Foursquare extends AbstractClient {
 	 * Get the users venue history.
 	 * 
 	 * @param userId A String id of a user.
-	 * @param params A {@link Bundle} containing optional keys beforeTimestamp, afterTimestamp, categoryId.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/venuehistory.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersVenueHistory(String userId, Bundle params, SmorgasbordCallback callback) {
@@ -232,7 +232,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param name A String name of the venue.
 	 * @param latLon A String of the form lat,lon.
-	 * @param params A {@link Bundle} containing optional keys address, crossStreet, city, state, zip, phone, primaryCategoryId.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/add.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void addVenue(String name, String latLon, Bundle params, SmorgasbordCallback callback) {
@@ -252,7 +252,7 @@ public class Foursquare extends AbstractClient {
 	 * Explore nearby venues.
 	 * 
 	 * @param latLon A String of the form lat,lon.
-	 * @param params A {@link Bundle} containing optional keys llAcc, alt, altAcc, radius, section, query, limit, basis.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/explore.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void exploreVenues(String latLon, Bundle params, SmorgasbordCallback callback) {
@@ -263,7 +263,7 @@ public class Foursquare extends AbstractClient {
 	 * Search nearby venues.
 	 * 
 	 * @param latLon A String of the form lat,lon.
-	 * @param params A {@link Bundle} containing optional keys llAcc, alt, altAcc, radius, section, query, limit, basis.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/search.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void searchVenues(String latLon, Bundle params, SmorgasbordCallback callback) {
@@ -274,7 +274,7 @@ public class Foursquare extends AbstractClient {
 	 * Return trending venues.
 	 * 
 	 * @param latLon A String of the form lat,lon.
-	 * @param params A {@link Bundle} containing optional keys limit, radius.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/trending.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void trendingVenues(String latLon, Bundle params, SmorgasbordCallback callback) {
@@ -285,7 +285,7 @@ public class Foursquare extends AbstractClient {
 	 * Retrieve who's at this venue now.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params A {@link Bundle} containing optional keys limit, offset, afterTimestamp.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/herenow.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void hereNow(String venueId, Bundle params, SmorgasbordCallback callback) {
@@ -293,10 +293,10 @@ public class Foursquare extends AbstractClient {
 	}
 	
 	/**
-	 * Retrieve who's at this venue now.
+	 * Return tips for a venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params A {@link Bundle} containing optional keys sort, limit, offset.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/tips.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void venueTips(String venueId, Bundle params, SmorgasbordCallback callback) {
@@ -307,7 +307,7 @@ public class Foursquare extends AbstractClient {
 	 * Retrieve photos of this venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params A {@link Bundle} containing optional keys group, limit, offset.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/photos.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void venuePhotos(String venueId, Bundle params, SmorgasbordCallback callback) {
@@ -328,7 +328,7 @@ public class Foursquare extends AbstractClient {
 	 * Mark this venue as a to-do and optionally set a tip.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params A {@link Bundle} containing optional key text.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/marktodo.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void markVenueToDo(String venueId, Bundle params, SmorgasbordCallback callback) {
@@ -339,7 +339,7 @@ public class Foursquare extends AbstractClient {
 	 * Flag this venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params A {@link Bundle} containing optional key problem.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/flag.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void flagVenue(String venueId, Bundle params, SmorgasbordCallback callback) {
@@ -350,7 +350,7 @@ public class Foursquare extends AbstractClient {
 	 * Edit this venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params A {@link Bundle} containing optional keys name, address, crossStreet, city, state, zip, phone, ll, categoryId.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/edit.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void editVenue(String venueId, Bundle params, SmorgasbordCallback callback) {
@@ -361,7 +361,7 @@ public class Foursquare extends AbstractClient {
 	 * Propose an edit this venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params A {@link Bundle} containing optional keys name, address, crossStreet, city, state, zip, phone, ll, primaryCategoryId.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/proposeedit.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void proposeEditVenue(String venueId, Bundle params, SmorgasbordCallback callback) {
@@ -374,7 +374,7 @@ public class Foursquare extends AbstractClient {
 	 * Get checkin details.
 	 * 
 	 * @param checkinId A string id of the checkin.
-	 * @param params A {@link Bundle} containing optional key signature.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/checkins.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getCheckin(String checkinId, Bundle params, SmorgasbordCallback callback) {
@@ -386,7 +386,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param venueId A String id of a venue.
 	 * @param broadcast A String list telling foursquare who to tell about this checkin.  private|public|public,facebook
-	 * @param params A {@link Bundle} containing optional keys ll, llAcc, alt, altAcc.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/add.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void checkin(String venueId, boolean broadcast, Bundle params, SmorgasbordCallback callback) {
@@ -398,7 +398,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param venueName A String name of a venue.
 	 * @param broadcast A String list telling foursquare who to tell about this checkin.  private|public|public,facebook
-	 * @param params A {@link Bundle} containing optional keys ll, llAcc, alt, altAcc.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/add.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void checkinToVenueWithoutId(String venueName, boolean broadcast, Bundle params, SmorgasbordCallback callback) {
@@ -410,7 +410,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param shout A String of a shout.
 	 * @param broadcast A String list telling foursquare who to tell about this checkin.  private|public|public,facebook
-	 * @param params A {@link Bundle} containing optional keys ll, llAcc, alt, altAcc.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/add.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void shout(String shout, boolean broadcast, Bundle params, SmorgasbordCallback callback) {
@@ -420,7 +420,7 @@ public class Foursquare extends AbstractClient {
 	/**
 	 * Get recent checkins from friends.
 	 * 
-	 * @param params A {@link Bundle} containing optional keys ll, limit, afterTimestamp.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/recent.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getRecentCheckins(Bundle params, SmorgasbordCallback callback) {
@@ -466,7 +466,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param venueId A String id of the venue.
 	 * @param text A String of the tip text.
-	 * @param params A {@link Bundle} containing optional key url.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/tips/add.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void addTip(String venueId, String text, Bundle params, SmorgasbordCallback callback) {
@@ -477,7 +477,7 @@ public class Foursquare extends AbstractClient {
 	 * Retrieves a list of tips near the specified location.
 	 * 
 	 * @param latLon A String of the form lat,lon
-	 * @param params An {@link Bundle} of extra params. Accepted keys are limit, offset, filter and query.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/tips/search.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void searchTips(String latLon, Bundle params, SmorgasbordCallback callback) {
@@ -531,7 +531,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param checkinId A String id of a checkin.
 	 * @param photo A Bitmap of the photo.
-	 * @param params A {@link Bundle} containing optional keys broadcast, ll, llAcc, alt and altAcc.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/photos/add.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void addPhotoToCheckin(String checkinId, Bitmap photo, Bundle params, SmorgasbordCallback callback) {
@@ -543,7 +543,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param venueId A String id of a venue.
 	 * @param photo A Bitmap of the photo.
-	 * @param params A {@link Bundle} containing optional keys broadcast, ll, llAcc, alt and altAcc.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/photos/add.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void addPhotoToVenue(String venueId, Bitmap photo, Bundle params, SmorgasbordCallback callback) {
@@ -555,7 +555,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param tipId A String id of a tip.
 	 * @param photo A Bitmap of the photo.
-	 * @param params A {@link Bundle} containing optional keys broadcast, ll, llAcc, alt and altAcc.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/photos/add.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void addPhotoToTip(String tipId, Bitmap photo, Bundle params, SmorgasbordCallback callback) {
@@ -611,7 +611,7 @@ public class Foursquare extends AbstractClient {
 	 * Retrieves a list of specials near the specified location.
 	 * 
 	 * @param latLon A String of the form lat,lon
-	 * @param params An {@link Bundle} of extra params. Accepted keys are llAcc, alt, altAcc and limit.
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/specials/specials.html">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void searchSpecials(String latLon, Bundle params, SmorgasbordCallback callback) {
