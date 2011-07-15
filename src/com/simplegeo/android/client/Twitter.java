@@ -1,23 +1,32 @@
 package com.simplegeo.android.client;
 
-import java.util.ArrayList;
-
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.simplegeo.android.callback.SmorgasbordCallback;
+import com.simplegeo.android.http.OAuthHttpClient;
 import com.simplegeo.android.type.TwitterList;
 import com.simplegeo.android.type.User;
 import com.simplegeo.android.type.UserCollection;
 
 public class Twitter extends AbstractClient {
 
-	private static final String HTTP_URL = "http://api.twitter.com/1/";
-	
-	public Twitter(String format) {
-		
+	private static final String twitterUrl = "https://api.twitter.com/1";
+
+	private Twitter(String accessToken) {
+		this(accessToken);
 	}
 	
+	private Twitter(String key, String secret) {
+		this(key, secret);
+	}
+
+	/**
+	 * Verify the user's credentials.
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/account/verify_credentials">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
 	public void verifyCredentials(Bundle params, SmorgasbordCallback callback) {
 		// HttpGet
 	}
@@ -1506,7 +1515,7 @@ public class Twitter extends AbstractClient {
 	 */
 	public void lookupUsers(Bundle params, SmorgasbordCallback callback) {
 		// TODO Make sure we can use both
-		
+		// HttpGet
 	}
 	
 	/**
