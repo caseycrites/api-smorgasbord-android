@@ -66,9 +66,8 @@ public abstract class AbstractClient {
 		
 	}
 	
-	// This should handle the response from executeRequest and then send it to the appropriate method in the SmorgasbordCallback.
 	private void handleResponse() {
-		
+		// This should handle the response from executeRequest and then send it to the appropriate method in the SmorgasbordCallback.
 	}
 	
 	public byte[] bitmapToByteArray(Bitmap bmp) {

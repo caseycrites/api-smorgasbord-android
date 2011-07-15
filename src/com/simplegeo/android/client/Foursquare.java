@@ -11,7 +11,7 @@ import com.simplegeo.android.callback.SmorgasbordCallback;
 public class Foursquare extends AbstractClient {
 	
 	private static Foursquare foursquare = null;
-	private static final String HTTP_URL = "https://api.foursquare.com/v2";
+	private static final String foursquareUrl = "https://api.foursquare.com/v2";
 
 	public Foursquare(String accessToken) {
 		super(accessToken);
@@ -26,7 +26,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUser(String userId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s", URLEncoder.encode(userId)), null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s", URLEncoder.encode(userId)), null, callback);
 	}
 	
 	/**
@@ -55,7 +55,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersBadges(String userId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s/badges", URLEncoder.encode(userId)), null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/badges", URLEncoder.encode(userId)), null, callback);
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersCheckins(String userId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s/checkins", userId), null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/checkins", URLEncoder.encode(userId)), null, callback);
 	}
 	
 	/**
@@ -76,7 +76,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersFriends(String userId, Bundle params, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s/friends", userId), params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/friends", URLEncoder.encode(userId)), params, callback);
 	}	
 	
 	/**
@@ -86,7 +86,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersMayorships(String userId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s/mayorships", userId), null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/mayorships", URLEncoder.encode(userId)), null, callback);
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersTips(String userId, Bundle params, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s/tips", userId), params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/tips", URLEncoder.encode(userId)), params, callback);
 	}
 	
 	/**
@@ -108,7 +108,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersToDos(String userId, Bundle params, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s/todos", userId), params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/todos", URLEncoder.encode(userId)), params, callback);
 	}
 	
 	/**
@@ -119,7 +119,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersVenueHistory(String userId, Bundle params, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s/venuehistory", userId), params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/venuehistory", URLEncoder.encode(userId)), params, callback);
 	}
 	
 	/**
@@ -129,7 +129,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void sendFriendRequest(String userId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s/request", userId), null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/request", URLEncoder.encode(userId)), null, callback);
 	}
 	
 	/**
@@ -139,7 +139,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void unfriendUser(String userId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s/unfriend", userId), null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/unfriend", URLEncoder.encode(userId)), null, callback);
 	}
 	
 	/**
@@ -149,7 +149,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void approveFriendRequest(String userId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s/approve", userId), null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/approve", URLEncoder.encode(userId)), null, callback);
 	}
 	
 	/**
@@ -159,7 +159,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void denyFriendRequest(String userId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s/deny", userId), null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/deny", URLEncoder.encode(userId)), null, callback);
 	}
 	
 	/**
@@ -172,7 +172,7 @@ public class Foursquare extends AbstractClient {
 	public void setPings(String userId, boolean value, SmorgasbordCallback callback) {
 		Bundle params = new Bundle(1);
 		params.putBoolean("value", value);
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/users/%s/setpings", userId), params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/setpings", URLEncoder.encode(userId)), params, callback);
 	}
 	
 	// Venues endpoints
@@ -184,7 +184,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getVenue(String venueId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/venues/%s", venueId), null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/venues/%s", URLEncoder.encode(venueId)), null, callback);
 	}
 	
 	/**
@@ -258,7 +258,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void hereNow(String venueId, Bundle params, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/venues/%s/herenow", venueId), params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/herenow", URLEncoder.encode(venueId)), params, callback);
 	}
 	
 	/**
@@ -269,7 +269,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void venueTips(String venueId, Bundle params, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/venues/%s/tips", venueId), params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/tips", URLEncoder.encode(venueId)), params, callback);
 	}
 	
 	/**
@@ -280,7 +280,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void venuePhotos(String venueId, Bundle params, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/venues/%s/photos", venueId), params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/photos", URLEncoder.encode(venueId)), params, callback);
 	}
 	
 	/**
@@ -290,7 +290,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void venueLinks(String venueId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/venues/%s/links", venueId), null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/links", URLEncoder.encode(venueId)), null, callback);
 	}
 	
 	/**
@@ -301,7 +301,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void markVenueToDo(String venueId, Bundle params, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.POST, HTTP_URL + String.format(Locale.US, "/venues/%s/marktodo", venueId), params, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/marktodo", URLEncoder.encode(venueId)), params, callback);
 	}
 		
 	/**
@@ -314,7 +314,7 @@ public class Foursquare extends AbstractClient {
 	public void flagVenue(String venueId, String problem, SmorgasbordCallback callback) {
 		Bundle params = new Bundle(1);
 		params.putString("problem", problem);
-		this.executeRequest(HttpMethod.POST, HTTP_URL + String.format(Locale.US, "/venues/%s/flag", venueId), params, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/flag", URLEncoder.encode(venueId)), params, callback);
 	}
 	
 	/**
@@ -325,7 +325,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void editVenue(String venueId, Bundle params, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.POST, HTTP_URL + String.format(Locale.US, "/venues/%s/edit", venueId), params, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/edit", URLEncoder.encode(venueId)), params, callback);
 	}
 		
 	/**
@@ -336,7 +336,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void proposeEditVenue(String venueId, Bundle params, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.POST, HTTP_URL + String.format(Locale.US, "/venues/%s/proposeedit", venueId), params, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/proposeedit", URLEncoder.encode(venueId)), params, callback);
 	}
 	
 	// Checkins endpoints
@@ -349,7 +349,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getCheckin(String checkinId, Bundle params, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/checkins/%s", checkinId), params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/checkins/%s", URLEncoder.encode(checkinId)), params, callback);
 	}
 	
 	/**
@@ -364,7 +364,7 @@ public class Foursquare extends AbstractClient {
 		params = this.initBundle(params, 2);
 		params.putString("venueId", venueId);
 		params.putBoolean("broadcast", broadcast);
-		this.executeRequest(HttpMethod.POST, HTTP_URL + "/checkins/add", params, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + "/checkins/add", params, callback);
 	}
 		
 	/**
@@ -379,7 +379,7 @@ public class Foursquare extends AbstractClient {
 		params = this.initBundle(params, 2);
 		params.putString("venue", venueName);
 		params.putBoolean("broadcast", broadcast);
-		this.executeRequest(HttpMethod.POST, HTTP_URL + "/checkins/add", params, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + "/checkins/add", params, callback);
 	}
 		
 	/**
@@ -394,7 +394,7 @@ public class Foursquare extends AbstractClient {
 		params = this.initBundle(params, 2);
 		params.putString("shout", shout);
 		params.putBoolean("broadcast", broadcast);
-		this.executeRequest(HttpMethod.POST, HTTP_URL + "/checkins/add", params, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + "/checkins/add", params, callback);
 	}
 	
 	/**
@@ -404,7 +404,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getRecentCheckins(Bundle params, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + "/checkins/recent", params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + "/checkins/recent", params, callback);
 	}
 	
 	/**
@@ -417,7 +417,7 @@ public class Foursquare extends AbstractClient {
 	public void commentOnCheckin(String checkinId, String text, SmorgasbordCallback callback) {
 		Bundle params = new Bundle(1);
 		params.putString("text", text);
-		this.executeRequest(HttpMethod.POST, HTTP_URL + String.format(Locale.US, "/checkins/%s/addcomment", checkinId), params, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/addcomment", URLEncoder.encode(checkinId)), params, callback);
 	}
 	
 	/**
@@ -430,7 +430,7 @@ public class Foursquare extends AbstractClient {
 	public void deleteComment(String checkinId, String commentId, SmorgasbordCallback callback) {
 		Bundle params = new Bundle(1);
 		params.putString("commentId", commentId);
-		this.executeRequest(HttpMethod.POST, HTTP_URL + String.format(Locale.US, "/checkins/%s/deletecomment", checkinId), params, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/deletecomment", URLEncoder.encode(checkinId)), params, callback);
 	}
 	
 	// Tips endpoints
@@ -442,7 +442,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getTip(String tipId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/tips/%s", tipId), null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/tips/%s", URLEncoder.encode(tipId)), null, callback);
 	}
 	
 	/**
@@ -457,7 +457,7 @@ public class Foursquare extends AbstractClient {
 		params = this.initBundle(params, 2);
 		params.putString("venueId", venueId);
 		params.putString("text", text);
-		this.executeRequest(HttpMethod.POST, HTTP_URL + "/tips/add", params, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + "/tips/add", params, callback);
 	}
 		
 	/**
@@ -470,7 +470,7 @@ public class Foursquare extends AbstractClient {
 	public void searchTips(String latLon, Bundle params, SmorgasbordCallback callback) {
 		params = this.initBundle(params, 1);
 		params.putString("ll", latLon);
-		this.executeRequest(HttpMethod.GET, HTTP_URL + "/tips/search", params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + "/tips/search", params, callback);
 	}
 	
 	/**
@@ -480,7 +480,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void markTipToDo(String tipId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.POST, HTTP_URL + String.format(Locale.US, "/tips/%s/marktodo", tipId), null, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/marktodo", URLEncoder.encode(tipId)), null, callback);
 	}
 	
 	/**
@@ -490,7 +490,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void markTipDone(String tipId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.POST, HTTP_URL + String.format(Locale.US, "/tips/%s/markdone", tipId), null, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/markdone", URLEncoder.encode(tipId)), null, callback);
 	}
 		
 	/**
@@ -500,7 +500,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void unmarkTip(String tipId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.POST, HTTP_URL + String.format(Locale.US, "/tips/%s/unmark", tipId), null, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/unmark", URLEncoder.encode(tipId)), null, callback);
 	}
 	
 	// Photos endpoints
@@ -512,7 +512,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getPhoto(String photoId, SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/photos/%s", photoId), null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/photos/%s", URLEncoder.encode(photoId)), null, callback);
 	}
 	
 	/**
@@ -526,8 +526,8 @@ public class Foursquare extends AbstractClient {
 	public void addPhotoToCheckin(String checkinId, Bitmap photo, Bundle params, SmorgasbordCallback callback) {
 		params = this.initBundle(params, 1);
 		params.putString("checkinId", checkinId);
-		params.putByteArray("photo", this.bitmapToByteArray(photo));
-		this.executeRequest(HttpMethod.POST, HTTP_URL + "/photos/add", params, callback);
+		params.putByteArray("image", this.bitmapToByteArray(photo));
+		this.executeRequest(HttpMethod.POST, foursquareUrl + "/photos/add", params, callback);
 	}
 		
 	/**
@@ -541,8 +541,8 @@ public class Foursquare extends AbstractClient {
 	public void addPhotoToVenue(String venueId, Bitmap photo, Bundle params, SmorgasbordCallback callback) {
 		params = this.initBundle(params, 1);
 		params.putString("venueId", venueId);
-		params.putByteArray("photo", this.bitmapToByteArray(photo));
-		this.executeRequest(HttpMethod.POST, HTTP_URL + "/photos/add", params, callback);
+		params.putByteArray("image", this.bitmapToByteArray(photo));
+		this.executeRequest(HttpMethod.POST, foursquareUrl + "/photos/add", params, callback);
 	}
 		
 	/**
@@ -556,8 +556,8 @@ public class Foursquare extends AbstractClient {
 	public void addPhotoToTip(String tipId, Bitmap photo, Bundle params, SmorgasbordCallback callback) {
 		params = this.initBundle(params, 1);
 		params.putString("tipId", tipId);
-		params.putByteArray("photo", this.bitmapToByteArray(photo));
-		this.executeRequest(HttpMethod.POST, HTTP_URL + "/photos/add", params, callback);
+		params.putByteArray("image", this.bitmapToByteArray(photo));
+		this.executeRequest(HttpMethod.POST, foursquareUrl + "/photos/add", params, callback);
 	}
 	
 	// Settings endpoints
@@ -571,7 +571,7 @@ public class Foursquare extends AbstractClient {
 	public void getSetting(String setting, SmorgasbordCallback callback) {
 		Bundle params = new Bundle(1);
 		params.putString("setting_id", setting);
-		this.executeRequest(HttpMethod.GET, HTTP_URL + "/settings/all", params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + "/settings/all", params, callback);
 	}
 	
 	/**
@@ -580,7 +580,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getAllSettings(SmorgasbordCallback callback) {
-		this.executeRequest(HttpMethod.GET, HTTP_URL + "/settings/all", null, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + "/settings/all", null, callback);
 	}
 	
 	/**
@@ -592,7 +592,7 @@ public class Foursquare extends AbstractClient {
 	public void setSetting(String setting, String value, SmorgasbordCallback callback) {
 		Bundle params = new Bundle(1);
 		params.putString("value", value);
-		this.executeRequest(HttpMethod.POST, HTTP_URL + String.format(Locale.US, "/settings/%s/set", setting), params, callback);
+		this.executeRequest(HttpMethod.POST, foursquareUrl + String.format(Locale.US, "/settings/%s/set", URLEncoder.encode(setting)), params, callback);
 	}
 	
 	// Specials endpoints
@@ -607,7 +607,7 @@ public class Foursquare extends AbstractClient {
 	public void getSpecial(String specialId, String venueId, SmorgasbordCallback callback) {
 		Bundle params = new Bundle(1);
 		params.putString("venueId", venueId);
-		this.executeRequest(HttpMethod.GET, HTTP_URL + String.format(Locale.US, "/specials/%s", specialId), params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + String.format(Locale.US, "/specials/%s", URLEncoder.encode(specialId)), params, callback);
 	}
 	
 	/**
@@ -620,7 +620,7 @@ public class Foursquare extends AbstractClient {
 	public void searchSpecials(String latLon, Bundle params, SmorgasbordCallback callback) {
 		params = this.initBundle(params, 1);
 		params.putString("ll", latLon);
-		this.executeRequest(HttpMethod.GET, HTTP_URL + "/specials/search", params, callback);
+		this.executeRequest(HttpMethod.GET, foursquareUrl + "/specials/search", params, callback);
 	}
 	
 }
