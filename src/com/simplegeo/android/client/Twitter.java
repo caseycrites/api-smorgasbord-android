@@ -523,19 +523,9 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getFavorites(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/favorites.json", params, callback);
 	}
 	
-	/**
-	 * Get a specified user's favorites.
-	 * 
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">here</a>.
-	 * @param callback A {@link SmorgasbordCallback}.
-	 */
-	public void getUserFavorites(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
-	}
-
 	/**
 	 * Get a user's favorites by user.
 	 * 
@@ -546,7 +536,7 @@ public class Twitter extends AbstractClient {
 	public void getUserFavorites(User user, Bundle params, SmorgasbordCallback callback) {
 		params = this.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		getUserFavorites(params, callback);
+		getFavorites(params, callback);
 	}
 	
 	/**
@@ -557,7 +547,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback callback}.
 	 */
 	public void favorite(String tweetId, Bundle params, SmorgasbordCallback callback) {
-		// HttpPost
+		this.executeRequest(HttpMethod.POST, twitterUrl + String.format(Locale.US, "/favorites/create/%s.json", URLEncoder.encode(tweetId)), params, callback);
 	}
 	
 	/**
@@ -568,7 +558,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback callback}.
 	 */
 	public void unfavorite(String tweetId, Bundle params, SmorgasbordCallback callback) {
-		// HttpDelete
+		this.executeRequest(HttpMethod.DELETE, twitterUrl + String.format(Locale.US, "/favorites/destroy/%s.json", URLEncoder.encode(tweetId)), params, callback);
 	}
 	
 	// Friend And Follower endpoints
@@ -580,7 +570,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getFollowersIds(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/followers/ids.json", params, callback);
 	}
 
 	/**
@@ -603,7 +593,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getFriendsIds(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/friends/ids.json", params, callback);
 	}
 
 	/**
@@ -626,7 +616,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void doesFriendshipExist(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/friendships/exists.json", params, callback);
 	}
 		
 	/**
@@ -649,7 +639,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getIncomingFriendRequests(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/friendships/incoming.json", params, callback);
 	}
 
 	/**
@@ -659,7 +649,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getOutgoingFriendRequests(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/friendships/outgoing.json", params, callback);
 	}
 	
 	/**
@@ -669,7 +659,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void showFriendship(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/friendships/show.json", params, callback);
 	}
 	
 	/**
@@ -679,7 +669,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void createFriendship(Bundle params, SmorgasbordCallback callback) {
-		// HttpPost
+		this.executeRequest(HttpMethod.POST, twitterUrl + "/friendships/create.json", params, callback);
 	}
 	
 	/**
@@ -702,7 +692,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void destroyFriendship(Bundle params, SmorgasbordCallback callback) {
-		// HttpPost
+		this.executeRequest(HttpMethod.POST, twitterUrl + "/friendships/destroy.json", params, callback);
 	}
 	
 	/**
@@ -725,7 +715,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void lookupFriendship(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/friendships/lookup.json", params, callback);
 	}
 	
 	/**
@@ -748,7 +738,17 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void updateFriendship(Bundle params, SmorgasbordCallback callback) {
-		// HttpPost
+		this.executeRequest(HttpMethod.POST, twitterUrl + "/friendships/update.json", params, callback);
+	}
+	
+	/**
+	 * Returns an array of user_ids that the currently authenticated user does not want to see retweets from..
+	 * 
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/get-friendshipsno_retweet_ids">here</a>.
+	 * @param callback A {@link SmorgasbordCallback}.
+	 */
+	public void getNoRetweetIds(Bundle params, SmorgasbordCallback callback) {
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/friendships/no_retweet_ids.json", params, callback);
 	}
 	
 	// List endpoints
