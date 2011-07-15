@@ -760,7 +760,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getSubscribedLists(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists/all.json", params, callback);
 	}
 	
 	/**
@@ -783,7 +783,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getListStatuses(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists/statuses.json", params, callback);
 	}
 	
 	/**
@@ -806,7 +806,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void removeMemberFromList(Bundle params, SmorgasbordCallback callback) {
-		// HttpDelete
+		this.executeRequest(HttpMethod.DELETE, twitterUrl + "/lists/members/destroy.json", params, callback);
 	}
 
 	/**
@@ -832,7 +832,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersListMemberships(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists/memberships.json", params, callback);
 	}
 	
 	/**
@@ -855,7 +855,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getListSubscribers(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists/subscribers.json", params, callback);
 	}
 	
 	/**
@@ -878,7 +878,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void subscribeToList(Bundle params, SmorgasbordCallback callback) {
-		
+		this.executeRequest(HttpMethod.POST, twitterUrl + "/lists/subscribers/create.json", params, callback);
 	}
 	
 	/**
@@ -901,7 +901,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void isUserListSubscriber(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists/subscribers/show.json", params, callback);
 	}
 	
 	/**
@@ -911,7 +911,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void unsubscribeFromList(Bundle params, SmorgasbordCallback callback) {
-		// HttpDelete
+		this.executeRequest(HttpMethod.DELETE, twitterUrl + "/lists/subscribers/destroy.json", params, callback);
 	}
 	
 	/**
@@ -934,7 +934,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void addUsersToList(Bundle params, SmorgasbordCallback callback) {
-		// HttpPost
+		this.executeRequest(HttpMethod.POST, twitterUrl + "/lists/members/create_all.json", params, callback);
 	}
 	
 	/**
@@ -959,7 +959,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void deleteList(Bundle params, SmorgasbordCallback callback) {
-		// HttpDelete
+		this.executeRequest(HttpMethod.DELETE, twitterUrl + "/lists/destroy.json", params, callback);
 	}
 		
 	/**
@@ -982,7 +982,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void updateList(Bundle params, SmorgasbordCallback callback) {
-		// HttpPost
+		this.executeRequest(HttpMethod.POST, twitterUrl + "/lists/update.json", params, callback);
 	}
 	
 	/**
@@ -1006,7 +1006,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void createList(String name, Bundle params, SmorgasbordCallback callback) {
-		// HttpPost
+		this.executeRequest(HttpMethod.POST, twitterUrl + "/lists/create.json", params, callback);
 	}
 	
 	/**
@@ -1016,7 +1016,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUsersLists(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists.json", params, callback);
 	}
 	
 	/**
@@ -1039,7 +1039,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getList(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists/show.json", params, callback);
 	}
 	
 	/**
@@ -1064,7 +1064,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void followNotifications(Bundle params, SmorgasbordCallback callback) {
-		// HttpPost
+		this.executeRequest(HttpMethod.POST, twitterUrl + "/notifications/follow.json", params, callback);
 	}
 	
 	/**
@@ -1086,7 +1086,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void unfollowNotifications(Bundle params, SmorgasbordCallback callback) {
-		// HttpPost
+		this.executeRequest(HttpMethod.POST, twitterUrl + "/notifications/leave.json", params, callback);
 	}
 	
 	/**
@@ -1110,7 +1110,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getPlace(String placeId, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, String.format(Locale.US, twitterUrl + "/geo/id/%s.json", URLEncoder.encode(placeId)), null, callback);
 	}
 	
 	/**
@@ -1122,8 +1122,10 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void reverseGeocode(String lat, String lon, Bundle params, SmorgasbordCallback callback) {
-		// TODO Need to remember lon should be sent as long
-		// HttpGet
+		params = this.initBundle(params, 2);
+		params.putString("lat", lat);
+		params.putString("long", lon);
+		this.executeRequest(HttpMethod.GET, "/geo/reverse_geocode.json", params, callback);
 	}
 	
 	/**
@@ -1133,9 +1135,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void searchNearby(Bundle params, SmorgasbordCallback callback) {
-		// TODO Need to remember lon should be sent as long
-		// TODO Do we need to create a Geo pojo? lat, long, ip, query
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/geo/nearby_places.json", params, callback);
 	}
 	
 	/**
@@ -1148,8 +1148,11 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void similarPlaces(String lat, String lon, String name, Bundle params, SmorgasbordCallback callback) {
-		// TODO Need to remember lon should be sent as long
-		// HttpGet
+		params = this.initBundle(params, 3);
+		params.putString("lat", lat);
+		params.putString("long", lon);
+		params.putString("name", name);
+		this.executeRequest(HttpMethod.GET, "/geo/similar_places.json", params, callback);
 	}
 	
 	/**
@@ -1164,8 +1167,13 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void createPlace(String name, String containedWithin, String token, String lat, String lon, Bundle params, SmorgasbordCallback callback) {
-		// TODO Need to remember lon should be sent as long
-		// HttpPost
+		params = this.initBundle(params, 5);
+		params.putString("lat", lat);
+		params.putString("long", lon);
+		params.putString("name", name);
+		params.putString("token", token);
+		params.putString("containedWithin", containedWithin);
+		this.executeRequest(HttpMethod.POST, "/geo/place.json", params, callback);
 	}
 		
 	// Saved Searches endpoints
