@@ -1184,7 +1184,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getSavedSearches(SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/saved_searches.json", null, callback);
 	}
 	
 	/**
@@ -1194,7 +1194,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void showSavedSearch(String id, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/saved_searches/show/%s.json", URLEncoder.encode(id)), null, callback);
 	}
 	
 	/**
@@ -1204,7 +1204,9 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void createSavedSearch(String query, SmorgasbordCallback callback) {
-		// HttpPost
+		Bundle params = new Bundle(1);
+		params.putString("query", query);
+		this.executeRequest(HttpMethod.POST, "/saved_searches/create.json", params, callback);
 	}
 		
 	/**
@@ -1214,7 +1216,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void deleteSavedSearch(String id, SmorgasbordCallback callback) {
-		// HttpDelete
+		this.executeRequest(HttpMethod.DELETE, String.format(Locale.US, "/saved_searches/destroy/%s.json", URLEncoder.encode(id)), null, callback);
 	}
 	
 	// Search endpoints
@@ -1227,7 +1229,9 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void search(String q, Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		params = this.initBundle(params, 1);
+		params.putString("q", q);
+		this.executeRequest(HttpMethod.GET, "/search.json", params, callback);
 	}
 
 	// Spam Reporting endpoints
@@ -1239,7 +1243,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void reportSpam(Bundle params, SmorgasbordCallback callback) {
-		// HttpPost
+		this.executeRequest(HttpMethod.POST, "/report_spam.json", params, callback);
 	}
 	
 	/**
@@ -1263,7 +1267,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getTimeline(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/statuses/home_timeline.json", params, callback);
 	}
 	
 	/**
@@ -1273,7 +1277,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getMentions(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/statuses/mentions.json", params, callback);
 	}
 		
 	/**
@@ -1283,7 +1287,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getPublicStatuses(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/statuses/public_timeline.json", params, callback);
 	}
 	
 	/**
@@ -1293,7 +1297,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getRetweetedByMe(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/statuses/retweeted_by_me.json", params, callback);
 	}
 	
 	/**
@@ -1303,7 +1307,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getRetweetedToMe(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/statuses/retweeted_to_me.json", params, callback);
 	}
 	
 	/**
@@ -1313,7 +1317,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getRetweetsOfMe(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/statuses/retweets_of_me.json", params, callback);
 	}
 	
 	/**
@@ -1323,7 +1327,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUserStatuses(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/statuses/user_timeline.json", params, callback);
 	}
 		
 	/**
@@ -1346,7 +1350,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getRetweetedToUser(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/statuses/retweeted_to_user.json", params, callback);
 	}
 		
 	/**
@@ -1369,7 +1373,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getRetweetedByUser(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/statuses/retweeted_by_user.json", params, callback);
 	}
 		
 	/**
@@ -1394,7 +1398,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getLocalTrends(String whereOnEarthId, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/trends/%s.json", URLEncoder.encode(whereOnEarthId)), null, callback);
 	}
 	
 	/**
@@ -1404,7 +1408,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getAvailableTrendLocations(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/trends/available.json", params, callback);
 	}
 		
 	/**
@@ -1413,7 +1417,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getTrends(SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/trends.json", null, callback);
 	}
 	
 	/**
@@ -1423,7 +1427,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getCurrentTrends(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/trends/current.json", params, callback);
 	}
 	
 	/**
@@ -1433,7 +1437,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getDailyTrends(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/trends/daily.json", params, callback);
 	}
 	
 	/**
@@ -1443,7 +1447,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getWeeklyTrends(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/trends/weekly.json", params, callback);
 	}
 	
 	// Tweet endpoints
@@ -1456,7 +1460,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getRetweetedBy(String id, Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/statuses/%s/retweeted_by.json", URLEncoder.encode(id)), params, callback);
 	}
 	
 	/**
@@ -1467,7 +1471,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getRetweetedByIds(String id, Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/statuses/%s/retweeted_by/ids.json", URLEncoder.encode(id)), params, callback);
 	}
 	
 	/**
@@ -1478,7 +1482,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getRetweets(String id, Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/statuses/retweets/%s.json", URLEncoder.encode(id)), params, callback);
 	}
 	
 	/**
@@ -1489,7 +1493,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getTweet(String id, Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/statuses/show/%s.json", URLEncoder.encode(id)), params, callback);
 	}
 	
 	/**
@@ -1500,7 +1504,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void deleteTweet(String id, Bundle params, SmorgasbordCallback callback) {
-		// HttpDelete
+		this.executeRequest(HttpMethod.DELETE, String.format(Locale.US, "/statuses/destroy/%s.json", URLEncoder.encode(id)), params, callback);
 	}
 	
 	/**
@@ -1511,7 +1515,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void retweet(String id, Bundle params, SmorgasbordCallback callback) {
-		// HttpPost
+		this.executeRequest(HttpMethod.POST, String.format(Locale.US, "/statuses/retweet/%s.json", URLEncoder.encode(id)), params, callback);
 	}
 		
 	/**
@@ -1522,7 +1526,9 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void tweet(String text, Bundle params, SmorgasbordCallback callback) {
-		// HttpPost
+		params = this.initBundle(params, 1);
+		params.putString("text", text);
+		this.executeRequest(HttpMethod.POST, "/statuses/update.json", params, callback);
 	}
 	
 	// User endpoints
@@ -1534,8 +1540,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void lookupUsers(Bundle params, SmorgasbordCallback callback) {
-		// TODO Make sure we can use both
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/users/lookup.json", params, callback);
 	}
 	
 	/**
@@ -1559,7 +1564,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getProfileImage(String screenName, Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/users/profile_image/%s.json", URLEncoder.encode(screenName)), params, callback);
 	}
 	
 	/**
@@ -1570,7 +1575,9 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void searchUsers(String q, Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		params = this.initBundle(params, 1);
+		params.putString("q", q);
+		this.executeRequest(HttpMethod.GET, "/users/search.json", params, callback);
 	}
 		
 	/**
@@ -1580,7 +1587,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getUser(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/users/show.json", params, callback);
 	}
 	
 	/**
@@ -1603,7 +1610,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getContributees(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/users/contributees.json", params, callback);
 	}
 	
 	/**
@@ -1626,7 +1633,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getContributors(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/users/contributors.json", params, callback);
 	}
 	
 	/**
@@ -1649,7 +1656,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getSuggestedUsers(Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, "/users/suggestions.json", params, callback);
 	}
 	
 	/**
@@ -1659,7 +1666,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getSuggestedUsers(String slug, Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/users/suggestions/%s.json", URLEncoder.encode(slug)), params, callback);
 	}
 		
 	/**
@@ -1669,7 +1676,7 @@ public class Twitter extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void getSuggestedUsersWithStatus(String slug, Bundle params, SmorgasbordCallback callback) {
-		// HttpGet
+		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/users/suggestions/%s/members.json", URLEncoder.encode(slug)), params, callback);
 	}
 	
 }
