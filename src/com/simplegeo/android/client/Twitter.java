@@ -1,5 +1,6 @@
 package com.simplegeo.android.client;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Locale;
 
@@ -7,6 +8,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.simplegeo.android.callback.SmorgasbordCallback;
+import com.simplegeo.android.type.OAuthConfig;
 import com.simplegeo.android.type.TwitterList;
 import com.simplegeo.android.type.User;
 import com.simplegeo.android.type.UserCollection;
@@ -17,11 +19,11 @@ public class Twitter extends AbstractClient {
 	private static final String twitterUrl = "https://api.twitter.com/1";
 
 	private Twitter(String accessToken) {
-		super(accessToken);
+		super(new OAuthConfig(accessToken, null, null, null));
 	}
 	
 	private Twitter(String key, String secret) {
-		super(key, secret);
+		super(new OAuthConfig(null, null, key, secret));
 	}
 
 	/**
@@ -29,8 +31,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/account/verify_credentials">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException
 	 */
-	public void verifyCredentials(Bundle params, SmorgasbordCallback callback) {
+	public void verifyCredentials(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/account/verify_credentials.json", params, callback);
 	}
 	
@@ -38,8 +41,9 @@ public class Twitter extends AbstractClient {
 	 * Retrieve the users rate limit status.
 	 * 
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void rateLimitStatus(SmorgasbordCallback callback) {
+	public void rateLimitStatus(SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/account/rate_limit_status.json", null, callback);
 	}
 		
@@ -47,8 +51,9 @@ public class Twitter extends AbstractClient {
 	 * Retrieve the users totals for friends, followers, updates and favorites.
 	 * 
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void totals(SmorgasbordCallback callback) {
+	public void totals(SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/account/totals.json", null, callback);
 	}
 	
@@ -56,8 +61,9 @@ public class Twitter extends AbstractClient {
 	 * Retrieve the users account settings.
 	 * 
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getSettings(SmorgasbordCallback callback) {
+	public void getSettings(SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/account/settings.json", null, callback);
 	}
 		
@@ -66,8 +72,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/settings">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void setSettings(Bundle params, SmorgasbordCallback callback) {
+	public void setSettings(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/account/settings.json", params, callback);
 	}
 	
@@ -76,8 +83,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param trendLocation A String of a @see <a href="http://developer.yahoo.com/geo/geoplanet/guide/concepts.html">Yahoo! Where On Earth ID</a> to use as the user's default trending location.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException
 	 */
-	public void setTrendLocation(String trendLocation, SmorgasbordCallback callback) {
+	public void setTrendLocation(String trendLocation, SmorgasbordCallback callback) throws IOException {
 		Bundle trendBundle = new Bundle(1);
 		trendBundle.putString("trend_location_woeid", trendLocation);
 		setSettings(trendBundle, callback);
@@ -89,8 +97,9 @@ public class Twitter extends AbstractClient {
 	 * @param startSleepTime An int in the range, 0-23.
 	 * @param endSleepTime An int in the range, 0-23.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void enableSleepTime(int startSleepTime, int endSleepTime, SmorgasbordCallback callback) {
+	public void enableSleepTime(int startSleepTime, int endSleepTime, SmorgasbordCallback callback) throws IOException {
 		Bundle sleepBundle = new Bundle(3);
 		sleepBundle.putBoolean("sleep_time_enabled", true);
 		sleepBundle.putString("start_sleep_time", String.valueOf(startSleepTime));
@@ -102,8 +111,9 @@ public class Twitter extends AbstractClient {
 	 * Disable sleep time.
 	 * 
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException
 	 */
-	public void disableSleepTime(SmorgasbordCallback callback) {
+	public void disableSleepTime(SmorgasbordCallback callback) throws IOException {
 		Bundle sleepBundle = new Bundle(1);
 		sleepBundle.putBoolean("sleep_time_enabled", false);
 		setSettings(sleepBundle, callback);
@@ -114,8 +124,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param timeZone A String of one of the @see <a href="http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html">Rails Time Zone's</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException
 	 */
-	public void setTimeZone(String timeZone, SmorgasbordCallback callback) {
+	public void setTimeZone(String timeZone, SmorgasbordCallback callback) throws IOException {
 		Bundle timeZoneBundle = new Bundle(1);
 		timeZoneBundle.putString("time_zone", timeZone);
 		setSettings(timeZoneBundle, callback);
@@ -126,8 +137,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param lang A String of one of the @see <a href="https://dev.twitter.com/docs/api/1/get/help/languages">Twitter Supported Languages.</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void setLanguage(String lang, SmorgasbordCallback callback) {
+	public void setLanguage(String lang, SmorgasbordCallback callback) throws IOException {
 		Bundle langBundle = new Bundle(1);
 		langBundle.putString("lang", lang);
 		setSettings(langBundle, callback);
@@ -139,8 +151,9 @@ public class Twitter extends AbstractClient {
 	 * @param device A String of either sms or none.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_delivery_device">here</a>.
 	 * @param callback
+	 * @throws IOException 
 	 */
-	public void updateDeliveryDevice(String device, Bundle params, SmorgasbordCallback callback) {
+	public void updateDeliveryDevice(String device, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("device", device);
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/account/update_delivery_device.json", params, callback);
@@ -151,8 +164,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException
 	 */
-	public void updateProfile(Bundle params, SmorgasbordCallback callback) {
+	public void updateProfile(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/account/update_profile.json", params, callback);
 	}
 	
@@ -161,8 +175,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param name A String of the user's full name. Must be 20 characters or less.
 	 * @param callback {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateName(String name, SmorgasbordCallback callback) {
+	public void updateName(String name, SmorgasbordCallback callback) throws IOException {
 		Bundle nameBundle = new Bundle(1);
 		nameBundle.putString("name", name);
 		updateProfile(nameBundle, callback);
@@ -173,8 +188,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param url A String of the user's url.
 	 * @param callback {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateUrl(String url, SmorgasbordCallback callback) {
+	public void updateUrl(String url, SmorgasbordCallback callback) throws IOException {
 		Bundle urlBundle = new Bundle(1);
 		urlBundle.putString("url", url);
 		updateProfile(urlBundle, callback);
@@ -185,8 +201,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param location A String of the user's location. Must be 30 characters or less.
 	 * @param callback {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateLocation(String location, SmorgasbordCallback callback) {
+	public void updateLocation(String location, SmorgasbordCallback callback) throws IOException {
 		Bundle locationBundle = new Bundle(1);
 		locationBundle.putString("location", location);
 		updateProfile(locationBundle, callback);
@@ -197,8 +214,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param description A String of the user's description. Must be 160 characters or less.
 	 * @param callback {@link SmorgasbordCallback}.
+	 * @throws IOException
 	 */
-	public void updateDescription(String description, SmorgasbordCallback callback) {
+	public void updateDescription(String description, SmorgasbordCallback callback) throws IOException {
 		Bundle descriptionBundle = new Bundle(1);
 		descriptionBundle.putString("description", description);
 		updateProfile(descriptionBundle, callback);
@@ -210,8 +228,9 @@ public class Twitter extends AbstractClient {
 	 * @param image A Bitmap of the desired background image.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_background_image">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateProfileBackgroundImage(Bitmap image, Bundle params, SmorgasbordCallback callback) {
+	public void updateProfileBackgroundImage(Bitmap image, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putByteArray("image", Util.bitmapToByteArray(image));
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/account/update_profile_background_image.json", params, callback);
@@ -222,8 +241,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_colors">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateProfileColors(Bundle params, SmorgasbordCallback callback) {
+	public void updateProfileColors(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/account/update_profile_colors.json", params, callback);
 	}
 
@@ -232,8 +252,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param backgroundColor A String of length 3 or 6 in hexadecimal of the desired color.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateProfileBackgroundColor(String backgroundColor, SmorgasbordCallback callback) {
+	public void updateProfileBackgroundColor(String backgroundColor, SmorgasbordCallback callback) throws IOException {
 		Bundle bgBundle = new Bundle(1);
 		bgBundle.putString("profile_background_color", backgroundColor);
 		updateProfile(bgBundle, callback);
@@ -244,8 +265,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param linkColor A String of length 3 or 6 in hexadecimal of the desired color.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateProfileLinkColor(String linkColor, SmorgasbordCallback callback) {
+	public void updateProfileLinkColor(String linkColor, SmorgasbordCallback callback) throws IOException {
 		Bundle linkBundle = new Bundle(1);
 		linkBundle.putString("profile_link_color", linkColor);
 		updateProfile(linkBundle, callback);
@@ -256,8 +278,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param borderColor A String of length 3 or 6 in hexadecimal of the desired color.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateProfileSidebarBorderColor(String borderColor, SmorgasbordCallback callback) {
+	public void updateProfileSidebarBorderColor(String borderColor, SmorgasbordCallback callback) throws IOException {
 		Bundle borderBundle = new Bundle(1);
 		borderBundle.putString("profile_sidebar_border_color", borderColor);
 		updateProfile(borderBundle, callback);
@@ -268,8 +291,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param borderColor A String of length 3 or 6 in hexadecimal of the desired color.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateProfileSidebarFillColor(String fillColor, SmorgasbordCallback callback) {
+	public void updateProfileSidebarFillColor(String fillColor, SmorgasbordCallback callback) throws IOException {
 		Bundle fillBundle = new Bundle(1);
 		fillBundle.putString("profile_sidebar_fill_color", fillColor);
 		updateProfile(fillBundle, callback);
@@ -280,8 +304,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param borderColor A String of length 3 or 6 in hexadecimal of the desired color.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateProfileTextColor(String textColor, SmorgasbordCallback callback) {
+	public void updateProfileTextColor(String textColor, SmorgasbordCallback callback) throws IOException {
 		Bundle textBundle = new Bundle(1);
 		textBundle.putString("profile_text_color", textColor);
 		updateProfile(textBundle, callback);
@@ -293,8 +318,9 @@ public class Twitter extends AbstractClient {
 	 * @param image A Bitmap of the desired image.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_image">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateProfileImage(Bitmap image, Bundle params, SmorgasbordCallback callback) {
+	public void updateProfileImage(Bitmap image, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putByteArray("image", Util.bitmapToByteArray(image));
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/account/update_profile_image.json", params, callback);
@@ -307,8 +333,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/blocking">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getBlockedUsers(Bundle params, SmorgasbordCallback callback) {
+	public void getBlockedUsers(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/blocks/blocking.json", params, callback);
 	}
 	
@@ -317,8 +344,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param stringifyIds A boolean that tells the API whether or not to stringify the Ids it returns.
 	 * @param callback A {@SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getBlockedUsersIds(Boolean stringifyIds, SmorgasbordCallback callback) {
+	public void getBlockedUsersIds(Boolean stringifyIds, SmorgasbordCallback callback) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putBoolean("stringifyIds", stringifyIds);
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/blocks/blocking/ids.json", params, callback);
@@ -329,8 +357,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/exists">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void doesBlockExist(Bundle params, SmorgasbordCallback callback) {
+	public void doesBlockExist(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/blocks/blocking/ids.json", params, callback);
 	}
 	
@@ -340,8 +369,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/exists">here</a>.
 	 * @param callback A {@SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void doesBlockExist(User user, Bundle params, SmorgasbordCallback callback) {
+	public void doesBlockExist(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		doesBlockExist(params, callback);
@@ -352,8 +382,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/create">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void block(Bundle params, SmorgasbordCallback callback) {
+	public void block(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/blocks/create.json", params, callback);
 	}
 	
@@ -363,8 +394,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/create">here</a>.
 	 * @param callback A {@SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void block(User user, Bundle params, SmorgasbordCallback callback) {
+	public void block(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		block(params, callback);
@@ -375,8 +407,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void unblock(Bundle params, SmorgasbordCallback callback) {
+	public void unblock(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/blocks/destroy.json", params, callback);
 	}
 	
@@ -386,8 +419,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/destroy">here</a>.
 	 * @param callback A {@SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void unblock(User user, Bundle params, SmorgasbordCallback callback) {
+	public void unblock(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		unblock(params, callback);
@@ -400,8 +434,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages">here</a>.
 	 * @param callback A {@SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getDirectMessages(Bundle params, SmorgasbordCallback callback) {
+	public void getDirectMessages(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/direct_messages.json", params, callback);
 	}
 	
@@ -411,8 +446,9 @@ public class Twitter extends AbstractClient {
 	 * @param sinceId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages">here</a>.
 	 * @param callback A {@SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getDirectMessagesSince(String sinceId, Bundle params, SmorgasbordCallback callback) {
+	public void getDirectMessagesSince(String sinceId, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("since_id", sinceId);
 		getDirectMessages(params, callback);
@@ -424,8 +460,9 @@ public class Twitter extends AbstractClient {
 	 * @param maxId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages">here</a>.
 	 * @param callback A {@SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getDirectMessagesBefore(String maxId, Bundle params, SmorgasbordCallback callback) {
+	public void getDirectMessagesBefore(String maxId, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("max_id", maxId);
 		getDirectMessages(params, callback);
@@ -436,8 +473,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages/sent">here</a>.
 	 * @param callback A {@SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getSentDirectMessages(Bundle params, SmorgasbordCallback callback) {
+	public void getSentDirectMessages(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/direct_messages/sent.json", params, callback);
 	}
 	
@@ -447,8 +485,9 @@ public class Twitter extends AbstractClient {
 	 * @param sinceId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages/sent">here</a>.
 	 * @param callback A {@SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getSentDirectMessagesSince(String sinceId, Bundle params, SmorgasbordCallback callback) {
+	public void getSentDirectMessagesSince(String sinceId, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("since_id", sinceId);
 		getSentDirectMessages(params, callback);
@@ -460,8 +499,9 @@ public class Twitter extends AbstractClient {
 	 * @param maxId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages/sent">here</a>.
 	 * @param callback A {@SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getSentDirectMessagesBefore(String maxId, Bundle params, SmorgasbordCallback callback) {
+	public void getSentDirectMessagesBefore(String maxId, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("max_id", maxId);
 		getSentDirectMessages(params, callback);
@@ -473,8 +513,9 @@ public class Twitter extends AbstractClient {
 	 * @param messageId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/destroy/%3Aid">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void destroyDirectMessage(String messageId, Bundle params, SmorgasbordCallback callback) {
+	public void destroyDirectMessage(String messageId, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.DELETE, twitterUrl + String.format(Locale.US, "/direct_messages/destroy/%s.json", URLEncoder.encode(messageId)), params, callback);
 	}
 	
@@ -484,8 +525,9 @@ public class Twitter extends AbstractClient {
 	 * @param text A String direct message.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/new">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void sendDirectMessage(String text, Bundle params, SmorgasbordCallback callback) {
+	public void sendDirectMessage(String text, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("text", text);
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/direct_messages/new.json", params, callback);
@@ -498,8 +540,9 @@ public class Twitter extends AbstractClient {
 	 * @param text A String direct message.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/new">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void sendDirectMessage(User user, String text, Bundle params, SmorgasbordCallback callback) {
+	public void sendDirectMessage(User user, String text, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		sendDirectMessage(text, params, callback);
@@ -510,8 +553,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param messageId A String direct message id.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getDirectMessage(String messageId, SmorgasbordCallback callback) {
+	public void getDirectMessage(String messageId, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + String.format(Locale.US, "/direct_messages/%s.json", URLEncoder.encode(messageId)), null, callback);
 	}
 	
@@ -522,8 +566,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getFavorites(Bundle params, SmorgasbordCallback callback) {
+	public void getFavorites(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/favorites.json", params, callback);
 	}
 	
@@ -533,8 +578,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">here</a>.
 	 * @param callback A {@link Bundle}.
+	 * @throws IOException 
 	 */
-	public void getUserFavorites(User user, Bundle params, SmorgasbordCallback callback) {
+	public void getUserFavorites(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		getFavorites(params, callback);
@@ -546,8 +592,9 @@ public class Twitter extends AbstractClient {
 	 * @param tweetId A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/favorites/create/%3Aid">here</a>.
 	 * @param callback A {@link SmorgasbordCallback callback}.
+	 * @throws IOException 
 	 */
-	public void favorite(String tweetId, Bundle params, SmorgasbordCallback callback) {
+	public void favorite(String tweetId, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + String.format(Locale.US, "/favorites/create/%s.json", URLEncoder.encode(tweetId)), params, callback);
 	}
 	
@@ -557,8 +604,9 @@ public class Twitter extends AbstractClient {
 	 * @param tweetId A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/favorites/destroy/%3Aid">here</a>.
 	 * @param callback A {@link SmorgasbordCallback callback}.
+	 * @throws IOException 
 	 */
-	public void unfavorite(String tweetId, Bundle params, SmorgasbordCallback callback) {
+	public void unfavorite(String tweetId, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.DELETE, twitterUrl + String.format(Locale.US, "/favorites/destroy/%s.json", URLEncoder.encode(tweetId)), params, callback);
 	}
 	
@@ -569,8 +617,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getFollowersIds(Bundle params, SmorgasbordCallback callback) {
+	public void getFollowersIds(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/followers/ids.json", params, callback);
 	}
 
@@ -580,8 +629,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getFollowersIds(User user, Bundle params, SmorgasbordCallback callback) {
+	public void getFollowersIds(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		getFollowersIds(params, callback);
@@ -592,8 +642,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getFriendsIds(Bundle params, SmorgasbordCallback callback) {
+	public void getFriendsIds(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/friends/ids.json", params, callback);
 	}
 
@@ -603,8 +654,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getFriendsIds(User user, Bundle params, SmorgasbordCallback callback) {
+	public void getFriendsIds(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		getFollowersIds(params, callback);
@@ -615,8 +667,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/exists">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void doesFriendshipExist(Bundle params, SmorgasbordCallback callback) {
+	public void doesFriendshipExist(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/friendships/exists.json", params, callback);
 	}
 		
@@ -625,8 +678,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/exists">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void doesFriendshipExist(User userA, User userB, Bundle params, SmorgasbordCallback callback) {
+	public void doesFriendshipExist(User userA, User userB, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 2);
 		params = userA.appendToBundle(params);
 		params = userB.appendToBundle(params);
@@ -638,8 +692,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/incoming">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getIncomingFriendRequests(Bundle params, SmorgasbordCallback callback) {
+	public void getIncomingFriendRequests(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/friendships/incoming.json", params, callback);
 	}
 
@@ -648,8 +703,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/outgoing">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getOutgoingFriendRequests(Bundle params, SmorgasbordCallback callback) {
+	public void getOutgoingFriendRequests(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/friendships/outgoing.json", params, callback);
 	}
 	
@@ -658,8 +714,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/show">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void showFriendship(Bundle params, SmorgasbordCallback callback) {
+	public void showFriendship(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/friendships/show.json", params, callback);
 	}
 	
@@ -668,8 +725,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void createFriendship(Bundle params, SmorgasbordCallback callback) {
+	public void createFriendship(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/friendships/create.json", params, callback);
 	}
 	
@@ -679,8 +737,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void createFriendship(User user, Bundle params, SmorgasbordCallback callback) {
+	public void createFriendship(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		createFriendship(params, callback);
@@ -691,8 +750,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void destroyFriendship(Bundle params, SmorgasbordCallback callback) {
+	public void destroyFriendship(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/friendships/destroy.json", params, callback);
 	}
 	
@@ -702,8 +762,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void destroyFriendship(User user, Bundle params, SmorgasbordCallback callback) {
+	public void destroyFriendship(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		destroyFriendship(params, callback);
@@ -714,8 +775,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/lookup">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void lookupFriendship(Bundle params, SmorgasbordCallback callback) {
+	public void lookupFriendship(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/friendships/lookup.json", params, callback);
 	}
 	
@@ -725,8 +787,9 @@ public class Twitter extends AbstractClient {
 	 * @param users An {@link UserCollection}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/lookup">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void lookupFriendship(UserCollection users, Bundle params, SmorgasbordCallback callback) {
+	public void lookupFriendship(UserCollection users, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = users.appendToBundle(params);
 		lookupFriendship(params, callback);
@@ -737,8 +800,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/update">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateFriendship(Bundle params, SmorgasbordCallback callback) {
+	public void updateFriendship(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/friendships/update.json", params, callback);
 	}
 	
@@ -747,8 +811,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/get-friendshipsno_retweet_ids">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getNoRetweetIds(Bundle params, SmorgasbordCallback callback) {
+	public void getNoRetweetIds(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/friendships/no_retweet_ids.json", params, callback);
 	}
 	
@@ -759,8 +824,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/all">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getSubscribedLists(Bundle params, SmorgasbordCallback callback) {
+	public void getSubscribedLists(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists/all.json", params, callback);
 	}
 	
@@ -770,8 +836,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/all">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getSubscribedLists(User user, Bundle params, SmorgasbordCallback callback) {
+	public void getSubscribedLists(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		getSubscribedLists(params, callback);
@@ -782,8 +849,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/statuses">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getListStatuses(Bundle params, SmorgasbordCallback callback) {
+	public void getListStatuses(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists/statuses.json", params, callback);
 	}
 	
@@ -793,8 +861,9 @@ public class Twitter extends AbstractClient {
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/statuses">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getListStatuses(TwitterList list, Bundle params, SmorgasbordCallback callback) {
+	public void getListStatuses(TwitterList list, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
 		getListStatuses(params, callback);
@@ -805,8 +874,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void removeMemberFromList(Bundle params, SmorgasbordCallback callback) {
+	public void removeMemberFromList(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.DELETE, twitterUrl + "/lists/members/destroy.json", params, callback);
 	}
 
@@ -817,8 +887,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void removeMemberFromList(TwitterList list, User user, SmorgasbordCallback callback) {
+	public void removeMemberFromList(TwitterList list, User user, SmorgasbordCallback callback) throws IOException {
 		// TODO What's the smallest this Bundle can be and still fit everything?
 		Bundle params = new Bundle();
 		params = list.appendToBundle(params);
@@ -831,8 +902,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/memberships">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getUsersListMemberships(Bundle params, SmorgasbordCallback callback) {
+	public void getUsersListMemberships(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists/memberships.json", params, callback);
 	}
 	
@@ -842,8 +914,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/memberships">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getUsersListMemberships(User user, Bundle params, SmorgasbordCallback callback) {
+	public void getUsersListMemberships(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		getUsersListMemberships(params, callback);
@@ -854,8 +927,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscriptions">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getListSubscribers(Bundle params, SmorgasbordCallback callback) {
+	public void getListSubscribers(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists/subscribers.json", params, callback);
 	}
 	
@@ -865,8 +939,9 @@ public class Twitter extends AbstractClient {
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscriptions">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getListSubscribers(TwitterList list, Bundle params, SmorgasbordCallback callback) {
+	public void getListSubscribers(TwitterList list, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
 		getListSubscribers(params, callback);
@@ -877,8 +952,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/create">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void subscribeToList(Bundle params, SmorgasbordCallback callback) {
+	public void subscribeToList(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/lists/subscribers/create.json", params, callback);
 	}
 	
@@ -888,8 +964,9 @@ public class Twitter extends AbstractClient {
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/create">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void subscribeToList(TwitterList list, Bundle params, SmorgasbordCallback callback) {
+	public void subscribeToList(TwitterList list, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
 		subscribeToList(params, callback);
@@ -900,8 +977,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscribers/show">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void isUserListSubscriber(Bundle params, SmorgasbordCallback callback) {
+	public void isUserListSubscriber(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists/subscribers/show.json", params, callback);
 	}
 	
@@ -910,8 +988,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void unsubscribeFromList(Bundle params, SmorgasbordCallback callback) {
+	public void unsubscribeFromList(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.DELETE, twitterUrl + "/lists/subscribers/destroy.json", params, callback);
 	}
 	
@@ -921,8 +1000,9 @@ public class Twitter extends AbstractClient {
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void unsubscribeFromList(TwitterList list, Bundle params, SmorgasbordCallback callback) {
+	public void unsubscribeFromList(TwitterList list, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
 		unsubscribeFromList(params, callback);
@@ -933,8 +1013,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/create_all">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void addUsersToList(Bundle params, SmorgasbordCallback callback) {
+	public void addUsersToList(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/lists/members/create_all.json", params, callback);
 	}
 	
@@ -944,8 +1025,9 @@ public class Twitter extends AbstractClient {
 	 * @param list A {@link TwitterList}.
 	 * @param users An {@link UserCollection}.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void addUsersToList(TwitterList list, UserCollection users, SmorgasbordCallback callback) {
+	public void addUsersToList(TwitterList list, UserCollection users, SmorgasbordCallback callback) throws IOException {
 		// TODO What's the smallest this Bundle can be?
 		Bundle params = new Bundle();
 		params = list.appendToBundle(params);
@@ -958,8 +1040,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void deleteList(Bundle params, SmorgasbordCallback callback) {
+	public void deleteList(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.DELETE, twitterUrl + "/lists/destroy.json", params, callback);
 	}
 		
@@ -969,8 +1052,9 @@ public class Twitter extends AbstractClient {
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/destroy">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void deleteList(TwitterList list, Bundle params, SmorgasbordCallback callback) {
+	public void deleteList(TwitterList list, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
 		deleteList(params, callback);
@@ -981,8 +1065,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/update">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateList(Bundle params, SmorgasbordCallback callback) {
+	public void updateList(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/lists/update.json", params, callback);
 	}
 	
@@ -992,8 +1077,9 @@ public class Twitter extends AbstractClient {
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/update">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void updateList(TwitterList list, Bundle params, SmorgasbordCallback callback) {
+	public void updateList(TwitterList list, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 2);
 		params = list.appendToBundle(params);
 		updateList(params, callback);
@@ -1005,8 +1091,9 @@ public class Twitter extends AbstractClient {
 	 * @param name A String Twitter list name.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/create">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void createList(String name, Bundle params, SmorgasbordCallback callback) {
+	public void createList(String name, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/lists/create.json", params, callback);
 	}
 	
@@ -1015,8 +1102,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getUsersLists(Bundle params, SmorgasbordCallback callback) {
+	public void getUsersLists(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists.json", params, callback);
 	}
 	
@@ -1026,8 +1114,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getUsersLists(User user, Bundle params, SmorgasbordCallback callback) {
+	public void getUsersLists(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		getUsersLists(params, callback);
@@ -1038,8 +1127,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/show">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getList(Bundle params, SmorgasbordCallback callback) {
+	public void getList(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, twitterUrl + "/lists/show.json", params, callback);
 	}
 	
@@ -1049,8 +1139,9 @@ public class Twitter extends AbstractClient {
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/show">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getList(TwitterList list, Bundle params, SmorgasbordCallback callback) {
+	public void getList(TwitterList list, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
 		getList(params, callback);
@@ -1063,8 +1154,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/notifications/follow">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void followNotifications(Bundle params, SmorgasbordCallback callback) {
+	public void followNotifications(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/notifications/follow.json", params, callback);
 	}
 	
@@ -1073,8 +1165,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void followNotifications(User user, SmorgasbordCallback callback) {
+	public void followNotifications(User user, SmorgasbordCallback callback) throws IOException {
 		Bundle params = new Bundle(1);
 		params = user.appendToBundle(params);
 		followNotifications(params, callback);
@@ -1085,8 +1178,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/notifications/follow">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void unfollowNotifications(Bundle params, SmorgasbordCallback callback) {
+	public void unfollowNotifications(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, twitterUrl + "/notifications/leave.json", params, callback);
 	}
 	
@@ -1095,8 +1189,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void unfollowNotifications(User user, SmorgasbordCallback callback) {
+	public void unfollowNotifications(User user, SmorgasbordCallback callback) throws IOException {
 		Bundle params = new Bundle(1);
 		params = user.appendToBundle(params);
 		unfollowNotifications(params, callback);
@@ -1109,8 +1204,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param placeId A String id that can be retrieved from reverseGeocode.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getPlace(String placeId, SmorgasbordCallback callback) {
+	public void getPlace(String placeId, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, String.format(Locale.US, twitterUrl + "/geo/id/%s.json", URLEncoder.encode(placeId)), null, callback);
 	}
 	
@@ -1121,8 +1217,9 @@ public class Twitter extends AbstractClient {
 	 * @param lon A String longitude.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/geo/reverse_geocode">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void reverseGeocode(String lat, String lon, Bundle params, SmorgasbordCallback callback) {
+	public void reverseGeocode(String lat, String lon, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("lat", lat);
 		params.putString("long", lon);
@@ -1134,8 +1231,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/geo/search">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void searchNearby(Bundle params, SmorgasbordCallback callback) {
+	public void searchNearby(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/geo/nearby_places.json", params, callback);
 	}
 	
@@ -1147,8 +1245,9 @@ public class Twitter extends AbstractClient {
 	 * @param name A String of the name of the place.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/geo/search">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void similarPlaces(String lat, String lon, String name, Bundle params, SmorgasbordCallback callback) {
+	public void similarPlaces(String lat, String lon, String name, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 3);
 		params.putString("lat", lat);
 		params.putString("long", lon);
@@ -1166,8 +1265,9 @@ public class Twitter extends AbstractClient {
 	 * @param lon A String longitude.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/geo/place">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void createPlace(String name, String containedWithin, String token, String lat, String lon, Bundle params, SmorgasbordCallback callback) {
+	public void createPlace(String name, String containedWithin, String token, String lat, String lon, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 5);
 		params.putString("lat", lat);
 		params.putString("long", lon);
@@ -1183,8 +1283,9 @@ public class Twitter extends AbstractClient {
 	 * Returns the authenticated users saved search queries.
 	 * 
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getSavedSearches(SmorgasbordCallback callback) {
+	public void getSavedSearches(SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/saved_searches.json", null, callback);
 	}
 	
@@ -1193,8 +1294,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String id of the saved search query.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void showSavedSearch(String id, SmorgasbordCallback callback) {
+	public void showSavedSearch(String id, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/saved_searches/show/%s.json", URLEncoder.encode(id)), null, callback);
 	}
 	
@@ -1203,8 +1305,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param query A String search query.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void createSavedSearch(String query, SmorgasbordCallback callback) {
+	public void createSavedSearch(String query, SmorgasbordCallback callback) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("query", query);
 		this.executeRequest(HttpMethod.POST, "/saved_searches/create.json", params, callback);
@@ -1215,8 +1318,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String id of the saved search query.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void deleteSavedSearch(String id, SmorgasbordCallback callback) {
+	public void deleteSavedSearch(String id, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.DELETE, String.format(Locale.US, "/saved_searches/destroy/%s.json", URLEncoder.encode(id)), null, callback);
 	}
 	
@@ -1228,8 +1332,9 @@ public class Twitter extends AbstractClient {
 	 * @param q A String search query.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/search">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void search(String q, Bundle params, SmorgasbordCallback callback) {
+	public void search(String q, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("q", q);
 		this.executeRequest(HttpMethod.GET, "/search.json", params, callback);
@@ -1242,8 +1347,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/report_spam">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void reportSpam(Bundle params, SmorgasbordCallback callback) {
+	public void reportSpam(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, "/report_spam.json", params, callback);
 	}
 	
@@ -1252,8 +1358,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void reportSpam(User user, SmorgasbordCallback callback) {
+	public void reportSpam(User user, SmorgasbordCallback callback) throws IOException {
 		Bundle params = new Bundle(1);
 		params = user.appendToBundle(params);
 		reportSpam(params, callback);
@@ -1266,8 +1373,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/home_timeline">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getTimeline(Bundle params, SmorgasbordCallback callback) {
+	public void getTimeline(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/statuses/home_timeline.json", params, callback);
 	}
 	
@@ -1276,8 +1384,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/mentions">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getMentions(Bundle params, SmorgasbordCallback callback) {
+	public void getMentions(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/statuses/mentions.json", params, callback);
 	}
 		
@@ -1286,8 +1395,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/public_timeline">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getPublicStatuses(Bundle params, SmorgasbordCallback callback) {
+	public void getPublicStatuses(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/statuses/public_timeline.json", params, callback);
 	}
 	
@@ -1296,8 +1406,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_by_me">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getRetweetedByMe(Bundle params, SmorgasbordCallback callback) {
+	public void getRetweetedByMe(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/statuses/retweeted_by_me.json", params, callback);
 	}
 	
@@ -1306,8 +1417,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_me">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getRetweetedToMe(Bundle params, SmorgasbordCallback callback) {
+	public void getRetweetedToMe(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/statuses/retweeted_to_me.json", params, callback);
 	}
 	
@@ -1316,8 +1428,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweets_of_me">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getRetweetsOfMe(Bundle params, SmorgasbordCallback callback) {
+	public void getRetweetsOfMe(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/statuses/retweets_of_me.json", params, callback);
 	}
 	
@@ -1326,8 +1439,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/user_timeline">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getUserStatuses(Bundle params, SmorgasbordCallback callback) {
+	public void getUserStatuses(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/statuses/user_timeline.json", params, callback);
 	}
 		
@@ -1337,8 +1451,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/user_timeline">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getUserStatuses(User user, Bundle params, SmorgasbordCallback callback) {
+	public void getUserStatuses(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 0);
 		params = user.appendToBundle(params);
 		getUserStatuses(params, callback);
@@ -1349,8 +1464,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_user">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getRetweetedToUser(Bundle params, SmorgasbordCallback callback) {
+	public void getRetweetedToUser(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/statuses/retweeted_to_user.json", params, callback);
 	}
 		
@@ -1360,8 +1476,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_user">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getRetweetedToUser(User user, Bundle params, SmorgasbordCallback callback) {
+	public void getRetweetedToUser(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 0);
 		params = user.appendToBundle(params);
 		getRetweetedToUser(params, callback);
@@ -1372,8 +1489,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/get/statuses/retweeted_by_user">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getRetweetedByUser(Bundle params, SmorgasbordCallback callback) {
+	public void getRetweetedByUser(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/statuses/retweeted_by_user.json", params, callback);
 	}
 		
@@ -1383,8 +1501,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/get/statuses/retweeted_by_user">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getRetweetedByUser(User user, Bundle params, SmorgasbordCallback callback) {
+	public void getRetweetedByUser(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 0);
 		params = user.appendToBundle(params);
 		getRetweetedByUser(params, callback);
@@ -1397,8 +1516,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param whereOnEarthId A String Yahoo where on earth id.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getLocalTrends(String whereOnEarthId, SmorgasbordCallback callback) {
+	public void getLocalTrends(String whereOnEarthId, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/trends/%s.json", URLEncoder.encode(whereOnEarthId)), null, callback);
 	}
 	
@@ -1407,8 +1527,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/available">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getAvailableTrendLocations(Bundle params, SmorgasbordCallback callback) {
+	public void getAvailableTrendLocations(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/trends/available.json", params, callback);
 	}
 		
@@ -1416,8 +1537,9 @@ public class Twitter extends AbstractClient {
 	 * Returns the top 10 current trending topics on Twitter.
 	 * 
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getTrends(SmorgasbordCallback callback) {
+	public void getTrends(SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/trends.json", null, callback);
 	}
 	
@@ -1426,8 +1548,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/current">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getCurrentTrends(Bundle params, SmorgasbordCallback callback) {
+	public void getCurrentTrends(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/trends/current.json", params, callback);
 	}
 	
@@ -1436,8 +1559,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/current">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getDailyTrends(Bundle params, SmorgasbordCallback callback) {
+	public void getDailyTrends(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/trends/daily.json", params, callback);
 	}
 	
@@ -1446,8 +1570,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/current">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getWeeklyTrends(Bundle params, SmorgasbordCallback callback) {
+	public void getWeeklyTrends(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/trends/weekly.json", params, callback);
 	}
 	
@@ -1459,8 +1584,9 @@ public class Twitter extends AbstractClient {
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/%3Aid/retweeted_by">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getRetweetedBy(String id, Bundle params, SmorgasbordCallback callback) {
+	public void getRetweetedBy(String id, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/statuses/%s/retweeted_by.json", URLEncoder.encode(id)), params, callback);
 	}
 	
@@ -1470,8 +1596,9 @@ public class Twitter extends AbstractClient {
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/%3Aid/retweeted_by/ids">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getRetweetedByIds(String id, Bundle params, SmorgasbordCallback callback) {
+	public void getRetweetedByIds(String id, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/statuses/%s/retweeted_by/ids.json", URLEncoder.encode(id)), params, callback);
 	}
 	
@@ -1481,8 +1608,9 @@ public class Twitter extends AbstractClient {
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweets/%3Aid">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getRetweets(String id, Bundle params, SmorgasbordCallback callback) {
+	public void getRetweets(String id, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/statuses/retweets/%s.json", URLEncoder.encode(id)), params, callback);
 	}
 	
@@ -1492,8 +1620,9 @@ public class Twitter extends AbstractClient {
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/show/%3Aid">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getTweet(String id, Bundle params, SmorgasbordCallback callback) {
+	public void getTweet(String id, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/statuses/show/%s.json", URLEncoder.encode(id)), params, callback);
 	}
 	
@@ -1503,8 +1632,9 @@ public class Twitter extends AbstractClient {
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/destroy/%3Aid">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void deleteTweet(String id, Bundle params, SmorgasbordCallback callback) {
+	public void deleteTweet(String id, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.DELETE, String.format(Locale.US, "/statuses/destroy/%s.json", URLEncoder.encode(id)), params, callback);
 	}
 	
@@ -1514,8 +1644,9 @@ public class Twitter extends AbstractClient {
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void retweet(String id, Bundle params, SmorgasbordCallback callback) {
+	public void retweet(String id, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.POST, String.format(Locale.US, "/statuses/retweet/%s.json", URLEncoder.encode(id)), params, callback);
 	}
 		
@@ -1525,8 +1656,9 @@ public class Twitter extends AbstractClient {
 	 * @param text A String status.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void tweet(String text, Bundle params, SmorgasbordCallback callback) {
+	public void tweet(String text, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("text", text);
 		this.executeRequest(HttpMethod.POST, "/statuses/update.json", params, callback);
@@ -1539,8 +1671,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/lookup">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void lookupUsers(Bundle params, SmorgasbordCallback callback) {
+	public void lookupUsers(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/users/lookup.json", params, callback);
 	}
 	
@@ -1550,8 +1683,9 @@ public class Twitter extends AbstractClient {
 	 * @param users {@link UserCollection}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/lookup">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void lookupUsers(UserCollection users, Bundle params, SmorgasbordCallback callback) {
+	public void lookupUsers(UserCollection users, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 2);
 		params = users.appendToBundle(params);
 		lookupUsers(params, callback);
@@ -1563,8 +1697,9 @@ public class Twitter extends AbstractClient {
 	 * @param screenName A String Twitter screen name.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getProfileImage(String screenName, Bundle params, SmorgasbordCallback callback) {
+	public void getProfileImage(String screenName, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/users/profile_image/%s.json", URLEncoder.encode(screenName)), params, callback);
 	}
 	
@@ -1574,8 +1709,9 @@ public class Twitter extends AbstractClient {
 	 * @param q A String search query.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void searchUsers(String q, Bundle params, SmorgasbordCallback callback) {
+	public void searchUsers(String q, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("q", q);
 		this.executeRequest(HttpMethod.GET, "/users/search.json", params, callback);
@@ -1586,8 +1722,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getUser(Bundle params, SmorgasbordCallback callback) {
+	public void getUser(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/users/show.json", params, callback);
 	}
 	
@@ -1597,8 +1734,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getUser(User user, Bundle params, SmorgasbordCallback callback) {
+	public void getUser(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		getUser(params, callback);
@@ -1609,8 +1747,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributees">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getContributees(Bundle params, SmorgasbordCallback callback) {
+	public void getContributees(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/users/contributees.json", params, callback);
 	}
 	
@@ -1620,8 +1759,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributees">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getContributees(User user, Bundle params, SmorgasbordCallback callback) {
+	public void getContributees(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		getContributees(params, callback);
@@ -1632,8 +1772,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributors">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getContributors(Bundle params, SmorgasbordCallback callback) {
+	public void getContributors(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/users/contributors.json", params, callback);
 	}
 	
@@ -1643,8 +1784,9 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributors">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getContributors(User user, Bundle params, SmorgasbordCallback callback) {
+	public void getContributors(User user, Bundle params, SmorgasbordCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		getContributors(params, callback);
@@ -1655,8 +1797,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getSuggestedUsers(Bundle params, SmorgasbordCallback callback) {
+	public void getSuggestedUsers(Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, "/users/suggestions.json", params, callback);
 	}
 	
@@ -1665,8 +1808,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions/%3Aslug">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getSuggestedUsers(String slug, Bundle params, SmorgasbordCallback callback) {
+	public void getSuggestedUsers(String slug, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/users/suggestions/%s.json", URLEncoder.encode(slug)), params, callback);
 	}
 		
@@ -1675,8 +1819,9 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions/%3Aslug/members">here</a>.
 	 * @param callback A {@link SmorgasbordCallback}.
+	 * @throws IOException 
 	 */
-	public void getSuggestedUsersWithStatus(String slug, Bundle params, SmorgasbordCallback callback) {
+	public void getSuggestedUsersWithStatus(String slug, Bundle params, SmorgasbordCallback callback) throws IOException {
 		this.executeRequest(HttpMethod.GET, String.format(Locale.US, "/users/suggestions/%s/members.json", URLEncoder.encode(slug)), params, callback);
 	}
 	

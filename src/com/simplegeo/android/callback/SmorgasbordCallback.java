@@ -4,6 +4,6 @@ public interface SmorgasbordCallback<E> {
 	
 	public void onSuccess(E e);
 		
-	public void onError(String errorMessage);
+	public void onError(E e);
 	
 }
