@@ -35,33 +35,6 @@ public abstract class AbstractClient {
 		return params;
 	}
 
-	public static String dictFormat(String format, Bundle values) {
-		StringBuffer convFormat = new StringBuffer(format);
-		Set<String> keys = values.keySet();
-		ArrayList valueList = new ArrayList();
-		int currentPos = 1;
-		Iterator<String> keysIter = keys.iterator();
-		while (keysIter.hasNext()) {
-			String key = keysIter.next(),
-					formatKey = "%(" + key + ")",
-					formatPos = "%" + Integer.toString(currentPos) + "$";
-			int index = -1;
-			while ((index = convFormat.indexOf(formatKey, index)) != -1) {
-				convFormat.replace(index, index + formatKey.length(), formatPos);
-				index += formatPos.length();
-			}
-			// If it's an array list, we need to make it a string
-			Object value = values.get(key);
-			if (value instanceof ArrayList) {
-				String newValue = ((ArrayList) value).toString();
-				value = newValue.substring(1, newValue.length());
-			}
-			valueList.add(URLEncoder.encode((String)value));
-			++currentPos;
-		}
-		return String.format(Locale.US, convFormat.toString(), valueList.toArray());
-	}
-	
 	public void executeRequest(HttpMethod httpMethod, String url, Bundle params, SmorgasbordCallback callback) {
 		
 	}
