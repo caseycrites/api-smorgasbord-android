@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.simplegeo.android.callback.SmorgasbordCallback;
+import com.simplegeo.android.util.Util;
 
 public class Foursquare extends AbstractClient {
 	
@@ -196,7 +197,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void addVenue(String name, String latLon, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 2);
+		params = Util.initBundle(params, 2);
 		params.putString("name", name);
 		params.putString("ll", latLon);
 		this.executeRequest(HttpMethod.POST, "/venues/add", params, callback);
@@ -219,7 +220,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void exploreVenues(String latLon, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 1);
+		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
 		this.executeRequest(HttpMethod.GET, "/venues/explore", params, callback);
 	}
@@ -232,7 +233,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void searchVenues(String latLon, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 1);
+		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
 		this.executeRequest(HttpMethod.GET, "/venues/explore", params, callback);
 	}
@@ -245,7 +246,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void trendingVenues(String latLon, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 1);
+		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
 		this.executeRequest(HttpMethod.GET, "/venues/trending", params, callback);
 	}
@@ -361,7 +362,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void checkin(String venueId, boolean broadcast, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 2);
+		params = Util.initBundle(params, 2);
 		params.putString("venueId", venueId);
 		params.putBoolean("broadcast", broadcast);
 		this.executeRequest(HttpMethod.POST, foursquareUrl + "/checkins/add", params, callback);
@@ -376,7 +377,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void checkinToVenueWithoutId(String venueName, boolean broadcast, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 2);
+		params = Util.initBundle(params, 2);
 		params.putString("venue", venueName);
 		params.putBoolean("broadcast", broadcast);
 		this.executeRequest(HttpMethod.POST, foursquareUrl + "/checkins/add", params, callback);
@@ -391,7 +392,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void shout(String shout, boolean broadcast, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 2);
+		params = Util.initBundle(params, 2);
 		params.putString("shout", shout);
 		params.putBoolean("broadcast", broadcast);
 		this.executeRequest(HttpMethod.POST, foursquareUrl + "/checkins/add", params, callback);
@@ -454,7 +455,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void addTip(String venueId, String text, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 2);
+		params = Util.initBundle(params, 2);
 		params.putString("venueId", venueId);
 		params.putString("text", text);
 		this.executeRequest(HttpMethod.POST, foursquareUrl + "/tips/add", params, callback);
@@ -468,7 +469,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void searchTips(String latLon, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 1);
+		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
 		this.executeRequest(HttpMethod.GET, foursquareUrl + "/tips/search", params, callback);
 	}
@@ -524,9 +525,9 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void addPhotoToCheckin(String checkinId, Bitmap photo, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 1);
+		params = Util.initBundle(params, 1);
 		params.putString("checkinId", checkinId);
-		params.putByteArray("image", this.bitmapToByteArray(photo));
+		params.putByteArray("image", Util.bitmapToByteArray(photo));
 		this.executeRequest(HttpMethod.POST, foursquareUrl + "/photos/add", params, callback);
 	}
 		
@@ -539,9 +540,9 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void addPhotoToVenue(String venueId, Bitmap photo, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 1);
+		params = Util.initBundle(params, 1);
 		params.putString("venueId", venueId);
-		params.putByteArray("image", this.bitmapToByteArray(photo));
+		params.putByteArray("image", Util.bitmapToByteArray(photo));
 		this.executeRequest(HttpMethod.POST, foursquareUrl + "/photos/add", params, callback);
 	}
 		
@@ -554,9 +555,9 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void addPhotoToTip(String tipId, Bitmap photo, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 1);
+		params = Util.initBundle(params, 1);
 		params.putString("tipId", tipId);
-		params.putByteArray("image", this.bitmapToByteArray(photo));
+		params.putByteArray("image", Util.bitmapToByteArray(photo));
 		this.executeRequest(HttpMethod.POST, foursquareUrl + "/photos/add", params, callback);
 	}
 	
@@ -618,7 +619,7 @@ public class Foursquare extends AbstractClient {
 	 * @param callback A {@link SmorgasbordCallback}.
 	 */
 	public void searchSpecials(String latLon, Bundle params, SmorgasbordCallback callback) {
-		params = this.initBundle(params, 1);
+		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
 		this.executeRequest(HttpMethod.GET, foursquareUrl + "/specials/search", params, callback);
 	}

@@ -14,7 +14,7 @@ public class Util {
 		return params;
 	}
 
-	public byte[] bitmapToByteArray(Bitmap bmp) {
+	public static byte[] bitmapToByteArray(Bitmap bmp) {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 		return stream.toByteArray();
