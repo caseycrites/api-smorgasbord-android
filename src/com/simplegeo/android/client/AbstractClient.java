@@ -35,13 +35,13 @@ public abstract class AbstractClient implements Client {
 	 */
 	@Override
 	public void executeRequest(HttpMethod httpMethod, String url, Bundle params, SmorgasbordCallback callback) throws IOException {
-		final HttpURLConnection connection = createConnection(httpMethod, url, params);
+		final HttpURLConnection request = buildRequest(httpMethod, url, params);
 		final SmorgasbordCallback finalCallback = callback;
 		threadExecutor.execute(new Thread() {
 			public void run() {
 				try {
-					connection.connect();
-					handleResponse(connection, finalCallback);
+					request.connect();
+					handleResponse(request, finalCallback);
 				} catch (IOException e) {
 				}
 			}
@@ -52,31 +52,33 @@ public abstract class AbstractClient implements Client {
 		return code >= 200 && code < 300;
 	}
 	
-	private HttpURLConnection createConnection(HttpMethod httpMethod, String url, Bundle params) throws IOException {
+	private HttpURLConnection buildRequest(HttpMethod httpMethod, String url, Bundle params) throws IOException {
 		String encodedString = Util.createEncodedString(params);
-		HttpURLConnection connection = null;
+		HttpURLConnection request = null;
 		String httpMethodStr = "";
 		switch (httpMethod) {
 			case GET:
 				if ("".equals(encodedString)) { url += "?" + encodedString; }
-				connection = (HttpURLConnection) new URL(url).openConnection();
-				connection.setRequestMethod("GET");
+				request = (HttpURLConnection) new URL(url).openConnection();
+				request.setRequestMethod("GET");
+				break;
+			case DELETE:
+				request = (HttpURLConnection) new URL(url).openConnection();
+				request.setRequestMethod("DELETE");
 				break;
 			case PUT:
-				if ("".equals(httpMethodStr)) { httpMethodStr = "PUT"; }
+				httpMethodStr = "PUT";
 			case POST:
 				if ("".equals(httpMethodStr)) { httpMethodStr = "POST"; }
-			case DELETE:
-				if ("".equals(httpMethodStr)) { httpMethodStr = "DELETE"; }
+				request = (HttpURLConnection) new URL(url).openConnection();
+				request.setRequestMethod(httpMethodStr);
+				request.setRequestProperty("Content-Length", String.valueOf(encodedString.length()));
+				request.setDoOutput(true);
+				request.getOutputStream().write(encodedString.getBytes());
 			default:
-				connection = (HttpURLConnection) new URL(url).openConnection();
-				connection.setRequestMethod(httpMethodStr);
-				connection.setRequestProperty("Content-Length", String.valueOf(encodedString.length()));
-				connection.setDoOutput(true);
-				connection.getOutputStream().write(encodedString.getBytes());
 				break;
 		}
-		return connection;
+		return config.signRequest(request, params);
 	}
 	
 	/* (non-Javadoc)
