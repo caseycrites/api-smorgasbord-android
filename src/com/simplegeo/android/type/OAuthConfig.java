@@ -2,12 +2,18 @@ package com.simplegeo.android.type;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
 import android.os.Bundle;
+import android.util.Base64;
 
 public class OAuthConfig {
 
@@ -15,6 +21,12 @@ public class OAuthConfig {
 	private String accessSecret;
 	private String consumerKey;
 	private String consumerSecret;
+	
+	public static final String ALGO = "HmacSHA1";
+	public static final String EQUALS = "=";
+	public static final String EQUALS_ENCODED = "%3D";
+	public static final String AMPERSAND = "&";
+	public static final String AMPERSAND_ENCODED = "%26";
 	
 	public OAuthConfig(String accessToken) {
 		this(accessToken, null, null, null);
@@ -66,21 +78,48 @@ public class OAuthConfig {
 	public HttpURLConnection signRequest(HttpURLConnection request, Bundle params) {
 		Bundle oAuthParams = this.generateOAuthParams();
 		params.putAll(oAuthParams);
-		oAuthParams.putString("oauth_signature", this.generateSignature(params));
+		oAuthParams.putString("oauth_signature", this.generateSignature(request, params));
 		this.addAuthHeader(request, oAuthParams);
 		return request;
 	}
 	
-	private String generateSignature(Bundle params) {
-		StringBuffer sig = new StringBuffer();
+	private String generateSignature(HttpURLConnection request, Bundle params) {
+		StringBuffer baseBuf = new StringBuffer();
 		List<String> sortedKeys = this.asSortedList(params.keySet());
+		baseBuf.append(request.getRequestMethod()+AMPERSAND+URLEncoder.encode(request.getURL().toString())+AMPERSAND);
 		for (String key : sortedKeys) {
-			sig.append(URLEncoder.encode(key)+"="+URLEncoder.encode(params.getString(key)));
+			if (sortedKeys.indexOf(key) != 0) { baseBuf.append(AMPERSAND_ENCODED); }
+			baseBuf.append(URLEncoder.encode(key)+EQUALS_ENCODED+URLEncoder.encode(params.getString(key)));
 		}
-		return sig.toString();
+		String base = baseBuf.toString();
+		return this.sign(this.consumerSecret + AMPERSAND + this.accessSecret, base);
+	}
+	
+	private String sign(String key, String baseString) {
+		byte[] digest = null;
+		try {
+			Mac hmac = Mac.getInstance(ALGO);
+			SecretKeySpec secret = new SecretKeySpec(key.getBytes(), hmac.getAlgorithm());
+			hmac.init(secret);
+			digest = hmac.doFinal(baseString.getBytes());
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		}
+		return Base64.encodeToString(digest, Base64.DEFAULT);
 	}
 	
 	private void addAuthHeader(HttpURLConnection request, Bundle params) {
+		StringBuffer headerValueBuf = new StringBuffer();
+		List<String> sortedKeys = this.asSortedList(params.keySet());
+		headerValueBuf.append("OAuth ");
+		for (String key : sortedKeys) {
+			if (sortedKeys.indexOf(key) != 0) { headerValueBuf.append(", "); }
+			headerValueBuf.append(URLEncoder.encode(key)+EQUALS+URLEncoder.encode(params.getString(key)));
+		}
+		String headerValue = headerValueBuf.toString();
+		request.addRequestProperty("Authorization", headerValue);
 	}
 	
 	private static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {

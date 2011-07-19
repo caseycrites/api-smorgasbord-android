@@ -7,14 +7,11 @@ import org.json.JSONException;
 
 import android.os.Bundle;
 
-import com.simplegeo.android.callback.SmorgasbordCallback;
-import com.simplegeo.android.client.AbstractClient.HttpMethod;
+import com.simplegeo.android.callback.SGCallback;
+import com.simplegeo.android.http.SGHttpMethod;
 
 public interface Client {
 
-	public void executeRequest(HttpMethod httpMethod, String url,
-			Bundle params, SmorgasbordCallback callback) throws IOException;
-
-	public void handleResponse(HttpURLConnection connection, SmorgasbordCallback callback) throws IOException, JSONException;
-
+	public void executeRequest(SGHttpMethod httpMethod, String url,
+			Bundle params, SGCallback callback) throws IOException;
 }

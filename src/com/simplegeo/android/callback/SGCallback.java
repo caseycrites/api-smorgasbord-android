@@ -1,6 +1,6 @@
 package com.simplegeo.android.callback;
 
-public interface SmorgasbordCallback<E> {
+public interface SGCallback<E> {
 	
 	public void onSuccess(E e);
 		
