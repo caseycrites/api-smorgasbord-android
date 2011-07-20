@@ -15,7 +15,10 @@ import javax.crypto.spec.SecretKeySpec;
 import android.os.Bundle;
 import android.util.Base64;
 
+import com.simplegeo.android.http.SGHttpRequest;
+
 public class OAuthConfig {
+	public static final String TAG = "OAuthConfig";
 
 	private String accessToken;
 	private String accessSecret;
@@ -75,18 +78,18 @@ public class OAuthConfig {
 		this.consumerSecret = consumerSecret;
 	}
 	
-	public HttpURLConnection signRequest(HttpURLConnection request, Bundle params) {
+	public SGHttpRequest signRequest(SGHttpRequest request, Bundle params) {
 		Bundle oAuthParams = this.generateOAuthParams();
 		params.putAll(oAuthParams);
-		oAuthParams.putString("oauth_signature", this.generateSignature(request, params));
+		oAuthParams.putString("oauth_signature", this.generateOAuthSignature(request, params));
 		this.addAuthHeader(request, oAuthParams);
 		return request;
 	}
 	
-	private String generateSignature(HttpURLConnection request, Bundle params) {
+	private String generateOAuthSignature(SGHttpRequest request, Bundle params) {
 		StringBuffer baseBuf = new StringBuffer();
 		List<String> sortedKeys = this.asSortedList(params.keySet());
-		baseBuf.append(request.getRequestMethod()+AMPERSAND+URLEncoder.encode(request.getURL().toString())+AMPERSAND);
+		baseBuf.append(request.getRequest().getRequestMethod()+AMPERSAND+URLEncoder.encode(request.getRequest().getURL().toString())+AMPERSAND);
 		for (String key : sortedKeys) {
 			if (sortedKeys.indexOf(key) != 0) { baseBuf.append(AMPERSAND_ENCODED); }
 			baseBuf.append(URLEncoder.encode(key)+EQUALS_ENCODED+URLEncoder.encode(params.getString(key)));
@@ -110,7 +113,7 @@ public class OAuthConfig {
 		return Base64.encodeToString(digest, Base64.DEFAULT);
 	}
 	
-	private void addAuthHeader(HttpURLConnection request, Bundle params) {
+	private void addAuthHeader(SGHttpRequest request, Bundle params) {
 		StringBuffer headerValueBuf = new StringBuffer();
 		List<String> sortedKeys = this.asSortedList(params.keySet());
 		headerValueBuf.append("OAuth ");
@@ -119,7 +122,7 @@ public class OAuthConfig {
 			headerValueBuf.append(URLEncoder.encode(key)+EQUALS+URLEncoder.encode(params.getString(key)));
 		}
 		String headerValue = headerValueBuf.toString();
-		request.addRequestProperty("Authorization", headerValue);
+		request.setHeader("Authorization", headerValue);
 	}
 	
 	private static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {

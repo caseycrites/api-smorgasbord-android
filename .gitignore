@@ -9,3 +9,5 @@ smorgasbord/bin/
 smorgasbord/gen/
 proguard.cfg
 lib/
+bin/
+gen/

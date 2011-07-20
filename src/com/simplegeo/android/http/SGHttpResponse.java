@@ -6,7 +6,10 @@ import java.net.HttpURLConnection;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 
+import android.util.Log;
+
 public class SGHttpResponse {
+	public static final String TAG = "SGHttpResponse";
 
 	private int code;
 	private String body;
@@ -14,14 +17,15 @@ public class SGHttpResponse {
 	private HashMap<String, String> headers;
 	
 	public SGHttpResponse(HttpURLConnection request) throws IOException {
+		Log.d(TAG, request.getHeaderFields().toString());
 	    try {
-	      request.connect();
-	      code = request.getResponseCode();
-	      headers = parseHeaders(request);
-	      stream = wasSuccessful() ? request.getInputStream() : request.getErrorStream();
+	    	request.connect();
+	    	code = request.getResponseCode();
+	    	headers = parseHeaders(request);
+	    	stream = wasSuccessful() ? request.getInputStream() : request.getErrorStream();
 	    } catch (UnknownHostException e) {
-	      code = 404;
-	      body = "";
+	    	code = 404;
+	    	body = "";
 	    }
 	}
 	

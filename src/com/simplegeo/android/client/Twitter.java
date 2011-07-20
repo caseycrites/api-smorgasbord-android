@@ -16,8 +16,9 @@ import com.simplegeo.android.type.UserCollection;
 import com.simplegeo.android.util.Util;
 
 public class Twitter extends AbstractClient {
-
-	private static final String twitterUrl = "https://api.twitter.com/1";
+	public static final String TAG = "Twitter";
+	
+	private static final String twitterUrl = "http://api.twitter.com/1";
 
 	public Twitter(String accessToken) {
 		super(new OAuthConfig(accessToken, null, null, null));
@@ -1224,7 +1225,7 @@ public class Twitter extends AbstractClient {
 		params = Util.initBundle(params, 2);
 		params.putString("lat", lat);
 		params.putString("long", lon);
-		this.executeRequest(SGHttpMethod.GET, "/geo/reverse_geocode.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/geo/reverse_geocode.json", params, callback);
 	}
 	
 	/**
@@ -1235,7 +1236,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void searchNearby(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/geo/nearby_places.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/geo/nearby_places.json", params, callback);
 	}
 	
 	/**
@@ -1253,7 +1254,7 @@ public class Twitter extends AbstractClient {
 		params.putString("lat", lat);
 		params.putString("long", lon);
 		params.putString("name", name);
-		this.executeRequest(SGHttpMethod.GET, "/geo/similar_places.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/geo/similar_places.json", params, callback);
 	}
 	
 	/**
@@ -1275,7 +1276,7 @@ public class Twitter extends AbstractClient {
 		params.putString("name", name);
 		params.putString("token", token);
 		params.putString("containedWithin", containedWithin);
-		this.executeRequest(SGHttpMethod.POST, "/geo/place.json", params, callback);
+		this.executeRequest(SGHttpMethod.POST, twitterUrl + "/geo/place.json", params, callback);
 	}
 		
 	// Saved Searches endpoints
@@ -1287,7 +1288,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getSavedSearches(SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/saved_searches.json", null, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/saved_searches.json", null, callback);
 	}
 	
 	/**
@@ -1298,7 +1299,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void showSavedSearch(String id, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, "/saved_searches/show/%s.json", URLEncoder.encode(id)), null, callback);
+		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/saved_searches/show/%s.json", URLEncoder.encode(id)), null, callback);
 	}
 	
 	/**
@@ -1311,7 +1312,7 @@ public class Twitter extends AbstractClient {
 	public void createSavedSearch(String query, SGCallback callback) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("query", query);
-		this.executeRequest(SGHttpMethod.POST, "/saved_searches/create.json", params, callback);
+		this.executeRequest(SGHttpMethod.POST, twitterUrl + "/saved_searches/create.json", params, callback);
 	}
 		
 	/**
@@ -1322,7 +1323,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void deleteSavedSearch(String id, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.DELETE, String.format(Locale.US, "/saved_searches/destroy/%s.json", URLEncoder.encode(id)), null, callback);
+		this.executeRequest(SGHttpMethod.DELETE, String.format(Locale.US, twitterUrl + "/saved_searches/destroy/%s.json", URLEncoder.encode(id)), null, callback);
 	}
 	
 	// Search endpoints
@@ -1338,7 +1339,7 @@ public class Twitter extends AbstractClient {
 	public void search(String q, Bundle params, SGCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("q", q);
-		this.executeRequest(SGHttpMethod.GET, "/search.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/search.json", params, callback);
 	}
 
 	// Spam Reporting endpoints
@@ -1351,7 +1352,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void reportSpam(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.POST, "/report_spam.json", params, callback);
+		this.executeRequest(SGHttpMethod.POST, twitterUrl + "/report_spam.json", params, callback);
 	}
 	
 	/**
@@ -1377,7 +1378,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getTimeline(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/statuses/home_timeline.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/home_timeline.json", params, callback);
 	}
 	
 	/**
@@ -1388,7 +1389,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getMentions(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/statuses/mentions.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/mentions.json", params, callback);
 	}
 		
 	/**
@@ -1399,7 +1400,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getPublicStatuses(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/statuses/public_timeline.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/public_timeline.json", params, callback);
 	}
 	
 	/**
@@ -1410,7 +1411,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getRetweetedByMe(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/statuses/retweeted_by_me.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/retweeted_by_me.json", params, callback);
 	}
 	
 	/**
@@ -1421,7 +1422,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getRetweetedToMe(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/statuses/retweeted_to_me.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/retweeted_to_me.json", params, callback);
 	}
 	
 	/**
@@ -1432,7 +1433,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getRetweetsOfMe(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/statuses/retweets_of_me.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/retweets_of_me.json", params, callback);
 	}
 	
 	/**
@@ -1443,7 +1444,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getUserStatuses(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/statuses/user_timeline.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/user_timeline.json", params, callback);
 	}
 		
 	/**
@@ -1468,7 +1469,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getRetweetedToUser(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/statuses/retweeted_to_user.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/retweeted_to_user.json", params, callback);
 	}
 		
 	/**
@@ -1493,7 +1494,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getRetweetedByUser(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/statuses/retweeted_by_user.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/retweeted_by_user.json", params, callback);
 	}
 		
 	/**
@@ -1520,7 +1521,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getLocalTrends(String whereOnEarthId, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, "/trends/%s.json", URLEncoder.encode(whereOnEarthId)), null, callback);
+		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/trends/%s.json", URLEncoder.encode(whereOnEarthId)), null, callback);
 	}
 	
 	/**
@@ -1531,7 +1532,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getAvailableTrendLocations(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/trends/available.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/trends/available.json", params, callback);
 	}
 		
 	/**
@@ -1541,7 +1542,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getTrends(SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/trends.json", null, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/trends.json", null, callback);
 	}
 	
 	/**
@@ -1552,7 +1553,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getCurrentTrends(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/trends/current.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/trends/current.json", params, callback);
 	}
 	
 	/**
@@ -1563,7 +1564,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getDailyTrends(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/trends/daily.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/trends/daily.json", params, callback);
 	}
 	
 	/**
@@ -1574,7 +1575,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getWeeklyTrends(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/trends/weekly.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/trends/weekly.json", params, callback);
 	}
 	
 	// Tweet endpoints
@@ -1588,7 +1589,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getRetweetedBy(String id, Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, "/statuses/%s/retweeted_by.json", URLEncoder.encode(id)), params, callback);
+		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by.json", URLEncoder.encode(id)), params, callback);
 	}
 	
 	/**
@@ -1600,7 +1601,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getRetweetedByIds(String id, Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, "/statuses/%s/retweeted_by/ids.json", URLEncoder.encode(id)), params, callback);
+		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by/ids.json", URLEncoder.encode(id)), params, callback);
 	}
 	
 	/**
@@ -1612,7 +1613,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getRetweets(String id, Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, "/statuses/retweets/%s.json", URLEncoder.encode(id)), params, callback);
+		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/statuses/retweets/%s.json", URLEncoder.encode(id)), params, callback);
 	}
 	
 	/**
@@ -1624,7 +1625,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getTweet(String id, Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, "/statuses/show/%s.json", URLEncoder.encode(id)), params, callback);
+		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/statuses/show/%s.json", URLEncoder.encode(id)), params, callback);
 	}
 	
 	/**
@@ -1636,7 +1637,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void deleteTweet(String id, Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.DELETE, String.format(Locale.US, "/statuses/destroy/%s.json", URLEncoder.encode(id)), params, callback);
+		this.executeRequest(SGHttpMethod.DELETE, String.format(Locale.US, twitterUrl + "/statuses/destroy/%s.json", URLEncoder.encode(id)), params, callback);
 	}
 	
 	/**
@@ -1648,7 +1649,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void retweet(String id, Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.POST, String.format(Locale.US, "/statuses/retweet/%s.json", URLEncoder.encode(id)), params, callback);
+		this.executeRequest(SGHttpMethod.POST, String.format(Locale.US, twitterUrl + "/statuses/retweet/%s.json", URLEncoder.encode(id)), params, callback);
 	}
 		
 	/**
@@ -1662,7 +1663,7 @@ public class Twitter extends AbstractClient {
 	public void tweet(String text, Bundle params, SGCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("text", text);
-		this.executeRequest(SGHttpMethod.POST, "/statuses/update.json", params, callback);
+		this.executeRequest(SGHttpMethod.POST, twitterUrl + "/statuses/update.json", params, callback);
 	}
 	
 	// User endpoints
@@ -1675,7 +1676,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void lookupUsers(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/users/lookup.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/users/lookup.json", params, callback);
 	}
 	
 	/**
@@ -1701,7 +1702,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getProfileImage(String screenName, Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, "/users/profile_image/%s.json", URLEncoder.encode(screenName)), params, callback);
+		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/users/profile_image/%s.json", URLEncoder.encode(screenName)), params, callback);
 	}
 	
 	/**
@@ -1715,7 +1716,7 @@ public class Twitter extends AbstractClient {
 	public void searchUsers(String q, Bundle params, SGCallback callback) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("q", q);
-		this.executeRequest(SGHttpMethod.GET, "/users/search.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/users/search.json", params, callback);
 	}
 		
 	/**
@@ -1726,7 +1727,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getUser(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/users/show.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/users/show.json", params, callback);
 	}
 	
 	/**
@@ -1751,7 +1752,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getContributees(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/users/contributees.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/users/contributees.json", params, callback);
 	}
 	
 	/**
@@ -1776,7 +1777,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getContributors(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/users/contributors.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/users/contributors.json", params, callback);
 	}
 	
 	/**
@@ -1801,7 +1802,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getSuggestedUsers(Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, "/users/suggestions.json", params, callback);
+		this.executeRequest(SGHttpMethod.GET, twitterUrl + "/users/suggestions.json", params, callback);
 	}
 	
 	/**
@@ -1812,7 +1813,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getSuggestedUsers(String slug, Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, "/users/suggestions/%s.json", URLEncoder.encode(slug)), params, callback);
+		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s.json", URLEncoder.encode(slug)), params, callback);
 	}
 		
 	/**
@@ -1823,7 +1824,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getSuggestedUsersWithStatus(String slug, Bundle params, SGCallback callback) throws IOException {
-		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, "/users/suggestions/%s/members.json", URLEncoder.encode(slug)), params, callback);
+		this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s/members.json", URLEncoder.encode(slug)), params, callback);
 	}
 	
 }

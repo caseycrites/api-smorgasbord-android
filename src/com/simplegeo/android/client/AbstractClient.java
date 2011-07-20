@@ -17,7 +17,7 @@ import com.simplegeo.android.util.Util;
 
 public abstract class AbstractClient implements Client {
 	
-	public static OAuthConfig config;
+	public OAuthConfig config;
 	
 	public AbstractClient(OAuthConfig config) {
 		this.config = config;

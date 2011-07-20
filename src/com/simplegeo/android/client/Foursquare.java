@@ -13,6 +13,7 @@ import com.simplegeo.android.type.OAuthConfig;
 import com.simplegeo.android.util.Util;
 
 public class Foursquare extends AbstractClient {
+	public static final String TAG = "Foursquare";
 	
 	private static final String foursquareUrl = "https://api.foursquare.com/v2";
 
