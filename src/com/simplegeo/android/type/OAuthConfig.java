@@ -1,6 +1,5 @@
 package com.simplegeo.android.type;
 
-import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
