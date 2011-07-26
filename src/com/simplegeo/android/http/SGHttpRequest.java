@@ -9,11 +9,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.simplegeo.android.callback.SGCallback;
 import com.simplegeo.android.type.OAuthConfig;
 
 public class SGHttpRequest {
@@ -35,25 +33,19 @@ public class SGHttpRequest {
 		this.oAuthConfig = oAuthConfig;
 	}
 
-	public void startAsynchronous(Bundle params, SGCallback callback) {
-		try {
-			createRequest(params);
-			oAuthConfig.signRequest(this, params);
-			addHeaders();
-			setBody();
-			SGHttpRequestTask requestTask = new SGHttpRequestTask(getRequest(), callback);
-			requestTask.execute();
-		} catch (IOException e) {
-			Log.d(TAG, e.getMessage());
-			e.printStackTrace();
-		}
+	public SGHttpResponse start(Bundle params) throws IOException {
+		createRequest(params);
+		oAuthConfig.signRequest(this, params);
+		addHeaders();
+		setBody();
+		return new SGHttpResponse(request);
 	}
 	
 	public void addHeaders() {
 		Set<Entry<String, String>> entries = getHeaders().entrySet();
-		for (Entry entry : entries) {
-			Log.d(TAG, String.valueOf(entry.getKey()) + " - " + String.valueOf(entry.getValue()));
-			getRequest().setRequestProperty(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
+		for (Entry<String, String> entry : entries) {
+			Log.d(TAG, entry.getKey() + " - " + entry.getValue());
+			getRequest().setRequestProperty(entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -109,41 +101,7 @@ public class SGHttpRequest {
 		}
 		return query.toString();
 	}
-	
-	// Inner classes
-	
-	private class SGHttpRequestTask extends AsyncTask<Void, Void, SGHttpResponse> {
 
-		private HttpURLConnection request;
-		private SGCallback callback;
-		
-		public SGHttpRequestTask(HttpURLConnection request, SGCallback callback) {
-			this.request = request;
-			this.callback = callback;
-		}
-		
-		@Override
-		protected SGHttpResponse doInBackground(Void... params) {
-			SGHttpResponse response = null;
-			try {
-				response = new SGHttpResponse(request);
-			} catch (IOException e) {
-				Log.d(TAG, e.getMessage());
-			}
-			return response;
-		}
-		
-		@Override
-		protected void onPostExecute(SGHttpResponse response) {
-			Log.d(TAG, "onPostExecute");
-			if (response.wasSuccessful()) {
-				callback.onSuccess(response);
-			} else {
-				callback.onError(response);
-			}
-		}
-	}
-	
 	// Getters/Setters
 
 	public String getUrl() {

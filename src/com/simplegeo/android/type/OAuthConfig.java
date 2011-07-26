@@ -87,7 +87,7 @@ public class OAuthConfig {
 	
 	private String generateOAuthSignature(SGHttpRequest request, Bundle params) {
 		StringBuffer baseBuf = new StringBuffer();
-		List<String> sortedKeys = this.asSortedList(params.keySet());
+		List<String> sortedKeys = asSortedList(params.keySet());
 		baseBuf.append(request.getRequest().getRequestMethod()+AMPERSAND+URLEncoder.encode(request.getRequest().getURL().toString())+AMPERSAND);
 		for (String key : sortedKeys) {
 			if (sortedKeys.indexOf(key) != 0) { baseBuf.append(AMPERSAND_ENCODED); }
@@ -114,7 +114,7 @@ public class OAuthConfig {
 	
 	private void addAuthHeader(SGHttpRequest request, Bundle params) {
 		StringBuffer headerValueBuf = new StringBuffer();
-		List<String> sortedKeys = this.asSortedList(params.keySet());
+		List<String> sortedKeys = asSortedList(params.keySet());
 		headerValueBuf.append("OAuth ");
 		for (String key : sortedKeys) {
 			if (sortedKeys.indexOf(key) != 0) { headerValueBuf.append(", "); }
@@ -136,7 +136,7 @@ public class OAuthConfig {
 		oAuthParams.putString("oauth_signature_method", "HMAC-SHA1");
 		oAuthParams.putString("oauth_timestamp", String.valueOf(System.currentTimeMillis()));
 		oAuthParams.putString("oauth_consumer_key", this.getConsumerKey());
-		oAuthParams.putString("oauth_token", this.getAccessToken());
+		if (this.getAccessToken() != null) { oAuthParams.putString("oauth_token", this.getAccessToken()); }
 		oAuthParams.putString("oauth_version", "1.0");
 		return oAuthParams;
 	}
