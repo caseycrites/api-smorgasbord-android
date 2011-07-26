@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Locale;
 
+import org.scribe.builder.api.TwitterApi;
+import org.scribe.model.Response;
+import org.scribe.model.Verb;
+
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
-import com.simplegeo.android.http.SGHttpMethod;
-import com.simplegeo.android.http.SGHttpResponse;
-import com.simplegeo.android.type.OAuthConfig;
+import com.simplegeo.android.type.OAuthCredentials;
 import com.simplegeo.android.type.TwitterList;
 import com.simplegeo.android.type.User;
 import com.simplegeo.android.type.UserCollection;
@@ -20,70 +22,70 @@ public class Twitter extends AbstractClient {
 	
 	private static final String twitterUrl = "http://api.twitter.com/1";
 
-	public Twitter(OAuthConfig credentials) {
-		super(credentials);
+	public Twitter(OAuthCredentials credentials) {
+		super(credentials, TwitterApi.class);
 	}
 	
 	/**
 	 * Verify the user's credentials.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/account/verify_credentials">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException
 	 */
-	public SGHttpResponse verifyCredentials(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/account/verify_credentials.json", params);
+	public Response verifyCredentials(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/account/verify_credentials.json", params);
 	}
 	
 	/**
 	 * Retrieve the users rate limit status.
 	 * 
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse rateLimitStatus() throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/account/rate_limit_status.json", null);
+	public Response rateLimitStatus() throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/account/rate_limit_status.json", null);
 	}
 		
 	/**
 	 * Retrieve the users totals for friends, followers, updates and favorites.
 	 * 
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse totals() throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/account/totals.json", null);
+	public Response totals() throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/account/totals.json", null);
 	}
 	
 	/**
 	 * Retrieve the users account settings.
 	 * 
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getSettings() throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/account/settings.json", null);
+	public Response getSettings() throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/account/settings.json", null);
 	}
 		
 	/**
 	 * Sets the users account settings.  Use return this to update a bunch of user settings at once.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/settings">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse setSettings(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/account/settings.json", params);
+	public Response setSettings(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/account/settings.json", params);
 	}
 	
 	/**
 	 * Set the trend location.
 	 * 
 	 * @param trendLocation A String of a @see <a href="http://developer.yahoo.com/geo/geoplanet/guide/concepts.html">Yahoo! Where On Earth ID</a> to use as the user's default trending location.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException
 	 */
-	public SGHttpResponse setTrendLocation(String trendLocation) throws IOException {
+	public Response setTrendLocation(String trendLocation) throws IOException {
 		Bundle trendBundle = new Bundle(1);
 		trendBundle.putString("trend_location_woeid", trendLocation);
 		return setSettings(trendBundle);
@@ -94,10 +96,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param startSleepTime An int in the range, 0-23.
 	 * @param endSleepTime An int in the range, 0-23.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse enableSleepTime(int startSleepTime, int endSleepTime) throws IOException {
+	public Response enableSleepTime(int startSleepTime, int endSleepTime) throws IOException {
 		Bundle sleepBundle = new Bundle(3);
 		sleepBundle.putBoolean("sleep_time_enabled", true);
 		sleepBundle.putString("start_sleep_time", String.valueOf(startSleepTime));
@@ -108,10 +110,10 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Disable sleep time.
 	 * 
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException
 	 */
-	public SGHttpResponse disableSleepTime() throws IOException {
+	public Response disableSleepTime() throws IOException {
 		Bundle sleepBundle = new Bundle(1);
 		sleepBundle.putBoolean("sleep_time_enabled", false);
 		return setSettings(sleepBundle);
@@ -121,10 +123,10 @@ public class Twitter extends AbstractClient {
 	 * Set time zone.
 	 * 
 	 * @param timeZone A String of one of the @see <a href="http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html">Rails Time Zone's</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException
 	 */
-	public SGHttpResponse setTimeZone(String timeZone) throws IOException {
+	public Response setTimeZone(String timeZone) throws IOException {
 		Bundle timeZoneBundle = new Bundle(1);
 		timeZoneBundle.putString("time_zone", timeZone);
 		return setSettings(timeZoneBundle);
@@ -134,10 +136,10 @@ public class Twitter extends AbstractClient {
 	 * Set language.
 	 * 
 	 * @param lang A String of one of the @see <a href="https://dev.twitter.com/docs/api/1/get/help/languages">Twitter Supported Languages.</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse setLanguage(String lang) throws IOException {
+	public Response setLanguage(String lang) throws IOException {
 		Bundle langBundle = new Bundle(1);
 		langBundle.putString("lang", lang);
 		return setSettings(langBundle);
@@ -148,34 +150,34 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param device A String of either sms or none.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_delivery_device">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateDeliveryDevice(String device, Bundle params) throws IOException {
+	public Response updateDeliveryDevice(String device, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("device", device);
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/account/update_delivery_device.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_delivery_device.json", params);
 	}
 	
 	/**
 	 * Update the user's profile.  Use return this method to update a bunch of profile settings at once.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException
 	 */
-	public SGHttpResponse updateProfile(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/account/update_profile.json", params);
+	public Response updateProfile(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile.json", params);
 	}
 	
 	/**
 	 * Update the user's full name.
 	 * 
 	 * @param name A String of the user's full name. Must be 20 characters or less.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateName(String name) throws IOException {
+	public Response updateName(String name) throws IOException {
 		Bundle nameBundle = new Bundle(1);
 		nameBundle.putString("name", name);
 		return updateProfile(nameBundle);
@@ -185,10 +187,10 @@ public class Twitter extends AbstractClient {
 	 * Update the user's url.
 	 * 
 	 * @param url A String of the user's url.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateUrl(String url) throws IOException {
+	public Response updateUrl(String url) throws IOException {
 		Bundle urlBundle = new Bundle(1);
 		urlBundle.putString("url", url);
 		return updateProfile(urlBundle);
@@ -198,10 +200,10 @@ public class Twitter extends AbstractClient {
 	 * Update the user's location.
 	 * 
 	 * @param location A String of the user's location. Must be 30 characters or less.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateLocation(String location) throws IOException {
+	public Response updateLocation(String location) throws IOException {
 		Bundle locationBundle = new Bundle(1);
 		locationBundle.putString("location", location);
 		return updateProfile(locationBundle);
@@ -211,10 +213,10 @@ public class Twitter extends AbstractClient {
 	 * Update the user's description.
 	 * 
 	 * @param description A String of the user's description. Must be 160 characters or less.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException
 	 */
-	public SGHttpResponse updateDescription(String description) throws IOException {
+	public Response updateDescription(String description) throws IOException {
 		Bundle descriptionBundle = new Bundle(1);
 		descriptionBundle.putString("description", description);
 		return updateProfile(descriptionBundle);
@@ -225,34 +227,34 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param image A Bitmap of the desired background image.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_background_image">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateProfileBackgroundImage(Bitmap image, Bundle params) throws IOException {
+	public Response updateProfileBackgroundImage(Bitmap image, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putByteArray("image", Util.bitmapToByteArray(image));
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/account/update_profile_background_image.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_background_image.json", params);
 	}
 	
 	/**
 	 * Update the users's profile colors.  Use return this method to update a bunch of profile colors at once.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_colors">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateProfileColors(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/account/update_profile_colors.json", params);
+	public Response updateProfileColors(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_colors.json", params);
 	}
 
 	/**
 	 * Update the user's profile background color.
 	 * 
 	 * @param backgroundColor A String of length 3 or 6 in hexadecimal of the desired color.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateProfileBackgroundColor(String backgroundColor) throws IOException {
+	public Response updateProfileBackgroundColor(String backgroundColor) throws IOException {
 		Bundle bgBundle = new Bundle(1);
 		bgBundle.putString("profile_background_color", backgroundColor);
 		return updateProfile(bgBundle);
@@ -262,10 +264,10 @@ public class Twitter extends AbstractClient {
 	 * Update the user's profile link color.
 	 * 
 	 * @param linkColor A String of length 3 or 6 in hexadecimal of the desired color.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateProfileLinkColor(String linkColor) throws IOException {
+	public Response updateProfileLinkColor(String linkColor) throws IOException {
 		Bundle linkBundle = new Bundle(1);
 		linkBundle.putString("profile_link_color", linkColor);
 		return updateProfile(linkBundle);
@@ -275,10 +277,10 @@ public class Twitter extends AbstractClient {
 	 * Update the user's profile sidebar border color.
 	 * 
 	 * @param borderColor A String of length 3 or 6 in hexadecimal of the desired color.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateProfileSidebarBorderColor(String borderColor) throws IOException {
+	public Response updateProfileSidebarBorderColor(String borderColor) throws IOException {
 		Bundle borderBundle = new Bundle(1);
 		borderBundle.putString("profile_sidebar_border_color", borderColor);
 		return updateProfile(borderBundle);
@@ -288,10 +290,10 @@ public class Twitter extends AbstractClient {
 	 * Update the user's profile sidebar fill color.
 	 * 
 	 * @param borderColor A String of length 3 or 6 in hexadecimal of the desired color.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateProfileSidebarFillColor(String fillColor) throws IOException {
+	public Response updateProfileSidebarFillColor(String fillColor) throws IOException {
 		Bundle fillBundle = new Bundle(1);
 		fillBundle.putString("profile_sidebar_fill_color", fillColor);
 		return updateProfile(fillBundle);
@@ -301,10 +303,10 @@ public class Twitter extends AbstractClient {
 	 * Update the user's profile text color.
 	 * 
 	 * @param borderColor A String of length 3 or 6 in hexadecimal of the desired color.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateProfileTextColor(String textColor) throws IOException {
+	public Response updateProfileTextColor(String textColor) throws IOException {
 		Bundle textBundle = new Bundle(1);
 		textBundle.putString("profile_text_color", textColor);
 		return updateProfile(textBundle);
@@ -315,13 +317,13 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param image A Bitmap of the desired image.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_image">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateProfileImage(Bitmap image, Bundle params) throws IOException {
+	public Response updateProfileImage(Bitmap image, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putByteArray("image", Util.bitmapToByteArray(image));
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/account/update_profile_image.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_image.json", params);
 	}
 	
 	// Block endpoints
@@ -330,35 +332,35 @@ public class Twitter extends AbstractClient {
 	 * Get a list of users that return this user has blocked.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/blocking">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getBlockedUsers(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/blocks/blocking.json", params);
+	public Response getBlockedUsers(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking.json", params);
 	}
 	
 	/**
 	 * Get a list of users ids that return this user has blocked.
 	 * 
 	 * @param stringifyIds A boolean that tells the API whether or not to stringify the Ids it returns.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getBlockedUsersIds(Boolean stringifyIds) throws IOException {
+	public Response getBlockedUsersIds(Boolean stringifyIds) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putBoolean("stringifyIds", stringifyIds);
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/blocks/blocking/ids.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking/ids.json", params);
 	}
 	
 	/**
 	 * Checks to see if the authenticated user blocks the target user. Returns the user if yes, else 404's.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/exists">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse doesBlockExist(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/blocks/blocking/ids.json", params);
+	public Response doesBlockExist(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking/ids.json", params);
 	}
 	
 	/**
@@ -366,10 +368,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/exists">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse doesBlockExist(User user, Bundle params) throws IOException {
+	public Response doesBlockExist(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return doesBlockExist(params);
@@ -379,11 +381,11 @@ public class Twitter extends AbstractClient {
 	 * Block the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/create">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse block(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/blocks/create.json", params);
+	public Response block(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/blocks/create.json", params);
 	}
 	
 	/**
@@ -391,10 +393,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/create">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse block(User user, Bundle params) throws IOException {
+	public Response block(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return block(params);
@@ -404,11 +406,11 @@ public class Twitter extends AbstractClient {
 	 * Unblock the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/destroy">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse unblock(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/blocks/destroy.json", params);
+	public Response unblock(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/blocks/destroy.json", params);
 	}
 	
 	/**
@@ -416,10 +418,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/destroy">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse unblock(User user, Bundle params) throws IOException {
+	public Response unblock(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return unblock(params);
@@ -431,11 +433,11 @@ public class Twitter extends AbstractClient {
 	 * Get the user's direct messages.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getDirectMessages(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/direct_messages.json", params);
+	public Response getDirectMessages(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/direct_messages.json", params);
 	}
 	
 	/**
@@ -443,10 +445,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param sinceId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getDirectMessagesSince(String sinceId, Bundle params) throws IOException {
+	public Response getDirectMessagesSince(String sinceId, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("since_id", sinceId);
 		return getDirectMessages(params);
@@ -457,10 +459,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param maxId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getDirectMessagesBefore(String maxId, Bundle params) throws IOException {
+	public Response getDirectMessagesBefore(String maxId, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("max_id", maxId);
 		return getDirectMessages(params);
@@ -470,11 +472,11 @@ public class Twitter extends AbstractClient {
 	 * Get the user's sent direct messages.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages/sent">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getSentDirectMessages(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/direct_messages/sent.json", params);
+	public Response getSentDirectMessages(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/direct_messages/sent.json", params);
 	}
 	
 	/**
@@ -482,10 +484,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param sinceId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages/sent">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getSentDirectMessagesSince(String sinceId, Bundle params) throws IOException {
+	public Response getSentDirectMessagesSince(String sinceId, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("since_id", sinceId);
 		return getSentDirectMessages(params);
@@ -496,10 +498,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param maxId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages/sent">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getSentDirectMessagesBefore(String maxId, Bundle params) throws IOException {
+	public Response getSentDirectMessagesBefore(String maxId, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("max_id", maxId);
 		return getSentDirectMessages(params);
@@ -510,11 +512,11 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param messageId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/destroy/%3Aid">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse destroyDirectMessage(String messageId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.DELETE, twitterUrl + String.format(Locale.US, "/direct_messages/destroy/%s.json", URLEncoder.encode(messageId)), params);
+	public Response destroyDirectMessage(String messageId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/direct_messages/destroy/%s.json", URLEncoder.encode(messageId)), params);
 	}
 	
 	/**
@@ -522,13 +524,13 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param text A String direct message.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/new">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse sendDirectMessage(String text, Bundle params) throws IOException {
+	public Response sendDirectMessage(String text, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("text", text);
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/direct_messages/new.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/direct_messages/new.json", params);
 	}
 	
 	/**
@@ -537,10 +539,10 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param text A String direct message.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/new">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse sendDirectMessage(User user, String text, Bundle params) throws IOException {
+	public Response sendDirectMessage(User user, String text, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return sendDirectMessage(text, params);
@@ -550,11 +552,11 @@ public class Twitter extends AbstractClient {
 	 * Get a single direct message.
 	 * 
 	 * @param messageId A String direct message id.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getDirectMessage(String messageId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + String.format(Locale.US, "/direct_messages/%s.json", URLEncoder.encode(messageId)), null);
+	public Response getDirectMessage(String messageId) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + String.format(Locale.US, "/direct_messages/%s.json", URLEncoder.encode(messageId)), null);
 	}
 	
 	// Favorites endpoints
@@ -564,10 +566,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">here</a>.
 	 * @throws IOException 
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 */
-	public SGHttpResponse getFavorites(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/favorites.json", params);
+	public Response getFavorites(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/favorites.json", params);
 	}
 	
 	/**
@@ -577,7 +579,7 @@ public class Twitter extends AbstractClient {
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">here</a>.
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUserFavorites(User user, Bundle params) throws IOException {
+	public Response getUserFavorites(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return getFavorites(params);
@@ -588,11 +590,11 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param tweetId A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/favorites/create/%3Aid">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse favorite(String tweetId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + String.format(Locale.US, "/favorites/create/%s.json", URLEncoder.encode(tweetId)), params);
+	public Response favorite(String tweetId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + String.format(Locale.US, "/favorites/create/%s.json", URLEncoder.encode(tweetId)), params);
 	}
 	
 	/**
@@ -600,11 +602,11 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param tweetId A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/favorites/destroy/%3Aid">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse unfavorite(String tweetId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.DELETE, twitterUrl + String.format(Locale.US, "/favorites/destroy/%s.json", URLEncoder.encode(tweetId)), params);
+	public Response unfavorite(String tweetId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/favorites/destroy/%s.json", URLEncoder.encode(tweetId)), params);
 	}
 	
 	// Friend And Follower endpoints
@@ -613,11 +615,11 @@ public class Twitter extends AbstractClient {
 	 * Get a list of a user's followers ids.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getFollowersIds(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/followers/ids.json", params);
+	public Response getFollowersIds(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/followers/ids.json", params);
 	}
 
 	/**
@@ -625,10 +627,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getFollowersIds(User user, Bundle params) throws IOException {
+	public Response getFollowersIds(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return getFollowersIds(params);
@@ -638,11 +640,11 @@ public class Twitter extends AbstractClient {
 	 * Get a list of a user's friends ids.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getFriendsIds(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/friends/ids.json", params);
+	public Response getFriendsIds(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/friends/ids.json", params);
 	}
 
 	/**
@@ -650,10 +652,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getFriendsIds(User user, Bundle params) throws IOException {
+	public Response getFriendsIds(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return getFollowersIds(params);
@@ -663,21 +665,21 @@ public class Twitter extends AbstractClient {
 	 * Check if a friendship exists between two users.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/exists">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse doesFriendshipExist(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/friendships/exists.json", params);
+	public Response doesFriendshipExist(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/exists.json", params);
 	}
 		
 	/**
 	 * Check if a friendship exists between two users.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/exists">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse doesFriendshipExist(User userA, User userB, Bundle params) throws IOException {
+	public Response doesFriendshipExist(User userA, User userB, Bundle params) throws IOException {
 		params = Util.initBundle(params, 2);
 		params = userA.appendToBundle(params);
 		params = userB.appendToBundle(params);
@@ -688,44 +690,44 @@ public class Twitter extends AbstractClient {
 	 * Get a list of friend requests for the authenticated user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/incoming">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getIncomingFriendRequests(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/friendships/incoming.json", params);
+	public Response getIncomingFriendRequests(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/incoming.json", params);
 	}
 
 	/**
 	 * Get a list of friend requests made by the authenticated user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/outgoing">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getOutgoingFriendRequests(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/friendships/outgoing.json", params);
+	public Response getOutgoingFriendRequests(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/outgoing.json", params);
 	}
 	
 	/**
 	 * Get detailed information about a friendship.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/show">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse showFriendship(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/friendships/show.json", params);
+	public Response showFriendship(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/show.json", params);
 	}
 	
 	/**
 	 * Create a friendship.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse createFriendship(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/friendships/create.json", params);
+	public Response createFriendship(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/friendships/create.json", params);
 	}
 	
 	/**
@@ -733,10 +735,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse createFriendship(User user, Bundle params) throws IOException {
+	public Response createFriendship(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return createFriendship(params);
@@ -746,11 +748,11 @@ public class Twitter extends AbstractClient {
 	 * Destroy a friendship.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/destroy">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse destroyFriendship(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/friendships/destroy.json", params);
+	public Response destroyFriendship(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/friendships/destroy.json", params);
 	}
 	
 	/**
@@ -758,10 +760,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/destroy">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse destroyFriendship(User user, Bundle params) throws IOException {
+	public Response destroyFriendship(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return destroyFriendship(params);
@@ -771,11 +773,11 @@ public class Twitter extends AbstractClient {
 	 * Look up the relationship between the authenticated user and the list of user ids or screen names.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/lookup">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse lookupFriendship(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/friendships/lookup.json", params);
+	public Response lookupFriendship(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/lookup.json", params);
 	}
 	
 	/**
@@ -783,10 +785,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param users An {@link UserCollection}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/lookup">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse lookupFriendship(UserCollection users, Bundle params) throws IOException {
+	public Response lookupFriendship(UserCollection users, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = users.appendToBundle(params);
 		return lookupFriendship(params);
@@ -796,22 +798,22 @@ public class Twitter extends AbstractClient {
 	 * Update what notifications should be shown for a friend.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/update">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateFriendship(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/friendships/update.json", params);
+	public Response updateFriendship(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/friendships/update.json", params);
 	}
 	
 	/**
 	 * Returns an array of user_ids that the currently authenticated user does not want to see retweets from..
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/get-friendshipsno_retweet_ids">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getNoRetweetIds(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/friendships/no_retweet_ids.json", params);
+	public Response getNoRetweetIds(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/no_retweet_ids.json", params);
 	}
 	
 	// List endpoints
@@ -820,11 +822,11 @@ public class Twitter extends AbstractClient {
 	 * Get lists of the authenticated user or the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/all">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getSubscribedLists(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/lists/all.json", params);
+	public Response getSubscribedLists(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists/all.json", params);
 	}
 	
 	/**
@@ -832,10 +834,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/all">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getSubscribedLists(User user, Bundle params) throws IOException {
+	public Response getSubscribedLists(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return getSubscribedLists(params);
@@ -845,11 +847,11 @@ public class Twitter extends AbstractClient {
 	 * Get statutes of the specified list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/statuses">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getListStatuses(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/lists/statuses.json", params);
+	public Response getListStatuses(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists/statuses.json", params);
 	}
 	
 	/**
@@ -857,10 +859,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/statuses">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getListStatuses(TwitterList list, Bundle params) throws IOException {
+	public Response getListStatuses(TwitterList list, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
 		return getListStatuses(params);
@@ -870,11 +872,11 @@ public class Twitter extends AbstractClient {
 	 * Remove a member from a list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/destroy">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse removeMemberFromList(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.DELETE, twitterUrl + "/lists/members/destroy.json", params);
+	public Response removeMemberFromList(Bundle params) throws IOException {
+		return this.executeRequest(Verb.DELETE, twitterUrl + "/lists/members/destroy.json", params);
 	}
 
 	/**
@@ -883,10 +885,10 @@ public class Twitter extends AbstractClient {
 	 * @param list A {@TwitterList}.
 	 * @param user A {@User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/destroy">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse removeMemberFromList(TwitterList list, User user) throws IOException {
+	public Response removeMemberFromList(TwitterList list, User user) throws IOException {
 		// TODO What's the smallest return this Bundle can be and still fit everything?
 		Bundle params = new Bundle();
 		params = list.appendToBundle(params);
@@ -898,11 +900,11 @@ public class Twitter extends AbstractClient {
 	 * Get the lists the user is a member of.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/memberships">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUsersListMemberships(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/lists/memberships.json", params);
+	public Response getUsersListMemberships(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists/memberships.json", params);
 	}
 	
 	/**
@@ -910,10 +912,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/memberships">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUsersListMemberships(User user, Bundle params) throws IOException {
+	public Response getUsersListMemberships(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return getUsersListMemberships(params);
@@ -923,11 +925,11 @@ public class Twitter extends AbstractClient {
 	 * Get a lists subscribers.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscriptions">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getListSubscribers(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/lists/subscribers.json", params);
+	public Response getListSubscribers(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists/subscribers.json", params);
 	}
 	
 	/**
@@ -935,10 +937,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscriptions">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getListSubscribers(TwitterList list, Bundle params) throws IOException {
+	public Response getListSubscribers(TwitterList list, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
 		return getListSubscribers(params);
@@ -948,11 +950,11 @@ public class Twitter extends AbstractClient {
 	 * Subscribe the authenticated user to a list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/create">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse subscribeToList(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/lists/subscribers/create.json", params);
+	public Response subscribeToList(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/lists/subscribers/create.json", params);
 	}
 	
 	/**
@@ -960,10 +962,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/create">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse subscribeToList(TwitterList list, Bundle params) throws IOException {
+	public Response subscribeToList(TwitterList list, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
 		return subscribeToList(params);
@@ -973,22 +975,22 @@ public class Twitter extends AbstractClient {
 	 * Check if the specified user is a member of the list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscribers/show">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse isUserListSubscriber(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/lists/subscribers/show.json", params);
+	public Response isUserListSubscriber(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists/subscribers/show.json", params);
 	}
 	
 	/**
 	 * Unsubscribe the authenticated user from a list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/destroy">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse unsubscribeFromList(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.DELETE, twitterUrl + "/lists/subscribers/destroy.json", params);
+	public Response unsubscribeFromList(Bundle params) throws IOException {
+		return this.executeRequest(Verb.DELETE, twitterUrl + "/lists/subscribers/destroy.json", params);
 	}
 	
 	/**
@@ -996,10 +998,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/destroy">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse unsubscribeFromList(TwitterList list, Bundle params) throws IOException {
+	public Response unsubscribeFromList(TwitterList list, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
 		return unsubscribeFromList(params);
@@ -1009,11 +1011,11 @@ public class Twitter extends AbstractClient {
 	 * Add multiple users to a list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/create_all">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse addUsersToList(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/lists/members/create_all.json", params);
+	public Response addUsersToList(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/lists/members/create_all.json", params);
 	}
 	
 	/**
@@ -1021,10 +1023,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param users An {@link UserCollection}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse addUsersToList(TwitterList list, UserCollection users) throws IOException {
+	public Response addUsersToList(TwitterList list, UserCollection users) throws IOException {
 		// TODO What's the smallest return this Bundle can be?
 		Bundle params = new Bundle();
 		params = list.appendToBundle(params);
@@ -1036,11 +1038,11 @@ public class Twitter extends AbstractClient {
 	 * Delete list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/destroy">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse deleteList(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.DELETE, twitterUrl + "/lists/destroy.json", params);
+	public Response deleteList(Bundle params) throws IOException {
+		return this.executeRequest(Verb.DELETE, twitterUrl + "/lists/destroy.json", params);
 	}
 		
 	/**
@@ -1048,10 +1050,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/destroy">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse deleteList(TwitterList list, Bundle params) throws IOException {
+	public Response deleteList(TwitterList list, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
 		return deleteList(params);
@@ -1061,11 +1063,11 @@ public class Twitter extends AbstractClient {
 	 * Update a list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/update">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateList(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/lists/update.json", params);
+	public Response updateList(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/lists/update.json", params);
 	}
 	
 	/**
@@ -1073,10 +1075,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/update">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse updateList(TwitterList list, Bundle params) throws IOException {
+	public Response updateList(TwitterList list, Bundle params) throws IOException {
 		params = Util.initBundle(params, 2);
 		params = list.appendToBundle(params);
 		return updateList(params);
@@ -1087,22 +1089,22 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param name A String Twitter list name.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/create">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse createList(String name, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/lists/create.json", params);
+	public Response createList(String name, Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/lists/create.json", params);
 	}
 	
 	/**
 	 * Get lists owned by the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUsersLists(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/lists.json", params);
+	public Response getUsersLists(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists.json", params);
 	}
 	
 	/**
@@ -1110,10 +1112,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUsersLists(User user, Bundle params) throws IOException {
+	public Response getUsersLists(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return getUsersLists(params);
@@ -1123,11 +1125,11 @@ public class Twitter extends AbstractClient {
 	 * Get a list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/show">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getList(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/lists/show.json", params);
+	public Response getList(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists/show.json", params);
 	}
 	
 	/**
@@ -1135,10 +1137,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/show">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getList(TwitterList list, Bundle params) throws IOException {
+	public Response getList(TwitterList list, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
 		return getList(params);
@@ -1150,21 +1152,21 @@ public class Twitter extends AbstractClient {
 	 * Enables device notifications for updates from the specified user. Returns the specified user when successful.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/notifications/follow">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse followNotifications(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/notifications/follow.json", params);
+	public Response followNotifications(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/notifications/follow.json", params);
 	}
 	
 	/**
 	 * Enables device notifications for updates from the specified user. Returns the specified user when successful.
 	 * 
 	 * @param user A {@link User}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse followNotifications(User user) throws IOException {
+	public Response followNotifications(User user) throws IOException {
 		Bundle params = new Bundle(1);
 		params = user.appendToBundle(params);
 		return followNotifications(params);
@@ -1174,21 +1176,21 @@ public class Twitter extends AbstractClient {
 	 * Disables device notifications for updates from the specified user. Returns the specified user when successful.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/notifications/follow">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse unfollowNotifications(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/notifications/leave.json", params);
+	public Response unfollowNotifications(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/notifications/leave.json", params);
 	}
 	
 	/**
 	 * Disables device notifications for updates from the specified user. Returns the specified user when successful.
 	 * 
 	 * @param user A {@link User}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse unfollowNotifications(User user) throws IOException {
+	public Response unfollowNotifications(User user) throws IOException {
 		Bundle params = new Bundle(1);
 		params = user.appendToBundle(params);
 		return unfollowNotifications(params);
@@ -1200,11 +1202,11 @@ public class Twitter extends AbstractClient {
 	 * Get all information about a place.
 	 * 
 	 * @param placeId A String id that can be retrieved from reverseGeocode.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getPlace(String placeId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/geo/id/%s.json", URLEncoder.encode(placeId)), null);
+	public Response getPlace(String placeId) throws IOException {
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/geo/id/%s.json", URLEncoder.encode(placeId)), null);
 	}
 	
 	/**
@@ -1213,25 +1215,25 @@ public class Twitter extends AbstractClient {
 	 * @param lat A String latitude.
 	 * @param lon A String longitude.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/geo/reverse_geocode">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse reverseGeocode(String lat, String lon, Bundle params) throws IOException {
+	public Response reverseGeocode(String lat, String lon, Bundle params) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("lat", lat);
 		params.putString("long", lon);
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/geo/reverse_geocode.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/geo/reverse_geocode.json", params);
 	}
 	
 	/**
 	 * Search nearby places.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/geo/search">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse searchNearby(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/geo/nearby_places.json", params);
+	public Response searchNearby(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/geo/nearby_places.json", params);
 	}
 	
 	/**
@@ -1241,15 +1243,15 @@ public class Twitter extends AbstractClient {
 	 * @param lon A String longitude.
 	 * @param name A String of the name of the place.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/geo/search">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse similarPlaces(String lat, String lon, String name, Bundle params) throws IOException {
+	public Response similarPlaces(String lat, String lon, String name, Bundle params) throws IOException {
 		params = Util.initBundle(params, 3);
 		params.putString("lat", lat);
 		params.putString("long", lon);
 		params.putString("name", name);
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/geo/similar_places.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/geo/similar_places.json", params);
 	}
 	
 	/**
@@ -1261,17 +1263,17 @@ public class Twitter extends AbstractClient {
 	 * @param lat A String latitude.
 	 * @param lon A String longitude.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/geo/place">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse createPlace(String name, String containedWithin, String token, String lat, String lon, Bundle params) throws IOException {
+	public Response createPlace(String name, String containedWithin, String token, String lat, String lon, Bundle params) throws IOException {
 		params = Util.initBundle(params, 5);
 		params.putString("lat", lat);
 		params.putString("long", lon);
 		params.putString("name", name);
 		params.putString("token", token);
 		params.putString("containedWithin", containedWithin);
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/geo/place.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/geo/place.json", params);
 	}
 		
 	// Saved Searches endpoints
@@ -1279,46 +1281,46 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Returns the authenticated users saved search queries.
 	 * 
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getSavedSearches() throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/saved_searches.json", null);
+	public Response getSavedSearches() throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/saved_searches.json", null);
 	}
 	
 	/**
 	 * Retrieve the information for the saved search represented by the given id.
 	 * 
 	 * @param id A String id of the saved search query.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse showSavedSearch(String id) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/saved_searches/show/%s.json", URLEncoder.encode(id)), null);
+	public Response showSavedSearch(String id) throws IOException {
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/saved_searches/show/%s.json", URLEncoder.encode(id)), null);
 	}
 	
 	/**
 	 * Create a new saved search.
 	 * 
 	 * @param query A String search query.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse createSavedSearch(String query) throws IOException {
+	public Response createSavedSearch(String query) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("query", query);
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/saved_searches/create.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/saved_searches/create.json", params);
 	}
 		
 	/**
 	 * Delete a saved search.
 	 * 
 	 * @param id A String id of the saved search query.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse deleteSavedSearch(String id) throws IOException {
-		return this.executeRequest(SGHttpMethod.DELETE, String.format(Locale.US, twitterUrl + "/saved_searches/destroy/%s.json", URLEncoder.encode(id)), null);
+	public Response deleteSavedSearch(String id) throws IOException {
+		return this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/saved_searches/destroy/%s.json", URLEncoder.encode(id)), null);
 	}
 	
 	// Search endpoints
@@ -1328,13 +1330,13 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param q A String search query.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/search">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse search(String q, Bundle params) throws IOException {
+	public Response search(String q, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("q", q);
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/search.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/search.json", params);
 	}
 
 	// Spam Reporting endpoints
@@ -1343,21 +1345,21 @@ public class Twitter extends AbstractClient {
 	 * Report spam and block the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/report_spam">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse reportSpam(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/report_spam.json", params);
+	public Response reportSpam(Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, twitterUrl + "/report_spam.json", params);
 	}
 	
 	/**
 	 * Report spam and block the specified user.
 	 * 
 	 * @param user A {@link User}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse reportSpam(User user) throws IOException {
+	public Response reportSpam(User user) throws IOException {
 		Bundle params = new Bundle(1);
 		params = user.appendToBundle(params);
 		return reportSpam(params);
@@ -1369,77 +1371,77 @@ public class Twitter extends AbstractClient {
 	 * Returns the most recent statuses posted by the authenticated user and the people they follow.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/home_timeline">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getTimeline(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/home_timeline.json", params);
+	public Response getTimeline(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/home_timeline.json", params);
 	}
 	
 	/**
 	 * Get the authenticated user's most recent mentions.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/mentions">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getMentions(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/mentions.json", params);
+	public Response getMentions(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/mentions.json", params);
 	}
 		
 	/**
 	 * Returns the most recent public statuses.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/public_timeline">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getPublicStatuses(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/public_timeline.json", params);
+	public Response getPublicStatuses(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/public_timeline.json", params);
 	}
 	
 	/**
 	 * Returns the most recent retweets by the authenticated user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_by_me">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getRetweetedByMe(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/retweeted_by_me.json", params);
+	public Response getRetweetedByMe(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_by_me.json", params);
 	}
 	
 	/**
 	 * Returns the most recent retweets by the people the authenticated user follows.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_me">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getRetweetedToMe(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/retweeted_to_me.json", params);
+	public Response getRetweetedToMe(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_to_me.json", params);
 	}
 	
 	/**
 	 * Returns the most recent retweets of the authenticated user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweets_of_me">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getRetweetsOfMe(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/retweets_of_me.json", params);
+	public Response getRetweetsOfMe(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweets_of_me.json", params);
 	}
 	
 	/**
 	 * Returns the most recent tweets of the authenticated user or the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/user_timeline">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUserStatuses(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/user_timeline.json", params);
+	public Response getUserStatuses(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/user_timeline.json", params);
 	}
 		
 	/**
@@ -1447,10 +1449,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/user_timeline">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUserStatuses(User user, Bundle params) throws IOException {
+	public Response getUserStatuses(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 0);
 		params = user.appendToBundle(params);
 		return getUserStatuses(params);
@@ -1460,11 +1462,11 @@ public class Twitter extends AbstractClient {
 	 * Returns the most recent retweets by the people the specified user follows.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_user">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getRetweetedToUser(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/retweeted_to_user.json", params);
+	public Response getRetweetedToUser(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_to_user.json", params);
 	}
 		
 	/**
@@ -1472,10 +1474,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_user">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getRetweetedToUser(User user, Bundle params) throws IOException {
+	public Response getRetweetedToUser(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 0);
 		params = user.appendToBundle(params);
 		return getRetweetedToUser(params);
@@ -1485,11 +1487,11 @@ public class Twitter extends AbstractClient {
 	 * Returns the most recent retweets by the people the specified user follows.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/get/statuses/retweeted_by_user">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getRetweetedByUser(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/statuses/retweeted_by_user.json", params);
+	public Response getRetweetedByUser(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_by_user.json", params);
 	}
 		
 	/**
@@ -1497,10 +1499,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/get/statuses/retweeted_by_user">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getRetweetedByUser(User user, Bundle params) throws IOException {
+	public Response getRetweetedByUser(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 0);
 		params = user.appendToBundle(params);
 		return getRetweetedByUser(params);
@@ -1512,65 +1514,65 @@ public class Twitter extends AbstractClient {
 	 * Returns the top 10 trending topics for the given @see <a href="http://developer.yahoo.com/geo/geoplanet/guide/concepts.html">Yahoo! Where On Earth Id</a>.
 	 * 
 	 * @param whereOnEarthId A String Yahoo where on earth id.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getLocalTrends(String whereOnEarthId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/trends/%s.json", URLEncoder.encode(whereOnEarthId)), null);
+	public Response getLocalTrends(String whereOnEarthId) throws IOException {
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/trends/%s.json", URLEncoder.encode(whereOnEarthId)), null);
 	}
 	
 	/**
 	 * Returns the locations that Twitter has trending topic information for.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/available">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getAvailableTrendLocations(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/trends/available.json", params);
+	public Response getAvailableTrendLocations(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/trends/available.json", params);
 	}
 		
 	/**
 	 * Returns the top 10 current trending topics on Twitter.
 	 * 
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getTrends() throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/trends.json", null);
+	public Response getTrends() throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/trends.json", null);
 	}
 	
 	/**
 	 * Returns the top 10 current trending topics on Twitter.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/current">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getCurrentTrends(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/trends/current.json", params);
+	public Response getCurrentTrends(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/trends/current.json", params);
 	}
 	
 	/**
 	 * Returns the top 20 trending topics for each hour in a given day.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/current">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getDailyTrends(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/trends/daily.json", params);
+	public Response getDailyTrends(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/trends/daily.json", params);
 	}
 	
 	/**
 	 * Returns the top 30 trending topics for each day in a given week.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/current">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getWeeklyTrends(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/trends/weekly.json", params);
+	public Response getWeeklyTrends(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/trends/weekly.json", params);
 	}
 	
 	// Tweet endpoints
@@ -1580,11 +1582,11 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/%3Aid/retweeted_by">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getRetweetedBy(String id, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by.json", URLEncoder.encode(id)), params);
+	public Response getRetweetedBy(String id, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by.json", URLEncoder.encode(id)), params);
 	}
 	
 	/**
@@ -1592,11 +1594,11 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/%3Aid/retweeted_by/ids">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getRetweetedByIds(String id, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by/ids.json", URLEncoder.encode(id)), params);
+	public Response getRetweetedByIds(String id, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by/ids.json", URLEncoder.encode(id)), params);
 	}
 	
 	/**
@@ -1604,11 +1606,11 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweets/%3Aid">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getRetweets(String id, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/statuses/retweets/%s.json", URLEncoder.encode(id)), params);
+	public Response getRetweets(String id, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/retweets/%s.json", URLEncoder.encode(id)), params);
 	}
 	
 	/**
@@ -1616,11 +1618,11 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/show/%3Aid">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getTweet(String id, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/statuses/show/%s.json", URLEncoder.encode(id)), params);
+	public Response getTweet(String id, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/show/%s.json", URLEncoder.encode(id)), params);
 	}
 	
 	/**
@@ -1628,11 +1630,11 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/destroy/%3Aid">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse deleteTweet(String id, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.DELETE, String.format(Locale.US, twitterUrl + "/statuses/destroy/%s.json", URLEncoder.encode(id)), params);
+	public Response deleteTweet(String id, Bundle params) throws IOException {
+		return this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/statuses/destroy/%s.json", URLEncoder.encode(id)), params);
 	}
 	
 	/**
@@ -1640,11 +1642,11 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse retweet(String id, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, String.format(Locale.US, twitterUrl + "/statuses/retweet/%s.json", URLEncoder.encode(id)), params);
+	public Response retweet(String id, Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, String.format(Locale.US, twitterUrl + "/statuses/retweet/%s.json", URLEncoder.encode(id)), params);
 	}
 		
 	/**
@@ -1652,13 +1654,13 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param text A String status.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse tweet(String text, Bundle params) throws IOException {
+	public Response tweet(String text, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("text", text);
-		return this.executeRequest(SGHttpMethod.POST, twitterUrl + "/statuses/update.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/statuses/update.json", params);
 	}
 	
 	// User endpoints
@@ -1667,11 +1669,11 @@ public class Twitter extends AbstractClient {
 	 * Return up to 100 users worth of extended information, specified by either ID, screen name, or combination of the two.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/lookup">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse lookupUsers(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/users/lookup.json", params);
+	public Response lookupUsers(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/users/lookup.json", params);
 	}
 	
 	/**
@@ -1679,10 +1681,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param users {@link UserCollection}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/lookup">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse lookupUsers(UserCollection users, Bundle params) throws IOException {
+	public Response lookupUsers(UserCollection users, Bundle params) throws IOException {
 		params = Util.initBundle(params, 2);
 		params = users.appendToBundle(params);
 		return lookupUsers(params);
@@ -1693,11 +1695,11 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param screenName A String Twitter screen name.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getProfileImage(String screenName, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/users/profile_image/%s.json", URLEncoder.encode(screenName)), params);
+	public Response getProfileImage(String screenName, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/profile_image/%s.json", URLEncoder.encode(screenName)), params);
 	}
 	
 	/**
@@ -1705,24 +1707,24 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param q A String search query.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse searchUsers(String q, Bundle params) throws IOException {
+	public Response searchUsers(String q, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("q", q);
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/users/search.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/users/search.json", params);
 	}
 		
 	/**
 	 * Return the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUser(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/users/show.json", params);
+	public Response getUser(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/users/show.json", params);
 	}
 	
 	/**
@@ -1730,10 +1732,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUser(User user, Bundle params) throws IOException {
+	public Response getUser(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return getUser(params);
@@ -1743,11 +1745,11 @@ public class Twitter extends AbstractClient {
 	 * Returns an array of users that the specified user can contribute to.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributees">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getContributees(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/users/contributees.json", params);
+	public Response getContributees(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/users/contributees.json", params);
 	}
 	
 	/**
@@ -1755,10 +1757,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributees">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getContributees(User user, Bundle params) throws IOException {
+	public Response getContributees(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return getContributees(params);
@@ -1768,11 +1770,11 @@ public class Twitter extends AbstractClient {
 	 * Returns an array of users who can contribute to the specified account.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributors">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getContributors(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/users/contributors.json", params);
+	public Response getContributors(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/users/contributors.json", params);
 	}
 	
 	/**
@@ -1780,10 +1782,10 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributors">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getContributors(User user, Bundle params) throws IOException {
+	public Response getContributors(User user, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
 		return getContributors(params);
@@ -1793,33 +1795,33 @@ public class Twitter extends AbstractClient {
 	 * Returns Twitter's suggested user list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getSuggestedUsers(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, twitterUrl + "/users/suggestions.json", params);
+	public Response getSuggestedUsers(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, twitterUrl + "/users/suggestions.json", params);
 	}
 	
 	/**
 	 * Returns Twitter's suggested user list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions/%3Aslug">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getSuggestedUsers(String slug, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s.json", URLEncoder.encode(slug)), params);
+	public Response getSuggestedUsers(String slug, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s.json", URLEncoder.encode(slug)), params);
 	}
 		
 	/**
 	 * Return the users in a given category of the Twitter suggested user list and return their most recent status.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions/%3Aslug/members">here</a>.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getSuggestedUsersWithStatus(String slug, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s/members.json", URLEncoder.encode(slug)), params);
+	public Response getSuggestedUsersWithStatus(String slug, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s/members.json", URLEncoder.encode(slug)), params);
 	}
 	
 }

@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Locale;
 
+import org.scribe.builder.api.FoursquareApi;
+import org.scribe.model.Response;
+import org.scribe.model.Verb;
+
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
-import com.simplegeo.android.http.SGHttpMethod;
-import com.simplegeo.android.http.SGHttpResponse;
-import com.simplegeo.android.type.OAuthConfig;
+import com.simplegeo.android.type.OAuthCredentials;
 import com.simplegeo.android.util.Util;
 
 public class Foursquare extends AbstractClient {
@@ -18,8 +20,8 @@ public class Foursquare extends AbstractClient {
 	
 	private static final String foursquareUrl = "https://api.foursquare.com/v2";
 
-	public Foursquare(OAuthConfig credentials) {
-		super(credentials);
+	public Foursquare(OAuthCredentials credentials) {
+		super(credentials, FoursquareApi.class);
 	}
 
 	// Users endpoints
@@ -29,11 +31,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param userId A String id of a user.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUser(String userId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s", URLEncoder.encode(userId)), null);
+	public Response getUser(String userId) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s", URLEncoder.encode(userId)), null);
 	}
 	
 	/**
@@ -41,22 +43,22 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/leaderboard.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getLeaderboard(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, "/users/leaderboard", params);
+	public Response getLeaderboard(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, "/users/leaderboard", params);
 	}
 		
 	/**
 	 * Get the users friend requests.
 	 * 
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getFriendRequests() throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, "/users/requests", null);
+	public Response getFriendRequests() throws IOException {
+		return this.executeRequest(Verb.GET, "/users/requests", null);
 	}
 		
 	/**
@@ -64,11 +66,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param userId A String id of a user.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUsersBadges(String userId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/badges", URLEncoder.encode(userId)), null);
+	public Response getUsersBadges(String userId) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/badges", URLEncoder.encode(userId)), null);
 	}
 	
 	/**
@@ -76,11 +78,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param userId A String id of a user.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUsersCheckins(String userId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/checkins", URLEncoder.encode(userId)), null);
+	public Response getUsersCheckins(String userId) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/checkins", URLEncoder.encode(userId)), null);
 	}
 	
 	/**
@@ -89,11 +91,11 @@ public class Foursquare extends AbstractClient {
 	 * @param userId A String id of a user.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/friends.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUsersFriends(String userId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/friends", URLEncoder.encode(userId)), params);
+	public Response getUsersFriends(String userId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/friends", URLEncoder.encode(userId)), params);
 	}	
 	
 	/**
@@ -101,11 +103,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param userId A String id of a user.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUsersMayorships(String userId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/mayorships", URLEncoder.encode(userId)), null);
+	public Response getUsersMayorships(String userId) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/mayorships", URLEncoder.encode(userId)), null);
 	}
 	
 	/**
@@ -114,11 +116,11 @@ public class Foursquare extends AbstractClient {
 	 * @param userId A String id of a user.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/tips.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUsersTips(String userId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/tips", URLEncoder.encode(userId)), params);
+	public Response getUsersTips(String userId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/tips", URLEncoder.encode(userId)), params);
 	}
 	
 	/**
@@ -127,11 +129,11 @@ public class Foursquare extends AbstractClient {
 	 * @param userId A String id of a user.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/todos.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUsersToDos(String userId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/todos", URLEncoder.encode(userId)), params);
+	public Response getUsersToDos(String userId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/todos", URLEncoder.encode(userId)), params);
 	}
 	
 	/**
@@ -140,11 +142,11 @@ public class Foursquare extends AbstractClient {
 	 * @param userId A String id of a user.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/venuehistory.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getUsersVenueHistory(String userId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/venuehistory", URLEncoder.encode(userId)), params);
+	public Response getUsersVenueHistory(String userId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/venuehistory", URLEncoder.encode(userId)), params);
 	}
 	
 	/**
@@ -152,11 +154,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param userId A String id of a user whose friendship to request.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse sendFriendRequest(String userId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/request", URLEncoder.encode(userId)), null);
+	public Response sendFriendRequest(String userId) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/request", URLEncoder.encode(userId)), null);
 	}
 	
 	/**
@@ -164,11 +166,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param userId A String id of a user to unfriend.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse unfriendUser(String userId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/unfriend", URLEncoder.encode(userId)), null);
+	public Response unfriendUser(String userId) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/unfriend", URLEncoder.encode(userId)), null);
 	}
 	
 	/**
@@ -176,11 +178,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param userId A String id of a user whose friend request should be approved.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse approveFriendRequest(String userId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/approve", URLEncoder.encode(userId)), null);
+	public Response approveFriendRequest(String userId) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/approve", URLEncoder.encode(userId)), null);
 	}
 	
 	/**
@@ -188,11 +190,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param userId A String id of a user whose friend request should be denied.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse denyFriendRequest(String userId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/deny", URLEncoder.encode(userId)), null);
+	public Response denyFriendRequest(String userId) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/deny", URLEncoder.encode(userId)), null);
 	}
 	
 	/**
@@ -201,13 +203,13 @@ public class Foursquare extends AbstractClient {
 	 * @param userId A String id of a user whose friend request should be denied.
 	 * @param value A Boolean.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse setPings(String userId, boolean value) throws IOException {
+	public Response setPings(String userId, boolean value) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putBoolean("value", value);
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/users/%s/setpings", URLEncoder.encode(userId)), params);
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/setpings", URLEncoder.encode(userId)), params);
 	}
 	
 	// Venues endpoints
@@ -217,11 +219,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param venueId A String id of a venue.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getVenue(String venueId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/venues/%s", URLEncoder.encode(venueId)), null);
+	public Response getVenue(String venueId) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s", URLEncoder.encode(venueId)), null);
 	}
 	
 	/**
@@ -231,25 +233,25 @@ public class Foursquare extends AbstractClient {
 	 * @param latLon A String of the form lat,lon.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/add.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse addVenue(String name, String latLon, Bundle params) throws IOException {
+	public Response addVenue(String name, String latLon, Bundle params) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("name", name);
 		params.putString("ll", latLon);
-		return this.executeRequest(SGHttpMethod.POST, "/venues/add", params);
+		return this.executeRequest(Verb.POST, "/venues/add", params);
 	}
 	
 	/**
 	 * Get a list of venue categories.
 	 * 
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getCategories() throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, "/venues/categories", null);
+	public Response getCategories() throws IOException {
+		return this.executeRequest(Verb.GET, "/venues/categories", null);
 	}
 	
 	/**
@@ -258,13 +260,13 @@ public class Foursquare extends AbstractClient {
 	 * @param latLon A String of the form lat,lon.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/explore.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse exploreVenues(String latLon, Bundle params) throws IOException {
+	public Response exploreVenues(String latLon, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
-		return this.executeRequest(SGHttpMethod.GET, "/venues/explore", params);
+		return this.executeRequest(Verb.GET, "/venues/explore", params);
 	}
 	
 	/**
@@ -273,13 +275,13 @@ public class Foursquare extends AbstractClient {
 	 * @param latLon A String of the form lat,lon.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/search.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse searchVenues(String latLon, Bundle params) throws IOException {
+	public Response searchVenues(String latLon, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
-		return this.executeRequest(SGHttpMethod.GET, "/venues/explore", params);
+		return this.executeRequest(Verb.GET, "/venues/explore", params);
 	}
 		
 	/**
@@ -288,13 +290,13 @@ public class Foursquare extends AbstractClient {
 	 * @param latLon A String of the form lat,lon.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/trending.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse trendingVenues(String latLon, Bundle params) throws IOException {
+	public Response trendingVenues(String latLon, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
-		return this.executeRequest(SGHttpMethod.GET, "/venues/trending", params);
+		return this.executeRequest(Verb.GET, "/venues/trending", params);
 	}
 	
 	/**
@@ -303,11 +305,11 @@ public class Foursquare extends AbstractClient {
 	 * @param venueId A String id of the venue.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/herenow.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse hereNow(String venueId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/herenow", URLEncoder.encode(venueId)), params);
+	public Response hereNow(String venueId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/herenow", URLEncoder.encode(venueId)), params);
 	}
 	
 	/**
@@ -316,11 +318,11 @@ public class Foursquare extends AbstractClient {
 	 * @param venueId A String id of the venue.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/tips.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse venueTips(String venueId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/tips", URLEncoder.encode(venueId)), params);
+	public Response venueTips(String venueId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/tips", URLEncoder.encode(venueId)), params);
 	}
 	
 	/**
@@ -329,11 +331,11 @@ public class Foursquare extends AbstractClient {
 	 * @param venueId A String id of the venue.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/photos.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse venuePhotos(String venueId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/photos", URLEncoder.encode(venueId)), params);
+	public Response venuePhotos(String venueId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/photos", URLEncoder.encode(venueId)), params);
 	}
 	
 	/**
@@ -341,11 +343,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param venueId A String id of the venue.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse venueLinks(String venueId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/links", URLEncoder.encode(venueId)), null);
+	public Response venueLinks(String venueId) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/links", URLEncoder.encode(venueId)), null);
 	}
 	
 	/**
@@ -354,11 +356,11 @@ public class Foursquare extends AbstractClient {
 	 * @param venueId A String id of the venue.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/marktodo.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse markVenueToDo(String venueId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/marktodo", URLEncoder.encode(venueId)), params);
+	public Response markVenueToDo(String venueId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/marktodo", URLEncoder.encode(venueId)), params);
 	}
 		
 	/**
@@ -367,13 +369,13 @@ public class Foursquare extends AbstractClient {
 	 * @param venueId A String id of the venue.
 	 * @param problem A String problem that's one of mislocated, closed or duplicate.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse flagVenue(String venueId, String problem) throws IOException {
+	public Response flagVenue(String venueId, String problem) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("problem", problem);
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/flag", URLEncoder.encode(venueId)), params);
+		return this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/flag", URLEncoder.encode(venueId)), params);
 	}
 	
 	/**
@@ -382,11 +384,11 @@ public class Foursquare extends AbstractClient {
 	 * @param venueId A String id of the venue.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/edit.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse editVenue(String venueId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/edit", URLEncoder.encode(venueId)), params);
+	public Response editVenue(String venueId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/edit", URLEncoder.encode(venueId)), params);
 	}
 		
 	/**
@@ -395,11 +397,11 @@ public class Foursquare extends AbstractClient {
 	 * @param venueId A String id of the venue.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/proposeedit.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse proposeEditVenue(String venueId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/proposeedit", URLEncoder.encode(venueId)), params);
+	public Response proposeEditVenue(String venueId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/proposeedit", URLEncoder.encode(venueId)), params);
 	}
 	
 	// Checkins endpoints
@@ -410,11 +412,11 @@ public class Foursquare extends AbstractClient {
 	 * @param checkinId A string id of the checkin.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/checkins.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getCheckin(String checkinId, Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/checkins/%s", URLEncoder.encode(checkinId)), params);
+	public Response getCheckin(String checkinId, Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/checkins/%s", URLEncoder.encode(checkinId)), params);
 	}
 	
 	/**
@@ -424,14 +426,14 @@ public class Foursquare extends AbstractClient {
 	 * @param broadcast A String list telling foursquare who to tell about return this checkin.  private|public|public,facebook
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/add.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse checkin(String venueId, boolean broadcast, Bundle params) throws IOException {
+	public Response checkin(String venueId, boolean broadcast, Bundle params) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("venueId", venueId);
 		params.putBoolean("broadcast", broadcast);
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + "/checkins/add", params);
+		return this.executeRequest(Verb.POST, foursquareUrl + "/checkins/add", params);
 	}
 		
 	/**
@@ -441,14 +443,14 @@ public class Foursquare extends AbstractClient {
 	 * @param broadcast A String list telling foursquare who to tell about return this checkin.  private|public|public,facebook
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/add.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse checkinToVenueWithoutId(String venueName, boolean broadcast, Bundle params) throws IOException {
+	public Response checkinToVenueWithoutId(String venueName, boolean broadcast, Bundle params) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("venue", venueName);
 		params.putBoolean("broadcast", broadcast);
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + "/checkins/add", params);
+		return this.executeRequest(Verb.POST, foursquareUrl + "/checkins/add", params);
 	}
 		
 	/**
@@ -458,14 +460,14 @@ public class Foursquare extends AbstractClient {
 	 * @param broadcast A String list telling foursquare who to tell about return this checkin.  private|public|public,facebook
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/add.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse shout(String shout, boolean broadcast, Bundle params) throws IOException {
+	public Response shout(String shout, boolean broadcast, Bundle params) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("shout", shout);
 		params.putBoolean("broadcast", broadcast);
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + "/checkins/add", params);
+		return this.executeRequest(Verb.POST, foursquareUrl + "/checkins/add", params);
 	}
 	
 	/**
@@ -473,11 +475,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/recent.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getRecentCheckins(Bundle params) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + "/checkins/recent", params);
+	public Response getRecentCheckins(Bundle params) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + "/checkins/recent", params);
 	}
 	
 	/**
@@ -486,13 +488,13 @@ public class Foursquare extends AbstractClient {
 	 * @param checkinId A String id of a checkin.
 	 * @param text A String comment.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse commentOnCheckin(String checkinId, String text) throws IOException {
+	public Response commentOnCheckin(String checkinId, String text) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("text", text);
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/addcomment", URLEncoder.encode(checkinId)), params);
+		return this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/addcomment", URLEncoder.encode(checkinId)), params);
 	}
 	
 	/**
@@ -501,13 +503,13 @@ public class Foursquare extends AbstractClient {
 	 * @param checkinId A String id of a checkin.
 	 * @param commentId A String id of a comment.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse deleteComment(String checkinId, String commentId) throws IOException {
+	public Response deleteComment(String checkinId, String commentId) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("commentId", commentId);
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/deletecomment", URLEncoder.encode(checkinId)), params);
+		return this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/deletecomment", URLEncoder.encode(checkinId)), params);
 	}
 	
 	// Tips endpoints
@@ -517,11 +519,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param tipId A String id of the tip.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getTip(String tipId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/tips/%s", URLEncoder.encode(tipId)), null);
+	public Response getTip(String tipId) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/tips/%s", URLEncoder.encode(tipId)), null);
 	}
 	
 	/**
@@ -531,14 +533,14 @@ public class Foursquare extends AbstractClient {
 	 * @param text A String of the tip text.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/tips/add.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse addTip(String venueId, String text, Bundle params) throws IOException {
+	public Response addTip(String venueId, String text, Bundle params) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("venueId", venueId);
 		params.putString("text", text);
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + "/tips/add", params);
+		return this.executeRequest(Verb.POST, foursquareUrl + "/tips/add", params);
 	}
 		
 	/**
@@ -547,13 +549,13 @@ public class Foursquare extends AbstractClient {
 	 * @param latLon A String of the form lat,lon
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/tips/search.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse searchTips(String latLon, Bundle params) throws IOException {
+	public Response searchTips(String latLon, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + "/tips/search", params);
+		return this.executeRequest(Verb.GET, foursquareUrl + "/tips/search", params);
 	}
 	
 	/**
@@ -561,11 +563,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param tipId A String id of the tip.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse markTipToDo(String tipId) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/marktodo", URLEncoder.encode(tipId)), null);
+	public Response markTipToDo(String tipId) throws IOException {
+		return this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/marktodo", URLEncoder.encode(tipId)), null);
 	}
 	
 	/**
@@ -573,11 +575,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param tipId A String id of the tip.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse markTipDone(String tipId) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/markdone", URLEncoder.encode(tipId)), null);
+	public Response markTipDone(String tipId) throws IOException {
+		return this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/markdone", URLEncoder.encode(tipId)), null);
 	}
 		
 	/**
@@ -585,11 +587,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param tipId A String id of the tip.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse unmarkTip(String tipId) throws IOException {
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/unmark", URLEncoder.encode(tipId)), null);
+	public Response unmarkTip(String tipId) throws IOException {
+		return this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/unmark", URLEncoder.encode(tipId)), null);
 	}
 	
 	// Photos endpoints
@@ -599,11 +601,11 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param photoId A String id of the photo.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getPhoto(String photoId) throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/photos/%s", URLEncoder.encode(photoId)), null);
+	public Response getPhoto(String photoId) throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/photos/%s", URLEncoder.encode(photoId)), null);
 	}
 	
 	/**
@@ -613,14 +615,14 @@ public class Foursquare extends AbstractClient {
 	 * @param photo A Bitmap of the photo.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/photos/add.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse addPhotoToCheckin(String checkinId, Bitmap photo, Bundle params) throws IOException {
+	public Response addPhotoToCheckin(String checkinId, Bitmap photo, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("checkinId", checkinId);
 		params.putByteArray("image", Util.bitmapToByteArray(photo));
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + "/photos/add", params);
+		return this.executeRequest(Verb.POST, foursquareUrl + "/photos/add", params);
 	}
 		
 	/**
@@ -630,14 +632,14 @@ public class Foursquare extends AbstractClient {
 	 * @param photo A Bitmap of the photo.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/photos/add.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse addPhotoToVenue(String venueId, Bitmap photo, Bundle params) throws IOException {
+	public Response addPhotoToVenue(String venueId, Bitmap photo, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("venueId", venueId);
 		params.putByteArray("image", Util.bitmapToByteArray(photo));
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + "/photos/add", params);
+		return this.executeRequest(Verb.POST, foursquareUrl + "/photos/add", params);
 	}
 		
 	/**
@@ -647,14 +649,14 @@ public class Foursquare extends AbstractClient {
 	 * @param photo A Bitmap of the photo.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/photos/add.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse addPhotoToTip(String tipId, Bitmap photo, Bundle params) throws IOException {
+	public Response addPhotoToTip(String tipId, Bitmap photo, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("tipId", tipId);
 		params.putByteArray("image", Util.bitmapToByteArray(photo));
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + "/photos/add", params);
+		return this.executeRequest(Verb.POST, foursquareUrl + "/photos/add", params);
 	}
 	
 	// Settings endpoints
@@ -664,24 +666,24 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param setting A String of the name of the desired setting.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getSetting(String setting) throws IOException {
+	public Response getSetting(String setting) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("setting_id", setting);
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + "/settings/all", params);
+		return this.executeRequest(Verb.GET, foursquareUrl + "/settings/all", params);
 	}
 	
 	/**
 	 * Convenience method for grabbing all settings.
 	 * 
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getAllSettings() throws IOException {
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + "/settings/all", null);
+	public Response getAllSettings() throws IOException {
+		return this.executeRequest(Verb.GET, foursquareUrl + "/settings/all", null);
 	}
 	
 	/**
@@ -689,13 +691,13 @@ public class Foursquare extends AbstractClient {
 	 * @param setting A string name of the desired setting.
 	 * @param value A string value to set the setting to.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse setSetting(String setting, String value) throws IOException {
+	public Response setSetting(String setting, String value) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("value", value);
-		return this.executeRequest(SGHttpMethod.POST, foursquareUrl + String.format(Locale.US, "/settings/%s/set", URLEncoder.encode(setting)), params);
+		return this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/settings/%s/set", URLEncoder.encode(setting)), params);
 	}
 	
 	// Specials endpoints
@@ -706,13 +708,13 @@ public class Foursquare extends AbstractClient {
 	 * @param specialId A string of the id of the special.
 	 * @param venueId A string of the id of the venue.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse getSpecial(String specialId, String venueId) throws IOException {
+	public Response getSpecial(String specialId, String venueId) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("venueId", venueId);
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + String.format(Locale.US, "/specials/%s", URLEncoder.encode(specialId)), params);
+		return this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/specials/%s", URLEncoder.encode(specialId)), params);
 	}
 	
 	/**
@@ -721,13 +723,13 @@ public class Foursquare extends AbstractClient {
 	 * @param latLon A String of the form lat,lon
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/specials/specials.html">here</a>.
 	 * @param callback A {@link SGDelegate}.
-	 * @return {@link SGHttpResponse}
+	 * @return {@link Response}
 	 * @throws IOException 
 	 */
-	public SGHttpResponse searchSpecials(String latLon, Bundle params) throws IOException {
+	public Response searchSpecials(String latLon, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
-		return this.executeRequest(SGHttpMethod.GET, foursquareUrl + "/specials/search", params);
+		return this.executeRequest(Verb.GET, foursquareUrl + "/specials/search", params);
 	}
 	
 }

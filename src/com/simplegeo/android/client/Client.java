@@ -2,13 +2,13 @@ package com.simplegeo.android.client;
 
 import java.io.IOException;
 
-import android.os.Bundle;
+import org.scribe.model.Response;
+import org.scribe.model.Verb;
 
-import com.simplegeo.android.http.SGHttpMethod;
-import com.simplegeo.android.http.SGHttpResponse;
+import android.os.Bundle;
 
 public interface Client {
 
-	public SGHttpResponse executeRequest(SGHttpMethod httpMethod, String url,
+	public Response executeRequest(Verb httpMethod, String url,
 			Bundle params) throws IOException;
 }
