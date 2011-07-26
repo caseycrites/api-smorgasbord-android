@@ -1,8 +1,6 @@
 package com.simplegeo.android.util;
 
 import java.io.ByteArrayOutputStream;
-import java.net.URLEncoder;
-import java.util.Set;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
