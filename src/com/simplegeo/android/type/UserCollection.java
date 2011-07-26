@@ -6,18 +6,18 @@ import android.os.Bundle;
 
 public class UserCollection {
 
-	public static ArrayList<User> users;
+	public ArrayList<User> users;
 	
 	public UserCollection(ArrayList<User> users) {
 		this.users = users;
 	}
 
-	public static ArrayList<User> getUsers() {
-		return users;
+	public ArrayList<User> getUsers() {
+		return this.users;
 	}
 
-	public static void setUsers(ArrayList<User> users) {
-		UserCollection.users = users;
+	public void setUsers(ArrayList<User> users) {
+		this.users = users;
 	}
 	
 	public Bundle appendToBundle(Bundle params) {
