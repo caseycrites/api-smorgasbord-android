@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 public class UserCollection {
 
-	public ArrayList<User> users;
+	private ArrayList<User> users;
 	
 	public UserCollection(ArrayList<User> users) {
 		this.users = users;
