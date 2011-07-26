@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -87,10 +89,10 @@ public class OAuthConfig {
 	
 	private String generateOAuthSignature(SGHttpRequest request, Bundle params) {
 		StringBuffer baseBuf = new StringBuffer();
-		List<String> sortedKeys = asSortedList(params.keySet());
+		SortedSet<String> sortedKeys = new TreeSet<String>(params.keySet());
 		baseBuf.append(request.getRequest().getRequestMethod()+AMPERSAND+URLEncoder.encode(request.getRequest().getURL().toString())+AMPERSAND);
 		for (String key : sortedKeys) {
-			if (sortedKeys.indexOf(key) != 0) { baseBuf.append(AMPERSAND_ENCODED); }
+			if (!sortedKeys.first().equals(key)) { baseBuf.append(AMPERSAND_ENCODED); }
 			baseBuf.append(URLEncoder.encode(key)+EQUALS_ENCODED+URLEncoder.encode(params.getString(key)));
 		}
 		String base = baseBuf.toString();
@@ -114,22 +116,16 @@ public class OAuthConfig {
 	
 	private void addAuthHeader(SGHttpRequest request, Bundle params) {
 		StringBuffer headerValueBuf = new StringBuffer();
-		List<String> sortedKeys = asSortedList(params.keySet());
+		SortedSet<String> sortedKeys = new TreeSet<String>(params.keySet());
 		headerValueBuf.append("OAuth ");
 		for (String key : sortedKeys) {
-			if (sortedKeys.indexOf(key) != 0) { headerValueBuf.append(", "); }
+			if (!sortedKeys.first().equals(key)) { headerValueBuf.append(", "); }
 			headerValueBuf.append(URLEncoder.encode(key)+EQUALS+URLEncoder.encode(params.getString(key)));
 		}
 		String headerValue = headerValueBuf.toString();
 		request.setHeader("Authorization", headerValue);
 	}
-	
-	private static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
-		List<T> list = new ArrayList<T>(c);
-		java.util.Collections.sort(list);
-		return list;
-	}
-	
+
 	private Bundle generateOAuthParams() {
 		Bundle oAuthParams = new Bundle();
 		oAuthParams.putString("oauth_nonce", this.generateNonce());
