@@ -19,18 +19,23 @@ public abstract class AbstractClient implements Client {
 	
 	private OAuthCredentials credentials;
 	private OAuthService service;
-	
+
 	public AbstractClient(OAuthCredentials credentials, Class<? extends Api> clazz) {
+		this(credentials, clazz, "");
+	}
+		
+	public AbstractClient(OAuthCredentials credentials, Class<? extends Api> clazz, String redirectUrl) {
 		this.credentials = credentials;
-		createOAuthService(clazz);
+		createOAuthService(clazz, redirectUrl);
 	}
 	
-	private void createOAuthService(Class<? extends Api> clazz) {
-		this.service = new ServiceBuilder()
+	private void createOAuthService(Class<? extends Api> clazz, String redirectUrl) {
+		ServiceBuilder builder = new ServiceBuilder()
 							.provider(clazz)
 							.apiKey(credentials.getConsumerKey())
-							.apiSecret(credentials.getConsumerSecret())
-							.build();
+							.apiSecret(credentials.getConsumerSecret());
+		if (!"".equals(redirectUrl)) builder.callback(redirectUrl);
+		this.service = builder.build();
 	}
 	
 	/* (non-Javadoc)
@@ -81,4 +86,20 @@ public abstract class AbstractClient implements Client {
 		return request;
 	}
 
+	public OAuthCredentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(OAuthCredentials credentials) {
+		this.credentials = credentials;
+	}
+
+	public OAuthService getService() {
+		return service;
+	}
+
+	public void setService(OAuthService service) {
+		this.service = service;
+	}
+	
 }

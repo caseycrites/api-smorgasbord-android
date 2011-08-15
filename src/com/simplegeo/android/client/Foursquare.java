@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Locale;
 
-import org.scribe.builder.api.FoursquareApi;
+import org.scribe.builder.api.Foursquare2Api;
 import org.scribe.model.Response;
 import org.scribe.model.Verb;
 
@@ -20,8 +20,8 @@ public class Foursquare extends AbstractClient {
 	
 	private static final String foursquareUrl = "https://api.foursquare.com/v2";
 
-	public Foursquare(OAuthCredentials credentials) {
-		super(credentials, FoursquareApi.class);
+	public Foursquare(OAuthCredentials credentials, String redirectUrl) {
+		super(credentials, Foursquare2Api.class, redirectUrl);
 	}
 
 	// Users endpoints
