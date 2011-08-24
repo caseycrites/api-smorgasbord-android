@@ -22,8 +22,8 @@ public class Twitter extends AbstractClient {
 	
 	private static final String twitterUrl = "http://api.twitter.com/1";
 
-	public Twitter(OAuthCredentials credentials) {
-		super(credentials, TwitterApi.class);
+	public Twitter(OAuthCredentials credentials, String redirectUrl) {
+		super(credentials, TwitterApi.class, redirectUrl);
 	}
 	
 	/**
@@ -34,7 +34,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException
 	 */
 	public Response verifyCredentials(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/account/verify_credentials.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/account/verify_credentials.json", params, null);
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response rateLimitStatus() throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/account/rate_limit_status.json", null);
+		return this.executeRequest(Verb.GET, twitterUrl + "/account/rate_limit_status.json", null, null);
 	}
 		
 	/**
@@ -54,7 +54,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response totals() throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/account/totals.json", null);
+		return this.executeRequest(Verb.GET, twitterUrl + "/account/totals.json", null, null);
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getSettings() throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/account/settings.json", null);
+		return this.executeRequest(Verb.GET, twitterUrl + "/account/settings.json", null, null);
 	}
 		
 	/**
@@ -75,7 +75,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response setSettings(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/account/settings.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/account/settings.json", params, null);
 	}
 	
 	/**
@@ -156,7 +156,7 @@ public class Twitter extends AbstractClient {
 	public Response updateDeliveryDevice(String device, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("device", device);
-		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_delivery_device.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_delivery_device.json", params, null);
 	}
 	
 	/**
@@ -167,7 +167,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException
 	 */
 	public Response updateProfile(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile.json", params, null);
 	}
 	
 	/**
@@ -233,7 +233,7 @@ public class Twitter extends AbstractClient {
 	public Response updateProfileBackgroundImage(Bitmap image, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putByteArray("image", Util.bitmapToByteArray(image));
-		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_background_image.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_background_image.json", params, null);
 	}
 	
 	/**
@@ -244,7 +244,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response updateProfileColors(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_colors.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_colors.json", params, null);
 	}
 
 	/**
@@ -323,7 +323,7 @@ public class Twitter extends AbstractClient {
 	public Response updateProfileImage(Bitmap image, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putByteArray("image", Util.bitmapToByteArray(image));
-		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_image.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_image.json", params, null);
 	}
 	
 	// Block endpoints
@@ -336,7 +336,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getBlockedUsers(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking.json", params, null);
 	}
 	
 	/**
@@ -349,7 +349,7 @@ public class Twitter extends AbstractClient {
 	public Response getBlockedUsersIds(Boolean stringifyIds) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putBoolean("stringifyIds", stringifyIds);
-		return this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking/ids.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking/ids.json", params, null);
 	}
 	
 	/**
@@ -360,7 +360,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response doesBlockExist(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking/ids.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking/ids.json", params, null);
 	}
 	
 	/**
@@ -385,7 +385,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response block(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/blocks/create.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/blocks/create.json", params, null);
 	}
 	
 	/**
@@ -410,7 +410,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response unblock(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/blocks/destroy.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/blocks/destroy.json", params, null);
 	}
 	
 	/**
@@ -437,7 +437,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getDirectMessages(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/direct_messages.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/direct_messages.json", params, null);
 	}
 	
 	/**
@@ -476,7 +476,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getSentDirectMessages(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/direct_messages/sent.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/direct_messages/sent.json", params, null);
 	}
 	
 	/**
@@ -516,7 +516,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response destroyDirectMessage(String messageId, Bundle params) throws IOException {
-		return this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/direct_messages/destroy/%s.json", URLEncoder.encode(messageId)), params);
+		return this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/direct_messages/destroy/%s.json", URLEncoder.encode(messageId)), params, null);
 	}
 	
 	/**
@@ -530,7 +530,7 @@ public class Twitter extends AbstractClient {
 	public Response sendDirectMessage(String text, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("text", text);
-		return this.executeRequest(Verb.POST, twitterUrl + "/direct_messages/new.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/direct_messages/new.json", params, null);
 	}
 	
 	/**
@@ -556,7 +556,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getDirectMessage(String messageId) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + String.format(Locale.US, "/direct_messages/%s.json", URLEncoder.encode(messageId)), null);
+		return this.executeRequest(Verb.GET, twitterUrl + String.format(Locale.US, "/direct_messages/%s.json", URLEncoder.encode(messageId)), null, null);
 	}
 	
 	// Favorites endpoints
@@ -569,7 +569,7 @@ public class Twitter extends AbstractClient {
 	 * @return {@link Response}
 	 */
 	public Response getFavorites(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/favorites.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/favorites.json", params, null);
 	}
 	
 	/**
@@ -594,7 +594,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response favorite(String tweetId, Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + String.format(Locale.US, "/favorites/create/%s.json", URLEncoder.encode(tweetId)), params);
+		return this.executeRequest(Verb.POST, twitterUrl + String.format(Locale.US, "/favorites/create/%s.json", URLEncoder.encode(tweetId)), params, null);
 	}
 	
 	/**
@@ -606,7 +606,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response unfavorite(String tweetId, Bundle params) throws IOException {
-		return this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/favorites/destroy/%s.json", URLEncoder.encode(tweetId)), params);
+		return this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/favorites/destroy/%s.json", URLEncoder.encode(tweetId)), params, null);
 	}
 	
 	// Friend And Follower endpoints
@@ -619,7 +619,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getFollowersIds(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/followers/ids.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/followers/ids.json", params, null);
 	}
 
 	/**
@@ -644,7 +644,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getFriendsIds(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/friends/ids.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/friends/ids.json", params, null);
 	}
 
 	/**
@@ -669,7 +669,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response doesFriendshipExist(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/exists.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/exists.json", params, null);
 	}
 		
 	/**
@@ -694,7 +694,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getIncomingFriendRequests(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/incoming.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/incoming.json", params, null);
 	}
 
 	/**
@@ -705,7 +705,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getOutgoingFriendRequests(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/outgoing.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/outgoing.json", params, null);
 	}
 	
 	/**
@@ -716,7 +716,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response showFriendship(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/show.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/show.json", params, null);
 	}
 	
 	/**
@@ -727,7 +727,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response createFriendship(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/friendships/create.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/friendships/create.json", params, null);
 	}
 	
 	/**
@@ -752,7 +752,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response destroyFriendship(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/friendships/destroy.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/friendships/destroy.json", params, null);
 	}
 	
 	/**
@@ -777,7 +777,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response lookupFriendship(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/lookup.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/lookup.json", params, null);
 	}
 	
 	/**
@@ -802,7 +802,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response updateFriendship(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/friendships/update.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/friendships/update.json", params, null);
 	}
 	
 	/**
@@ -813,7 +813,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getNoRetweetIds(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/no_retweet_ids.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/friendships/no_retweet_ids.json", params, null);
 	}
 	
 	// List endpoints
@@ -826,7 +826,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getSubscribedLists(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/lists/all.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists/all.json", params, null);
 	}
 	
 	/**
@@ -851,7 +851,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getListStatuses(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/lists/statuses.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists/statuses.json", params, null);
 	}
 	
 	/**
@@ -876,7 +876,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response removeMemberFromList(Bundle params) throws IOException {
-		return this.executeRequest(Verb.DELETE, twitterUrl + "/lists/members/destroy.json", params);
+		return this.executeRequest(Verb.DELETE, twitterUrl + "/lists/members/destroy.json", params, null);
 	}
 
 	/**
@@ -904,7 +904,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getUsersListMemberships(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/lists/memberships.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists/memberships.json", params, null);
 	}
 	
 	/**
@@ -929,7 +929,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getListSubscribers(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/lists/subscribers.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists/subscribers.json", params, null);
 	}
 	
 	/**
@@ -954,7 +954,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response subscribeToList(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/lists/subscribers/create.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/lists/subscribers/create.json", params, null);
 	}
 	
 	/**
@@ -979,7 +979,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response isUserListSubscriber(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/lists/subscribers/show.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists/subscribers/show.json", params, null);
 	}
 	
 	/**
@@ -990,7 +990,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response unsubscribeFromList(Bundle params) throws IOException {
-		return this.executeRequest(Verb.DELETE, twitterUrl + "/lists/subscribers/destroy.json", params);
+		return this.executeRequest(Verb.DELETE, twitterUrl + "/lists/subscribers/destroy.json", params, null);
 	}
 	
 	/**
@@ -1015,7 +1015,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response addUsersToList(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/lists/members/create_all.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/lists/members/create_all.json", params, null);
 	}
 	
 	/**
@@ -1042,7 +1042,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response deleteList(Bundle params) throws IOException {
-		return this.executeRequest(Verb.DELETE, twitterUrl + "/lists/destroy.json", params);
+		return this.executeRequest(Verb.DELETE, twitterUrl + "/lists/destroy.json", params, null);
 	}
 		
 	/**
@@ -1067,7 +1067,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response updateList(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/lists/update.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/lists/update.json", params, null);
 	}
 	
 	/**
@@ -1093,7 +1093,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response createList(String name, Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/lists/create.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/lists/create.json", params, null);
 	}
 	
 	/**
@@ -1104,7 +1104,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getUsersLists(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/lists.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists.json", params, null);
 	}
 	
 	/**
@@ -1129,7 +1129,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getList(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/lists/show.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/lists/show.json", params, null);
 	}
 	
 	/**
@@ -1156,7 +1156,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response followNotifications(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/notifications/follow.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/notifications/follow.json", params, null);
 	}
 	
 	/**
@@ -1180,7 +1180,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response unfollowNotifications(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/notifications/leave.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/notifications/leave.json", params, null);
 	}
 	
 	/**
@@ -1206,7 +1206,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getPlace(String placeId) throws IOException {
-		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/geo/id/%s.json", URLEncoder.encode(placeId)), null);
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/geo/id/%s.json", URLEncoder.encode(placeId)), null, null);
 	}
 	
 	/**
@@ -1222,7 +1222,7 @@ public class Twitter extends AbstractClient {
 		params = Util.initBundle(params, 2);
 		params.putString("lat", lat);
 		params.putString("long", lon);
-		return this.executeRequest(Verb.GET, twitterUrl + "/geo/reverse_geocode.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/geo/reverse_geocode.json", params, null);
 	}
 	
 	/**
@@ -1233,7 +1233,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response searchNearby(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/geo/nearby_places.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/geo/nearby_places.json", params, null);
 	}
 	
 	/**
@@ -1251,7 +1251,7 @@ public class Twitter extends AbstractClient {
 		params.putString("lat", lat);
 		params.putString("long", lon);
 		params.putString("name", name);
-		return this.executeRequest(Verb.GET, twitterUrl + "/geo/similar_places.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/geo/similar_places.json", params, null);
 	}
 	
 	/**
@@ -1273,7 +1273,7 @@ public class Twitter extends AbstractClient {
 		params.putString("name", name);
 		params.putString("token", token);
 		params.putString("containedWithin", containedWithin);
-		return this.executeRequest(Verb.POST, twitterUrl + "/geo/place.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/geo/place.json", params, null);
 	}
 		
 	// Saved Searches endpoints
@@ -1285,7 +1285,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getSavedSearches() throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/saved_searches.json", null);
+		return this.executeRequest(Verb.GET, twitterUrl + "/saved_searches.json", null, null);
 	}
 	
 	/**
@@ -1296,7 +1296,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response showSavedSearch(String id) throws IOException {
-		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/saved_searches/show/%s.json", URLEncoder.encode(id)), null);
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/saved_searches/show/%s.json", URLEncoder.encode(id)), null, null);
 	}
 	
 	/**
@@ -1309,7 +1309,7 @@ public class Twitter extends AbstractClient {
 	public Response createSavedSearch(String query) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("query", query);
-		return this.executeRequest(Verb.POST, twitterUrl + "/saved_searches/create.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/saved_searches/create.json", params, null);
 	}
 		
 	/**
@@ -1320,7 +1320,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response deleteSavedSearch(String id) throws IOException {
-		return this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/saved_searches/destroy/%s.json", URLEncoder.encode(id)), null);
+		return this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/saved_searches/destroy/%s.json", URLEncoder.encode(id)), null, null);
 	}
 	
 	// Search endpoints
@@ -1336,7 +1336,7 @@ public class Twitter extends AbstractClient {
 	public Response search(String q, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("q", q);
-		return this.executeRequest(Verb.GET, twitterUrl + "/search.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/search.json", params, null);
 	}
 
 	// Spam Reporting endpoints
@@ -1349,7 +1349,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response reportSpam(Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, twitterUrl + "/report_spam.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/report_spam.json", params, null);
 	}
 	
 	/**
@@ -1375,7 +1375,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getTimeline(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/home_timeline.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/home_timeline.json", params, null);
 	}
 	
 	/**
@@ -1386,7 +1386,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getMentions(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/mentions.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/mentions.json", params, null);
 	}
 		
 	/**
@@ -1397,7 +1397,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getPublicStatuses(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/public_timeline.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/public_timeline.json", params, null);
 	}
 	
 	/**
@@ -1408,7 +1408,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getRetweetedByMe(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_by_me.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_by_me.json", params, null);
 	}
 	
 	/**
@@ -1419,7 +1419,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getRetweetedToMe(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_to_me.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_to_me.json", params, null);
 	}
 	
 	/**
@@ -1430,7 +1430,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getRetweetsOfMe(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweets_of_me.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweets_of_me.json", params, null);
 	}
 	
 	/**
@@ -1441,7 +1441,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getUserStatuses(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/user_timeline.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/user_timeline.json", params, null);
 	}
 		
 	/**
@@ -1466,7 +1466,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getRetweetedToUser(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_to_user.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_to_user.json", params, null);
 	}
 		
 	/**
@@ -1491,7 +1491,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getRetweetedByUser(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_by_user.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_by_user.json", params, null);
 	}
 		
 	/**
@@ -1518,7 +1518,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getLocalTrends(String whereOnEarthId) throws IOException {
-		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/trends/%s.json", URLEncoder.encode(whereOnEarthId)), null);
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/trends/%s.json", URLEncoder.encode(whereOnEarthId)), null, null);
 	}
 	
 	/**
@@ -1529,7 +1529,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getAvailableTrendLocations(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/trends/available.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/trends/available.json", params, null);
 	}
 		
 	/**
@@ -1539,7 +1539,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getTrends() throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/trends.json", null);
+		return this.executeRequest(Verb.GET, twitterUrl + "/trends.json", null, null);
 	}
 	
 	/**
@@ -1550,7 +1550,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getCurrentTrends(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/trends/current.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/trends/current.json", params, null);
 	}
 	
 	/**
@@ -1561,7 +1561,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getDailyTrends(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/trends/daily.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/trends/daily.json", params, null);
 	}
 	
 	/**
@@ -1572,7 +1572,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getWeeklyTrends(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/trends/weekly.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/trends/weekly.json", params, null);
 	}
 	
 	// Tweet endpoints
@@ -1586,7 +1586,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getRetweetedBy(String id, Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by.json", URLEncoder.encode(id)), params);
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by.json", URLEncoder.encode(id)), params, null);
 	}
 	
 	/**
@@ -1598,7 +1598,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getRetweetedByIds(String id, Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by/ids.json", URLEncoder.encode(id)), params);
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by/ids.json", URLEncoder.encode(id)), params, null);
 	}
 	
 	/**
@@ -1610,7 +1610,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getRetweets(String id, Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/retweets/%s.json", URLEncoder.encode(id)), params);
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/retweets/%s.json", URLEncoder.encode(id)), params, null);
 	}
 	
 	/**
@@ -1622,7 +1622,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getTweet(String id, Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/show/%s.json", URLEncoder.encode(id)), params);
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/show/%s.json", URLEncoder.encode(id)), params, null);
 	}
 	
 	/**
@@ -1634,7 +1634,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response deleteTweet(String id, Bundle params) throws IOException {
-		return this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/statuses/destroy/%s.json", URLEncoder.encode(id)), params);
+		return this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/statuses/destroy/%s.json", URLEncoder.encode(id)), params, null);
 	}
 	
 	/**
@@ -1646,7 +1646,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response retweet(String id, Bundle params) throws IOException {
-		return this.executeRequest(Verb.POST, String.format(Locale.US, twitterUrl + "/statuses/retweet/%s.json", URLEncoder.encode(id)), params);
+		return this.executeRequest(Verb.POST, String.format(Locale.US, twitterUrl + "/statuses/retweet/%s.json", URLEncoder.encode(id)), params, null);
 	}
 		
 	/**
@@ -1660,7 +1660,7 @@ public class Twitter extends AbstractClient {
 	public Response tweet(String text, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("text", text);
-		return this.executeRequest(Verb.POST, twitterUrl + "/statuses/update.json", params);
+		return this.executeRequest(Verb.POST, twitterUrl + "/statuses/update.json", params, null);
 	}
 	
 	// User endpoints
@@ -1673,7 +1673,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response lookupUsers(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/users/lookup.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/users/lookup.json", params, null);
 	}
 	
 	/**
@@ -1699,7 +1699,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getProfileImage(String screenName, Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/profile_image/%s.json", URLEncoder.encode(screenName)), params);
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/profile_image/%s.json", URLEncoder.encode(screenName)), params, null);
 	}
 	
 	/**
@@ -1713,7 +1713,7 @@ public class Twitter extends AbstractClient {
 	public Response searchUsers(String q, Bundle params) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("q", q);
-		return this.executeRequest(Verb.GET, twitterUrl + "/users/search.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/users/search.json", params, null);
 	}
 		
 	/**
@@ -1724,7 +1724,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getUser(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/users/show.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/users/show.json", params, null);
 	}
 	
 	/**
@@ -1749,7 +1749,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getContributees(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/users/contributees.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/users/contributees.json", params, null);
 	}
 	
 	/**
@@ -1774,7 +1774,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getContributors(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/users/contributors.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/users/contributors.json", params, null);
 	}
 	
 	/**
@@ -1799,7 +1799,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getSuggestedUsers(Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, twitterUrl + "/users/suggestions.json", params);
+		return this.executeRequest(Verb.GET, twitterUrl + "/users/suggestions.json", params, null);
 	}
 	
 	/**
@@ -1810,7 +1810,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getSuggestedUsers(String slug, Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s.json", URLEncoder.encode(slug)), params);
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s.json", URLEncoder.encode(slug)), params, null);
 	}
 		
 	/**
@@ -1821,7 +1821,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public Response getSuggestedUsersWithStatus(String slug, Bundle params) throws IOException {
-		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s/members.json", URLEncoder.encode(slug)), params);
+		return this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s/members.json", URLEncoder.encode(slug)), params, null);
 	}
 	
 }

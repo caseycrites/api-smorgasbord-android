@@ -39,24 +39,24 @@ public abstract class AbstractClient implements Client {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.simplegeo.android.client.Client#executeRequest(com.simplegeo.android.client.AbstractClient.SGHttpMethod, java.lang.String, android.os.Bundle, com.simplegeo.android.callback.SmorgasbordCallback)
+	 * @see com.simplegeo.android.client.Client#executeRequest(com.simplegeo.android.client.AbstractClient.SGHttpMethod, java.lang.String, android.os.Bundle)
 	 */
-	@Override
-	public Response executeRequest(Verb httpMethod, String url, Bundle params) throws IOException {
-		OAuthRequest request = buildRequest(httpMethod, url, params);
+	public Response executeRequest(Verb httpMethod, String url, Bundle params, String payload) throws IOException {
+		OAuthRequest request = buildRequest(httpMethod, url, params, payload);
 		request = signRequest(request);
 		return request.send();
 	}
-	
-	private OAuthRequest buildRequest(Verb httpMethod, String url, Bundle params) {
+
+	private OAuthRequest buildRequest(Verb httpMethod, String url, Bundle params, String payload) {
 		OAuthRequest request = new OAuthRequest(httpMethod, url);
 		switch (httpMethod) {
 			case GET:
-				request = addQueryParams(request, params);
+				if (params != null) request = addQueryParams(request, params);
 				break;
 			case PUT:
 			case POST:
-				request = addBodyParams(request, params);
+				if (params != null) request = addBodyParams(request, params);
+				if (!"".equals(payload) && payload != null) request.addPayload(payload);
 				break;
 			default:
 				break;

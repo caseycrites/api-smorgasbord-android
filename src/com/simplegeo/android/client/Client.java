@@ -10,5 +10,5 @@ import android.os.Bundle;
 public interface Client {
 
 	public Response executeRequest(Verb httpMethod, String url,
-			Bundle params) throws IOException;
+			Bundle params, String payload) throws IOException;
 }
