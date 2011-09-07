@@ -1,7 +1,11 @@
-package com.simplegeo.android.type;
+package com.simplegeo.android.types;
+
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 
-public class OAuthCredentials {
+public class OAuthCredentials implements Parcelable {
 	public static final String TAG = "OAuthConfig";
 
 	private String accessToken;
@@ -24,6 +28,10 @@ public class OAuthCredentials {
 		this.consumerSecret = consumerSecret;
 	}
 
+	private OAuthCredentials(Parcel in) {
+		readFromParcel(in);
+	}
+	
 	public String getAccessToken() {
 		return accessToken;
 	}
@@ -55,5 +63,37 @@ public class OAuthCredentials {
 	public void setConsumerSecret(String consumerSecret) {
 		this.consumerSecret = consumerSecret;
 	}
+	
+	// Parcelable interface
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(accessToken);
+		dest.writeString(accessSecret);
+		dest.writeString(consumerKey);
+		dest.writeString(consumerSecret);
+	}
+	
+	private void readFromParcel(Parcel in) {
+		accessToken = in.readString();
+		accessSecret = in.readString();
+		consumerKey = in.readString();
+		consumerSecret = in.readString();
+	}
+	
+	public static final Parcelable.Creator<OAuthCredentials> CREATOR = new Parcelable.Creator<OAuthCredentials>() {
+		public OAuthCredentials createFromParcel(Parcel in) {
+			return new OAuthCredentials(in);
+		}
+		
+		public OAuthCredentials[] newArray(int size) {
+			throw new UnsupportedOperationException();
+		}
+	};
 
 }

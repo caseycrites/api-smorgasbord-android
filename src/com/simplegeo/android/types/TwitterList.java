@@ -1,4 +1,4 @@
-package com.simplegeo.android.type;
+package com.simplegeo.android.types;
 
 import android.os.Bundle;
 
