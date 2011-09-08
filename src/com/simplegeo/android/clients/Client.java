@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.scribe.model.Verb;
 
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.Messenger;
 
 public interface Client {
 	
@@ -16,5 +16,5 @@ public interface Client {
 	}
 
 	public void executeRequest(Verb httpMethod, String url,
-			Bundle params, String payload, Handler handler) throws IOException;
+			Bundle params, String payload, Messenger messenger) throws IOException;
 }

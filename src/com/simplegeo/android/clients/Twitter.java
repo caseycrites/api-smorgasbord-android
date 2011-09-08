@@ -11,7 +11,7 @@ import org.scribe.model.Verb;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.Messenger;
 
 import com.simplegeo.android.types.OAuthCredentials;
 import com.simplegeo.android.types.TwitterList;
@@ -36,8 +36,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException
 	 */
-	public void verifyCredentials(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/account/verify_credentials.json", params, null, handler);
+	public void verifyCredentials(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/account/verify_credentials.json", params, null, messenger);
 	}
 	
 	/**
@@ -46,8 +46,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void rateLimitStatus(Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/account/rate_limit_status.json", null, null, handler);
+	public void rateLimitStatus(Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/account/rate_limit_status.json", null, null, messenger);
 	}
 		
 	/**
@@ -56,8 +56,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void totals(Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/account/totals.json", null, null, handler);
+	public void totals(Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/account/totals.json", null, null, messenger);
 	}
 	
 	/**
@@ -66,8 +66,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getSettings(Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/account/settings.json", null, null, handler);
+	public void getSettings(Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/account/settings.json", null, null, messenger);
 	}
 		
 	/**
@@ -77,8 +77,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void setSettings(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/account/settings.json", params, null, handler);
+	public void setSettings(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/account/settings.json", params, null, messenger);
 	}
 	
 	/**
@@ -88,10 +88,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException
 	 */
-	public void setTrendLocation(String trendLocation, Handler handler) throws IOException {
+	public void setTrendLocation(String trendLocation, Messenger messenger) throws IOException {
 		Bundle trendBundle = new Bundle(1);
 		trendBundle.putString("trend_location_woeid", trendLocation);
-		setSettings(trendBundle, handler);
+		setSettings(trendBundle, messenger);
 	}
 	
 	/**
@@ -102,12 +102,12 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void enableSleepTime(int startSleepTime, int endSleepTime, Handler handler) throws IOException {
+	public void enableSleepTime(int startSleepTime, int endSleepTime, Messenger messenger) throws IOException {
 		Bundle sleepBundle = new Bundle(3);
 		sleepBundle.putBoolean("sleep_time_enabled", true);
 		sleepBundle.putString("start_sleep_time", String.valueOf(startSleepTime));
 		sleepBundle.putString("end_sleep_time", String.valueOf(endSleepTime));
-		setSettings(sleepBundle, handler);
+		setSettings(sleepBundle, messenger);
 	}
 	
 	/**
@@ -116,10 +116,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException
 	 */
-	public void disableSleepTime(Handler handler) throws IOException {
+	public void disableSleepTime(Messenger messenger) throws IOException {
 		Bundle sleepBundle = new Bundle(1);
 		sleepBundle.putBoolean("sleep_time_enabled", false);
-		setSettings(sleepBundle, handler);
+		setSettings(sleepBundle, messenger);
 	}
 	
 	/**
@@ -129,10 +129,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException
 	 */
-	public void setTimeZone(String timeZone, Handler handler) throws IOException {
+	public void setTimeZone(String timeZone, Messenger messenger) throws IOException {
 		Bundle timeZoneBundle = new Bundle(1);
 		timeZoneBundle.putString("time_zone", timeZone);
-		setSettings(timeZoneBundle, handler);
+		setSettings(timeZoneBundle, messenger);
 	}
 		
 	/**
@@ -142,10 +142,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void setLanguage(String lang, Handler handler) throws IOException {
+	public void setLanguage(String lang, Messenger messenger) throws IOException {
 		Bundle langBundle = new Bundle(1);
 		langBundle.putString("lang", lang);
-		setSettings(langBundle, handler);
+		setSettings(langBundle, messenger);
 	}
 	
 	/**
@@ -156,10 +156,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateDeliveryDevice(String device, Bundle params, Handler handler) throws IOException {
+	public void updateDeliveryDevice(String device, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("device", device);
-		this.executeRequest(Verb.POST, twitterUrl + "/account/update_delivery_device.json", params, null, handler);
+		this.executeRequest(Verb.POST, twitterUrl + "/account/update_delivery_device.json", params, null, messenger);
 	}
 	
 	/**
@@ -169,8 +169,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException
 	 */
-	public void updateProfile(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile.json", params, null, handler);
+	public void updateProfile(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile.json", params, null, messenger);
 	}
 	
 	/**
@@ -180,10 +180,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateName(String name, Handler handler) throws IOException {
+	public void updateName(String name, Messenger messenger) throws IOException {
 		Bundle nameBundle = new Bundle(1);
 		nameBundle.putString("name", name);
-		updateProfile(nameBundle, handler);
+		updateProfile(nameBundle, messenger);
 	}
 		
 	/**
@@ -193,10 +193,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateUrl(String url, Handler handler) throws IOException {
+	public void updateUrl(String url, Messenger messenger) throws IOException {
 		Bundle urlBundle = new Bundle(1);
 		urlBundle.putString("url", url);
-		updateProfile(urlBundle, handler);
+		updateProfile(urlBundle, messenger);
 	}
 	
 	/**
@@ -206,10 +206,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateLocation(String location, Handler handler) throws IOException {
+	public void updateLocation(String location, Messenger messenger) throws IOException {
 		Bundle locationBundle = new Bundle(1);
 		locationBundle.putString("location", location);
-		updateProfile(locationBundle, handler);
+		updateProfile(locationBundle, messenger);
 	}
 		
 	/**
@@ -219,10 +219,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException
 	 */
-	public void updateDescription(String description, Handler handler) throws IOException {
+	public void updateDescription(String description, Messenger messenger) throws IOException {
 		Bundle descriptionBundle = new Bundle(1);
 		descriptionBundle.putString("description", description);
-		updateProfile(descriptionBundle, handler);
+		updateProfile(descriptionBundle, messenger);
 	}
 	
 	/**
@@ -233,10 +233,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateProfileBackgroundImage(Bitmap image, Bundle params, Handler handler) throws IOException {
+	public void updateProfileBackgroundImage(Bitmap image, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putByteArray("image", Util.bitmapToByteArray(image));
-		this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_background_image.json", params, null, handler);
+		this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_background_image.json", params, null, messenger);
 	}
 	
 	/**
@@ -246,8 +246,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateProfileColors(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_colors.json", params, null, handler);
+	public void updateProfileColors(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_colors.json", params, null, messenger);
 	}
 
 	/**
@@ -257,10 +257,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateProfileBackgroundColor(String backgroundColor, Handler handler) throws IOException {
+	public void updateProfileBackgroundColor(String backgroundColor, Messenger messenger) throws IOException {
 		Bundle bgBundle = new Bundle(1);
 		bgBundle.putString("profile_background_color", backgroundColor);
-		updateProfile(bgBundle, handler);
+		updateProfile(bgBundle, messenger);
 	}
 	
 	/**
@@ -270,10 +270,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateProfileLinkColor(String linkColor, Handler handler) throws IOException {
+	public void updateProfileLinkColor(String linkColor, Messenger messenger) throws IOException {
 		Bundle linkBundle = new Bundle(1);
 		linkBundle.putString("profile_link_color", linkColor);
-		updateProfile(linkBundle, handler);
+		updateProfile(linkBundle, messenger);
 	}
 	
 	/**
@@ -283,10 +283,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateProfileSidebarBorderColor(String borderColor, Handler handler) throws IOException {
+	public void updateProfileSidebarBorderColor(String borderColor, Messenger messenger) throws IOException {
 		Bundle borderBundle = new Bundle(1);
 		borderBundle.putString("profile_sidebar_border_color", borderColor);
-		updateProfile(borderBundle, handler);
+		updateProfile(borderBundle, messenger);
 	}
 	
 	/**
@@ -296,10 +296,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateProfileSidebarFillColor(String fillColor, Handler handler) throws IOException {
+	public void updateProfileSidebarFillColor(String fillColor, Messenger messenger) throws IOException {
 		Bundle fillBundle = new Bundle(1);
 		fillBundle.putString("profile_sidebar_fill_color", fillColor);
-		updateProfile(fillBundle, handler);
+		updateProfile(fillBundle, messenger);
 	}
 	
 	/**
@@ -309,10 +309,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateProfileTextColor(String textColor, Handler handler) throws IOException {
+	public void updateProfileTextColor(String textColor, Messenger messenger) throws IOException {
 		Bundle textBundle = new Bundle(1);
 		textBundle.putString("profile_text_color", textColor);
-		updateProfile(textBundle, handler);
+		updateProfile(textBundle, messenger);
 	}
 	
 	/**
@@ -323,10 +323,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateProfileImage(Bitmap image, Bundle params, Handler handler) throws IOException {
+	public void updateProfileImage(Bitmap image, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putByteArray("image", Util.bitmapToByteArray(image));
-		this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_image.json", params, null, handler);
+		this.executeRequest(Verb.POST, twitterUrl + "/account/update_profile_image.json", params, null, messenger);
 	}
 	
 	// Block endpoints
@@ -338,8 +338,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getBlockedUsers(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking.json", params, null, handler);
+	public void getBlockedUsers(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking.json", params, null, messenger);
 	}
 	
 	/**
@@ -349,10 +349,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getBlockedUsersIds(Boolean stringifyIds, Handler handler) throws IOException {
+	public void getBlockedUsersIds(Boolean stringifyIds, Messenger messenger) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putBoolean("stringifyIds", stringifyIds);
-		this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking/ids.json", params, null, handler);
+		this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking/ids.json", params, null, messenger);
 	}
 	
 	/**
@@ -362,8 +362,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void doesBlockExist(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking/ids.json", params, null, handler);
+	public void doesBlockExist(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/blocks/blocking/ids.json", params, null, messenger);
 	}
 	
 	/**
@@ -374,10 +374,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void doesBlockExist(User user, Bundle params, Handler handler) throws IOException {
+	public void doesBlockExist(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		doesBlockExist(params, handler);
+		doesBlockExist(params, messenger);
 	}
 
 	/**
@@ -387,8 +387,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void block(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/blocks/create.json", params, null, handler);
+	public void block(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/blocks/create.json", params, null, messenger);
 	}
 	
 	/**
@@ -399,10 +399,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void block(User user, Bundle params, Handler handler) throws IOException {
+	public void block(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		block(params, handler);
+		block(params, messenger);
 	}
 
 	/**
@@ -412,8 +412,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void unblock(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/blocks/destroy.json", params, null, handler);
+	public void unblock(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/blocks/destroy.json", params, null, messenger);
 	}
 	
 	/**
@@ -424,10 +424,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void unblock(User user, Bundle params, Handler handler) throws IOException {
+	public void unblock(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		unblock(params, handler);
+		unblock(params, messenger);
 	}
 
 	// Direct Message endpoints
@@ -439,8 +439,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getDirectMessages(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/direct_messages.json", params, null, handler);
+	public void getDirectMessages(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/direct_messages.json", params, null, messenger);
 	}
 	
 	/**
@@ -451,10 +451,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getDirectMessagesSince(String sinceId, Bundle params, Handler handler) throws IOException {
+	public void getDirectMessagesSince(String sinceId, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("since_id", sinceId);
-		getDirectMessages(params, handler);
+		getDirectMessages(params, messenger);
 	}
 	
 	/**
@@ -465,10 +465,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getDirectMessagesBefore(String maxId, Bundle params, Handler handler) throws IOException {
+	public void getDirectMessagesBefore(String maxId, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("max_id", maxId);
-		getDirectMessages(params, handler);
+		getDirectMessages(params, messenger);
 	}
 		
 	/**
@@ -478,8 +478,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getSentDirectMessages(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/direct_messages/sent.json", params, null, handler);
+	public void getSentDirectMessages(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/direct_messages/sent.json", params, null, messenger);
 	}
 	
 	/**
@@ -490,10 +490,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getSentDirectMessagesSince(String sinceId, Bundle params, Handler handler) throws IOException {
+	public void getSentDirectMessagesSince(String sinceId, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("since_id", sinceId);
-		getSentDirectMessages(params, handler);
+		getSentDirectMessages(params, messenger);
 	}
 	
 	/**
@@ -504,10 +504,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getSentDirectMessagesBefore(String maxId, Bundle params, Handler handler) throws IOException {
+	public void getSentDirectMessagesBefore(String maxId, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("max_id", maxId);
-		getSentDirectMessages(params, handler);
+		getSentDirectMessages(params, messenger);
 	}
 	
 	/**
@@ -518,8 +518,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void destroyDirectMessage(String messageId, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/direct_messages/destroy/%s.json", URLEncoder.encode(messageId)), params, null, handler);
+	public void destroyDirectMessage(String messageId, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/direct_messages/destroy/%s.json", URLEncoder.encode(messageId)), params, null, messenger);
 	}
 	
 	/**
@@ -530,10 +530,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void sendDirectMessage(String text, Bundle params, Handler handler) throws IOException {
+	public void sendDirectMessage(String text, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("text", text);
-		this.executeRequest(Verb.POST, twitterUrl + "/direct_messages/new.json", params, null, handler);
+		this.executeRequest(Verb.POST, twitterUrl + "/direct_messages/new.json", params, null, messenger);
 	}
 	
 	/**
@@ -545,10 +545,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void sendDirectMessage(User user, String text, Bundle params, Handler handler) throws IOException {
+	public void sendDirectMessage(User user, String text, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		sendDirectMessage(text, params, handler);
+		sendDirectMessage(text, params, messenger);
 	}
 
 	/**
@@ -558,8 +558,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getDirectMessage(String messageId, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + String.format(Locale.US, "/direct_messages/%s.json", URLEncoder.encode(messageId)), null, null, handler);
+	public void getDirectMessage(String messageId, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + String.format(Locale.US, "/direct_messages/%s.json", URLEncoder.encode(messageId)), null, null, messenger);
 	}
 	
 	// Favorites endpoints
@@ -571,8 +571,8 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 * @{@link void}
 	 */
-	public void getFavorites(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/favorites.json", params, null, handler);
+	public void getFavorites(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/favorites.json", params, null, messenger);
 	}
 	
 	/**
@@ -582,10 +582,10 @@ public class Twitter extends AbstractClient {
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">here</a>.
 	 * @throws IOException 
 	 */
-	public void getUserFavorites(User user, Bundle params, Handler handler) throws IOException {
+	public void getUserFavorites(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		getFavorites(params, handler);
+		getFavorites(params, messenger);
 	}
 	
 	/**
@@ -596,8 +596,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void favorite(String tweetId, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + String.format(Locale.US, "/favorites/create/%s.json", URLEncoder.encode(tweetId)), params, null, handler);
+	public void favorite(String tweetId, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + String.format(Locale.US, "/favorites/create/%s.json", URLEncoder.encode(tweetId)), params, null, messenger);
 	}
 	
 	/**
@@ -608,8 +608,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void unfavorite(String tweetId, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/favorites/destroy/%s.json", URLEncoder.encode(tweetId)), params, null, handler);
+	public void unfavorite(String tweetId, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/favorites/destroy/%s.json", URLEncoder.encode(tweetId)), params, null, messenger);
 	}
 	
 	// Friend And Follower endpoints
@@ -621,8 +621,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getFollowersIds(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/followers/ids.json", params, null, handler);
+	public void getFollowersIds(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/followers/ids.json", params, null, messenger);
 	}
 
 	/**
@@ -633,10 +633,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getFollowersIds(User user, Bundle params, Handler handler) throws IOException {
+	public void getFollowersIds(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		getFollowersIds(params, handler);
+		getFollowersIds(params, messenger);
 	}
 
 	/**
@@ -646,8 +646,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getFriendsIds(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/friends/ids.json", params, null, handler);
+	public void getFriendsIds(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/friends/ids.json", params, null, messenger);
 	}
 
 	/**
@@ -658,10 +658,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getFriendsIds(User user, Bundle params, Handler handler) throws IOException {
+	public void getFriendsIds(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		getFollowersIds(params, handler);
+		getFollowersIds(params, messenger);
 	}
 	
 	/**
@@ -671,8 +671,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void doesFriendshipExist(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/friendships/exists.json", params, null, handler);
+	public void doesFriendshipExist(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/friendships/exists.json", params, null, messenger);
 	}
 		
 	/**
@@ -682,11 +682,11 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void doesFriendshipExist(User userA, User userB, Bundle params, Handler handler) throws IOException {
+	public void doesFriendshipExist(User userA, User userB, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 2);
 		params = userA.appendToBundle(params);
 		params = userB.appendToBundle(params);
-		doesFriendshipExist(params, handler);
+		doesFriendshipExist(params, messenger);
 	}
 	
 	/**
@@ -696,8 +696,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getIncomingFriendRequests(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/friendships/incoming.json", params, null, handler);
+	public void getIncomingFriendRequests(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/friendships/incoming.json", params, null, messenger);
 	}
 
 	/**
@@ -707,8 +707,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getOutgoingFriendRequests(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/friendships/outgoing.json", params, null, handler);
+	public void getOutgoingFriendRequests(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/friendships/outgoing.json", params, null, messenger);
 	}
 	
 	/**
@@ -718,8 +718,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void showFriendship(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/friendships/show.json", params, null, handler);
+	public void showFriendship(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/friendships/show.json", params, null, messenger);
 	}
 	
 	/**
@@ -729,8 +729,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void createFriendship(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/friendships/create.json", params, null, handler);
+	public void createFriendship(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/friendships/create.json", params, null, messenger);
 	}
 	
 	/**
@@ -741,10 +741,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void createFriendship(User user, Bundle params, Handler handler) throws IOException {
+	public void createFriendship(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		createFriendship(params, handler);
+		createFriendship(params, messenger);
 	}
 	
 	/**
@@ -754,8 +754,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void destroyFriendship(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/friendships/destroy.json", params, null, handler);
+	public void destroyFriendship(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/friendships/destroy.json", params, null, messenger);
 	}
 	
 	/**
@@ -766,10 +766,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void destroyFriendship(User user, Bundle params, Handler handler) throws IOException {
+	public void destroyFriendship(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		destroyFriendship(params, handler);
+		destroyFriendship(params, messenger);
 	}
 	
 	/**
@@ -779,8 +779,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void lookupFriendship(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/friendships/lookup.json", params, null, handler);
+	public void lookupFriendship(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/friendships/lookup.json", params, null, messenger);
 	}
 	
 	/**
@@ -791,10 +791,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void lookupFriendship(UserCollection users, Bundle params, Handler handler) throws IOException {
+	public void lookupFriendship(UserCollection users, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = users.appendToBundle(params);
-		lookupFriendship(params, handler);
+		lookupFriendship(params, messenger);
 	}
 	
 	/**
@@ -804,8 +804,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateFriendship(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/friendships/update.json", params, null, handler);
+	public void updateFriendship(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/friendships/update.json", params, null, messenger);
 	}
 	
 	/**
@@ -815,8 +815,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getNoRetweetIds(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/friendships/no_retweet_ids.json", params, null, handler);
+	public void getNoRetweetIds(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/friendships/no_retweet_ids.json", params, null, messenger);
 	}
 	
 	// List endpoints
@@ -828,8 +828,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getSubscribedLists(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/lists/all.json", params, null, handler);
+	public void getSubscribedLists(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/lists/all.json", params, null, messenger);
 	}
 	
 	/**
@@ -840,10 +840,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getSubscribedLists(User user, Bundle params, Handler handler) throws IOException {
+	public void getSubscribedLists(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		getSubscribedLists(params, handler);
+		getSubscribedLists(params, messenger);
 	}
 	
 	/**
@@ -853,8 +853,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getListStatuses(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/lists/statuses.json", params, null, handler);
+	public void getListStatuses(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/lists/statuses.json", params, null, messenger);
 	}
 	
 	/**
@@ -865,10 +865,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getListStatuses(TwitterList list, Bundle params, Handler handler) throws IOException {
+	public void getListStatuses(TwitterList list, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
-		getListStatuses(params, handler);
+		getListStatuses(params, messenger);
 	}
 
 	/**
@@ -878,8 +878,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void removeMemberFromList(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.DELETE, twitterUrl + "/lists/members/destroy.json", params, null, handler);
+	public void removeMemberFromList(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.DELETE, twitterUrl + "/lists/members/destroy.json", params, null, messenger);
 	}
 
 	/**
@@ -891,12 +891,12 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void removeMemberFromList(TwitterList list, User user, Handler handler) throws IOException {
+	public void removeMemberFromList(TwitterList list, User user, Messenger messenger) throws IOException {
 		// TODO What's the smallest this Bundle can be and still fit everything?
 		Bundle params = new Bundle();
 		params = list.appendToBundle(params);
 		params = user.appendToBundle(params);
-		removeMemberFromList(params, handler);
+		removeMemberFromList(params, messenger);
 	}
 	
 	/**
@@ -906,8 +906,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUsersListMemberships(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/lists/memberships.json", params, null, handler);
+	public void getUsersListMemberships(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/lists/memberships.json", params, null, messenger);
 	}
 	
 	/**
@@ -918,10 +918,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUsersListMemberships(User user, Bundle params, Handler handler) throws IOException {
+	public void getUsersListMemberships(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		getUsersListMemberships(params, handler);
+		getUsersListMemberships(params, messenger);
 	}
 	
 	/**
@@ -931,8 +931,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getListSubscribers(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/lists/subscribers.json", params, null, handler);
+	public void getListSubscribers(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/lists/subscribers.json", params, null, messenger);
 	}
 	
 	/**
@@ -943,10 +943,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getListSubscribers(TwitterList list, Bundle params, Handler handler) throws IOException {
+	public void getListSubscribers(TwitterList list, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
-		getListSubscribers(params, handler);
+		getListSubscribers(params, messenger);
 	}
 
 	/**
@@ -956,8 +956,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void subscribeToList(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/lists/subscribers/create.json", params, null, handler);
+	public void subscribeToList(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/lists/subscribers/create.json", params, null, messenger);
 	}
 	
 	/**
@@ -968,10 +968,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void subscribeToList(TwitterList list, Bundle params, Handler handler) throws IOException {
+	public void subscribeToList(TwitterList list, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
-		subscribeToList(params, handler);
+		subscribeToList(params, messenger);
 	}
 
 	/**
@@ -981,8 +981,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void isUserListSubscriber(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/lists/subscribers/show.json", params, null, handler);
+	public void isUserListSubscriber(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/lists/subscribers/show.json", params, null, messenger);
 	}
 	
 	/**
@@ -992,8 +992,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void unsubscribeFromList(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.DELETE, twitterUrl + "/lists/subscribers/destroy.json", params, null, handler);
+	public void unsubscribeFromList(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.DELETE, twitterUrl + "/lists/subscribers/destroy.json", params, null, messenger);
 	}
 	
 	/**
@@ -1004,10 +1004,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void unsubscribeFromList(TwitterList list, Bundle params, Handler handler) throws IOException {
+	public void unsubscribeFromList(TwitterList list, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
-		unsubscribeFromList(params, handler);
+		unsubscribeFromList(params, messenger);
 	}
 
 	/**
@@ -1017,8 +1017,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void addUsersToList(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/lists/members/create_all.json", params, null, handler);
+	public void addUsersToList(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/lists/members/create_all.json", params, null, messenger);
 	}
 	
 	/**
@@ -1029,12 +1029,12 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void addUsersToList(TwitterList list, UserCollection users, Handler handler) throws IOException {
+	public void addUsersToList(TwitterList list, UserCollection users, Messenger messenger) throws IOException {
 		// TODO What's the smallest this Bundle can be?
 		Bundle params = new Bundle();
 		params = list.appendToBundle(params);
 		params = users.appendToBundle(params);
-		addUsersToList(params, handler);
+		addUsersToList(params, messenger);
 	}
 	
 	/**
@@ -1044,8 +1044,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void deleteList(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.DELETE, twitterUrl + "/lists/destroy.json", params, null, handler);
+	public void deleteList(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.DELETE, twitterUrl + "/lists/destroy.json", params, null, messenger);
 	}
 		
 	/**
@@ -1056,10 +1056,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void deleteList(TwitterList list, Bundle params, Handler handler) throws IOException {
+	public void deleteList(TwitterList list, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
-		deleteList(params, handler);
+		deleteList(params, messenger);
 	}
 
 	/**
@@ -1069,8 +1069,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateList(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/lists/update.json", params, null, handler);
+	public void updateList(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/lists/update.json", params, null, messenger);
 	}
 	
 	/**
@@ -1081,10 +1081,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void updateList(TwitterList list, Bundle params, Handler handler) throws IOException {
+	public void updateList(TwitterList list, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 2);
 		params = list.appendToBundle(params);
-		updateList(params, handler);
+		updateList(params, messenger);
 	}
 	
 	/**
@@ -1095,8 +1095,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void createList(String name, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/lists/create.json", params, null, handler);
+	public void createList(String name, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/lists/create.json", params, null, messenger);
 	}
 	
 	/**
@@ -1106,8 +1106,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUsersLists(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/lists.json", params, null, handler);
+	public void getUsersLists(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/lists.json", params, null, messenger);
 	}
 	
 	/**
@@ -1118,10 +1118,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUsersLists(User user, Bundle params, Handler handler) throws IOException {
+	public void getUsersLists(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		getUsersLists(params, handler);
+		getUsersLists(params, messenger);
 	}
 	
 	/**
@@ -1131,8 +1131,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getList(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/lists/show.json", params, null, handler);
+	public void getList(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/lists/show.json", params, null, messenger);
 	}
 	
 	/**
@@ -1143,10 +1143,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getList(TwitterList list, Bundle params, Handler handler) throws IOException {
+	public void getList(TwitterList list, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = list.appendToBundle(params);
-		getList(params, handler);
+		getList(params, messenger);
 	}
 		
 	// Notification endpoints
@@ -1158,8 +1158,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void followNotifications(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/notifications/follow.json", params, null, handler);
+	public void followNotifications(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/notifications/follow.json", params, null, messenger);
 	}
 	
 	/**
@@ -1169,10 +1169,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void followNotifications(User user, Handler handler) throws IOException {
+	public void followNotifications(User user, Messenger messenger) throws IOException {
 		Bundle params = new Bundle(1);
 		params = user.appendToBundle(params);
-		followNotifications(params, handler);
+		followNotifications(params, messenger);
 	}
 		
 	/**
@@ -1182,8 +1182,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void unfollowNotifications(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/notifications/leave.json", params, null, handler);
+	public void unfollowNotifications(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/notifications/leave.json", params, null, messenger);
 	}
 	
 	/**
@@ -1193,10 +1193,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void unfollowNotifications(User user, Handler handler) throws IOException {
+	public void unfollowNotifications(User user, Messenger messenger) throws IOException {
 		Bundle params = new Bundle(1);
 		params = user.appendToBundle(params);
-		unfollowNotifications(params, handler);
+		unfollowNotifications(params, messenger);
 	}
 	
 	// Places & Geo endpoints
@@ -1208,8 +1208,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getPlace(String placeId, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/geo/id/%s.json", URLEncoder.encode(placeId)), null, null, handler);
+	public void getPlace(String placeId, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/geo/id/%s.json", URLEncoder.encode(placeId)), null, null, messenger);
 	}
 	
 	/**
@@ -1221,11 +1221,11 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void reverseGeocode(String lat, String lon, Bundle params, Handler handler) throws IOException {
+	public void reverseGeocode(String lat, String lon, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("lat", lat);
 		params.putString("long", lon);
-		this.executeRequest(Verb.GET, twitterUrl + "/geo/reverse_geocode.json", params, null, handler);
+		this.executeRequest(Verb.GET, twitterUrl + "/geo/reverse_geocode.json", params, null, messenger);
 	}
 	
 	/**
@@ -1235,8 +1235,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void searchNearby(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/geo/nearby_places.json", params, null, handler);
+	public void searchNearby(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/geo/nearby_places.json", params, null, messenger);
 	}
 	
 	/**
@@ -1249,12 +1249,12 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void similarPlaces(String lat, String lon, String name, Bundle params, Handler handler) throws IOException {
+	public void similarPlaces(String lat, String lon, String name, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 3);
 		params.putString("lat", lat);
 		params.putString("long", lon);
 		params.putString("name", name);
-		this.executeRequest(Verb.GET, twitterUrl + "/geo/similar_places.json", params, null, handler);
+		this.executeRequest(Verb.GET, twitterUrl + "/geo/similar_places.json", params, null, messenger);
 	}
 	
 	/**
@@ -1269,14 +1269,14 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void createPlace(String name, String containedWithin, String token, String lat, String lon, Bundle params, Handler handler) throws IOException {
+	public void createPlace(String name, String containedWithin, String token, String lat, String lon, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 5);
 		params.putString("lat", lat);
 		params.putString("long", lon);
 		params.putString("name", name);
 		params.putString("token", token);
 		params.putString("containedWithin", containedWithin);
-		this.executeRequest(Verb.POST, twitterUrl + "/geo/place.json", params, null, handler);
+		this.executeRequest(Verb.POST, twitterUrl + "/geo/place.json", params, null, messenger);
 	}
 		
 	// Saved Searches endpoints
@@ -1287,8 +1287,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getSavedSearches(Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/saved_searches.json", null, null, handler);
+	public void getSavedSearches(Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/saved_searches.json", null, null, messenger);
 	}
 	
 	/**
@@ -1298,8 +1298,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void showSavedSearch(String id, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/saved_searches/show/%s.json", URLEncoder.encode(id)), null, null, handler);
+	public void showSavedSearch(String id, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/saved_searches/show/%s.json", URLEncoder.encode(id)), null, null, messenger);
 	}
 	
 	/**
@@ -1309,10 +1309,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void createSavedSearch(String query, Handler handler) throws IOException {
+	public void createSavedSearch(String query, Messenger messenger) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("query", query);
-		this.executeRequest(Verb.POST, twitterUrl + "/saved_searches/create.json", params, null, handler);
+		this.executeRequest(Verb.POST, twitterUrl + "/saved_searches/create.json", params, null, messenger);
 	}
 		
 	/**
@@ -1322,8 +1322,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void deleteSavedSearch(String id, Handler handler) throws IOException {
-		this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/saved_searches/destroy/%s.json", URLEncoder.encode(id)), null, null, handler);
+	public void deleteSavedSearch(String id, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/saved_searches/destroy/%s.json", URLEncoder.encode(id)), null, null, messenger);
 	}
 	
 	// Search endpoints
@@ -1336,10 +1336,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void search(String q, Bundle params, Handler handler) throws IOException {
+	public void search(String q, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("q", q);
-		this.executeRequest(Verb.GET, twitterUrl + "/search.json", params, null, handler);
+		this.executeRequest(Verb.GET, twitterUrl + "/search.json", params, null, messenger);
 	}
 
 	// Spam Reporting endpoints
@@ -1351,8 +1351,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void reportSpam(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + "/report_spam.json", params, null, handler);
+	public void reportSpam(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, twitterUrl + "/report_spam.json", params, null, messenger);
 	}
 	
 	/**
@@ -1362,10 +1362,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void reportSpam(User user, Handler handler) throws IOException {
+	public void reportSpam(User user, Messenger messenger) throws IOException {
 		Bundle params = new Bundle(1);
 		params = user.appendToBundle(params);
-		reportSpam(params, handler);
+		reportSpam(params, messenger);
 	}
 	
 	// Timeline endpoints
@@ -1377,8 +1377,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getTimeline(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/statuses/home_timeline.json", params, null, handler);
+	public void getTimeline(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/statuses/home_timeline.json", params, null, messenger);
 	}
 	
 	/**
@@ -1388,8 +1388,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getMentions(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/statuses/mentions.json", params, null, handler);
+	public void getMentions(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/statuses/mentions.json", params, null, messenger);
 	}
 		
 	/**
@@ -1399,8 +1399,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getPublicStatuses(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/statuses/public_timeline.json", params, null, handler);
+	public void getPublicStatuses(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/statuses/public_timeline.json", params, null, messenger);
 	}
 	
 	/**
@@ -1410,8 +1410,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getRetweetedByMe(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_by_me.json", params, null, handler);
+	public void getRetweetedByMe(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_by_me.json", params, null, messenger);
 	}
 	
 	/**
@@ -1421,8 +1421,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getRetweetedToMe(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_to_me.json", params, null, handler);
+	public void getRetweetedToMe(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_to_me.json", params, null, messenger);
 	}
 	
 	/**
@@ -1432,8 +1432,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getRetweetsOfMe(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweets_of_me.json", params, null, handler);
+	public void getRetweetsOfMe(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweets_of_me.json", params, null, messenger);
 	}
 	
 	/**
@@ -1443,8 +1443,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUserStatuses(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/statuses/user_timeline.json", params, null, handler);
+	public void getUserStatuses(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/statuses/user_timeline.json", params, null, messenger);
 	}
 		
 	/**
@@ -1455,10 +1455,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUserStatuses(User user, Bundle params, Handler handler) throws IOException {
+	public void getUserStatuses(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 0);
 		params = user.appendToBundle(params);
-		getUserStatuses(params, handler);
+		getUserStatuses(params, messenger);
 	}
 	
 	/**
@@ -1468,8 +1468,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getRetweetedToUser(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_to_user.json", params, null, handler);
+	public void getRetweetedToUser(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_to_user.json", params, null, messenger);
 	}
 		
 	/**
@@ -1480,10 +1480,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getRetweetedToUser(User user, Bundle params, Handler handler) throws IOException {
+	public void getRetweetedToUser(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 0);
 		params = user.appendToBundle(params);
-		getRetweetedToUser(params, handler);
+		getRetweetedToUser(params, messenger);
 	}
 		
 	/**
@@ -1493,8 +1493,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getRetweetedByUser(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_by_user.json", params, null, handler);
+	public void getRetweetedByUser(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/statuses/retweeted_by_user.json", params, null, messenger);
 	}
 		
 	/**
@@ -1505,10 +1505,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getRetweetedByUser(User user, Bundle params, Handler handler) throws IOException {
+	public void getRetweetedByUser(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 0);
 		params = user.appendToBundle(params);
-		getRetweetedByUser(params, handler);
+		getRetweetedByUser(params, messenger);
 	}
 	
 	// Trends & Local Trends endpoints
@@ -1520,8 +1520,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getLocalTrends(String whereOnEarthId, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/trends/%s.json", URLEncoder.encode(whereOnEarthId)), null, null, handler);
+	public void getLocalTrends(String whereOnEarthId, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/trends/%s.json", URLEncoder.encode(whereOnEarthId)), null, null, messenger);
 	}
 	
 	/**
@@ -1531,8 +1531,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getAvailableTrendLocations(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/trends/available.json", params, null, handler);
+	public void getAvailableTrendLocations(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/trends/available.json", params, null, messenger);
 	}
 		
 	/**
@@ -1541,8 +1541,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getTrends(Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/trends.json", null, null, handler);
+	public void getTrends(Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/trends.json", null, null, messenger);
 	}
 	
 	/**
@@ -1552,8 +1552,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getCurrentTrends(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/trends/current.json", params, null, handler);
+	public void getCurrentTrends(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/trends/current.json", params, null, messenger);
 	}
 	
 	/**
@@ -1563,8 +1563,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getDailyTrends(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/trends/daily.json", params, null, handler);
+	public void getDailyTrends(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/trends/daily.json", params, null, messenger);
 	}
 	
 	/**
@@ -1574,8 +1574,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getWeeklyTrends(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/trends/weekly.json", params, null, handler);
+	public void getWeeklyTrends(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/trends/weekly.json", params, null, messenger);
 	}
 	
 	// Tweet endpoints
@@ -1588,8 +1588,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getRetweetedBy(String id, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by.json", URLEncoder.encode(id)), params, null, handler);
+	public void getRetweetedBy(String id, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by.json", URLEncoder.encode(id)), params, null, messenger);
 	}
 	
 	/**
@@ -1600,8 +1600,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getRetweetedByIds(String id, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by/ids.json", URLEncoder.encode(id)), params, null, handler);
+	public void getRetweetedByIds(String id, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by/ids.json", URLEncoder.encode(id)), params, null, messenger);
 	}
 	
 	/**
@@ -1612,8 +1612,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getRetweets(String id, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/retweets/%s.json", URLEncoder.encode(id)), params, null, handler);
+	public void getRetweets(String id, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/retweets/%s.json", URLEncoder.encode(id)), params, null, messenger);
 	}
 	
 	/**
@@ -1624,8 +1624,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getTweet(String id, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/show/%s.json", URLEncoder.encode(id)), params, null, handler);
+	public void getTweet(String id, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/show/%s.json", URLEncoder.encode(id)), params, null, messenger);
 	}
 	
 	/**
@@ -1636,8 +1636,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void deleteTweet(String id, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/statuses/destroy/%s.json", URLEncoder.encode(id)), params, null, handler);
+	public void deleteTweet(String id, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/statuses/destroy/%s.json", URLEncoder.encode(id)), params, null, messenger);
 	}
 	
 	/**
@@ -1648,8 +1648,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void retweet(String id, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.POST, String.format(Locale.US, twitterUrl + "/statuses/retweet/%s.json", URLEncoder.encode(id)), params, null, handler);
+	public void retweet(String id, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.POST, String.format(Locale.US, twitterUrl + "/statuses/retweet/%s.json", URLEncoder.encode(id)), params, null, messenger);
 	}
 		
 	/**
@@ -1660,10 +1660,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void tweet(String text, Bundle params, Handler handler) throws IOException {
+	public void tweet(String text, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("text", text);
-		this.executeRequest(Verb.POST, twitterUrl + "/statuses/update.json", params, null, handler);
+		this.executeRequest(Verb.POST, twitterUrl + "/statuses/update.json", params, null, messenger);
 	}
 	
 	// User endpoints
@@ -1675,8 +1675,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void lookupUsers(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/users/lookup.json", params, null, handler);
+	public void lookupUsers(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/users/lookup.json", params, null, messenger);
 	}
 	
 	/**
@@ -1687,10 +1687,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void lookupUsers(UserCollection users, Bundle params, Handler handler) throws IOException {
+	public void lookupUsers(UserCollection users, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 2);
 		params = users.appendToBundle(params);
-		lookupUsers(params, handler);
+		lookupUsers(params, messenger);
 	}
 	
 	/**
@@ -1701,8 +1701,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getProfileImage(String screenName, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/profile_image/%s.json", URLEncoder.encode(screenName)), params, null, handler);
+	public void getProfileImage(String screenName, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/profile_image/%s.json", URLEncoder.encode(screenName)), params, null, messenger);
 	}
 	
 	/**
@@ -1713,10 +1713,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void searchUsers(String q, Bundle params, Handler handler) throws IOException {
+	public void searchUsers(String q, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("q", q);
-		this.executeRequest(Verb.GET, twitterUrl + "/users/search.json", params, null, handler);
+		this.executeRequest(Verb.GET, twitterUrl + "/users/search.json", params, null, messenger);
 	}
 		
 	/**
@@ -1726,8 +1726,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUser(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/users/show.json", params, null, handler);
+	public void getUser(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/users/show.json", params, null, messenger);
 	}
 	
 	/**
@@ -1738,10 +1738,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUser(User user, Bundle params, Handler handler) throws IOException {
+	public void getUser(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		getUser(params, handler);
+		getUser(params, messenger);
 	}
 	
 	/**
@@ -1751,8 +1751,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getContributees(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/users/contributees.json", params, null, handler);
+	public void getContributees(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/users/contributees.json", params, null, messenger);
 	}
 	
 	/**
@@ -1763,10 +1763,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getContributees(User user, Bundle params, Handler handler) throws IOException {
+	public void getContributees(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		getContributees(params, handler);
+		getContributees(params, messenger);
 	}
 	
 	/**
@@ -1776,8 +1776,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getContributors(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/users/contributors.json", params, null, handler);
+	public void getContributors(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/users/contributors.json", params, null, messenger);
 	}
 	
 	/**
@@ -1788,10 +1788,10 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getContributors(User user, Bundle params, Handler handler) throws IOException {
+	public void getContributors(User user, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
 		params = user.appendToBundle(params);
-		getContributors(params, handler);
+		getContributors(params, messenger);
 	}
 	
 	/**
@@ -1801,8 +1801,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getSuggestedUsers(Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + "/users/suggestions.json", params, null, handler);
+	public void getSuggestedUsers(Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, twitterUrl + "/users/suggestions.json", params, null, messenger);
 	}
 	
 	/**
@@ -1812,8 +1812,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getSuggestedUsers(String slug, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s.json", URLEncoder.encode(slug)), params, null, handler);
+	public void getSuggestedUsers(String slug, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s.json", URLEncoder.encode(slug)), params, null, messenger);
 	}
 		
 	/**
@@ -1823,8 +1823,8 @@ public class Twitter extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getSuggestedUsersWithStatus(String slug, Bundle params, Handler handler) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s/members.json", URLEncoder.encode(slug)), params, null, handler);
+	public void getSuggestedUsersWithStatus(String slug, Bundle params, Messenger messenger) throws IOException {
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s/members.json", URLEncoder.encode(slug)), params, null, messenger);
 	}
 
 	@Override

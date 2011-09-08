@@ -30,10 +30,7 @@ public abstract class AbstractClient implements Client {
 		this.context = context;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.simplegeo.android.client.Client#executeRequest(com.simplegeo.android.client.AbstractClient.SGHttpMethod, java.lang.String, android.os.Bundle)
-	 */
-	public void executeRequest(Verb httpMethod, String url, Bundle params, String payload, Handler handler) throws IOException {
+	public void executeRequest(Verb httpMethod, String url, Bundle params, String payload, Messenger messenger) throws IOException {
 		Intent intent = new Intent(context, HttpRequestService.class);
 		
 		Bundle extras = new Bundle();
@@ -42,10 +39,42 @@ public abstract class AbstractClient implements Client {
 		extras.putString("url", url);
 		if (payload != null && !"".equals(payload)) extras.putString("payload", payload);
 		if (params != null) extras.putBundle("params", params);
-		extras.putParcelable("messenger", new Messenger(handler));
+		extras.putParcelable("messenger", messenger);
 		extras.putParcelable("credentials", credentials);
 		extras.putSerializable("clazz", clazz);
 		extras.putString("redirectUrl", redirectUrl);
+		
+		intent.putExtras(extras);
+		
+		context.startService(intent);
+	}
+	
+	public void getRequestToken(Messenger messenger) {
+		Intent intent = new Intent(context, HttpRequestService.class);
+		
+		Bundle extras = new Bundle();
+		extras.putSerializable("requestType", RequestType.REQUEST_TOKEN);
+		extras.putParcelable("messenger", messenger);
+		extras.putParcelable("credentials", credentials);
+		extras.putSerializable("clazz", clazz);
+		extras.putString("redirectUrl", redirectUrl);
+		
+		intent.putExtras(extras);
+		
+		context.startService(intent);
+	}
+	
+	public void getAccessToken(Token requestToken, String verifierCode, Messenger messenger) {
+		Intent intent = new Intent(context, HttpRequestService.class);
+		
+		Bundle extras = new Bundle();
+		extras.putSerializable("requestType", RequestType.ACCESS_TOKEN);
+		extras.putParcelable("messenger", messenger);
+		extras.putParcelable("credentials", credentials);
+		extras.putSerializable("clazz", clazz);
+		extras.putString("redirectUrl", redirectUrl);
+		extras.putSerializable("token", requestToken);
+		extras.putString("verifierCode", verifierCode);
 		
 		intent.putExtras(extras);
 		
@@ -58,38 +87,6 @@ public abstract class AbstractClient implements Client {
 
 	public void setCredentials(OAuthCredentials credentials) {
 		this.credentials = credentials;
-	}
-	
-	public void getRequestToken(Handler handler) {
-		Intent intent = new Intent(context, HttpRequestService.class);
-		
-		Bundle extras = new Bundle();
-		extras.putSerializable("requestType", RequestType.REQUEST_TOKEN);
-		extras.putParcelable("messenger", new Messenger(handler));
-		extras.putParcelable("credentials", credentials);
-		extras.putSerializable("class", clazz);
-		extras.putString("redirectUrl", redirectUrl);
-		
-		intent.putExtras(extras);
-		
-		context.startService(intent);
-	}
-	
-	public void getAccessToken(Token requestToken, String verifierCode, Handler handler) {
-		Intent intent = new Intent(context, HttpRequestService.class);
-		
-		Bundle extras = new Bundle();
-		extras.putSerializable("requestType", RequestType.ACCESS_TOKEN);
-		extras.putParcelable("messenger", new Messenger(handler));
-		extras.putParcelable("credentials", credentials);
-		extras.putSerializable("class", clazz);
-		extras.putString("redirectUrl", redirectUrl);
-		extras.putSerializable("token", requestToken);
-		extras.putString("verifierCode", verifierCode);
-		
-		intent.putExtras(extras);
-		
-		context.startService(intent);
 	}
 	
 	public abstract String getAuthorizationUrl(Bundle params);
