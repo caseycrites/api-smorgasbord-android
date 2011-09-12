@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import org.scribe.builder.api.Foursquare2Api;
 import org.scribe.model.Verb;
+import org.scribe.utils.URLUtils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -736,7 +737,7 @@ public class Foursquare extends AbstractClient {
 
 	@Override
 	public String getAuthorizationUrl(Bundle params) {
-		return String.format(Locale.US, authorizationUrl, params.getString("clientId"), params.getString("redirectUri"));
+		return String.format(Locale.US, authorizationUrl, params.getString("apiKey"), URLUtils.formURLEncode(params.getString("redirectUri")));
 	}
 	
 }

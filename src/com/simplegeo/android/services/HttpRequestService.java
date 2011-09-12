@@ -97,12 +97,15 @@ public class HttpRequestService extends IntentService {
 	private Message doApiCall(OAuthService service, OAuthCredentials credentials, Bundle extras, Messenger messenger) {
 		Verb httpMethod = (Verb) extras.getSerializable("httpMethod");
 		String url = extras.getString("url");
+		Log.d(TAG, url);
 		Bundle params = extras.getBundle("params") != null ? extras.getBundle("params") : new Bundle();
 		String payload = extras.getString("payload") != null ? extras.getString("payload") : "";
 		
 		OAuthRequest request = buildRequest(httpMethod, url, params, payload);
 		request = signRequest(service, request, credentials);
 		Response response = request.send();
+		Log.d(TAG, response.getBody());
+		Log.d(TAG, String.valueOf(response.getCode()));
 		
 		Message msg = new Message();
 		Bundle msgData = new Bundle();

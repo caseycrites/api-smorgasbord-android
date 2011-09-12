@@ -23,7 +23,7 @@ public class Twitter extends AbstractClient {
 	public static final String TAG = "Twitter";
 	
 	private static final String twitterUrl = "http://api.twitter.com/1";
-	private String authorizationUrl = "https://api.twitter.com/oauth/authorize?oauth_token=%s";
+	private String authorizationUrl = "https://api.twitter.com/oauth/authorize?oauth_token=%s&response=code";
 
 	public Twitter(OAuthCredentials credentials, String redirectUrl, Context context) {
 		super(credentials, TwitterApi.class, redirectUrl, context);
@@ -1655,14 +1655,14 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Tweet.
 	 * 
-	 * @param text A String status.
+	 * @param status A String status.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid">here</a>.
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void tweet(String text, Bundle params, Messenger messenger) throws IOException {
+	public void tweet(String status, Bundle params, Messenger messenger) throws IOException {
 		params = Util.initBundle(params, 1);
-		params.putString("text", text);
+		params.putString("status", status);
 		this.executeRequest(Verb.POST, twitterUrl + "/statuses/update.json", params, null, messenger);
 	}
 	
