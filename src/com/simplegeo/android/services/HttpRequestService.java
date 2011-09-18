@@ -25,6 +25,8 @@ import com.simplegeo.android.types.OAuthCredentials;
 public class HttpRequestService extends IntentService {
 	private final static String TAG = HttpRequestService.class.getSimpleName();
 	
+	private final static int maxAttempts = 3;
+	
 	public HttpRequestService() {
 		super(TAG);
 	}
@@ -75,9 +77,10 @@ public class HttpRequestService extends IntentService {
 		
 		Token token = service.getAccessToken(reqToken, verifier);
 		
-		Message msg = new Message();
+		Message msg = Message.obtain();
 		Bundle msgData = new Bundle();
 		msgData.putSerializable("token", token);
+		msgData.putBoolean("success", true);
 		msg.setData(msgData);
 		
 		return msg;
@@ -86,9 +89,10 @@ public class HttpRequestService extends IntentService {
 	private Message getRequestToken(OAuthService service, Bundle extras) {
 		Token token = service.getRequestToken();
 		
-		Message msg = new Message();
+		Message msg = Message.obtain();
 		Bundle msgData = new Bundle();
 		msgData.putSerializable("token", token);
+		msgData.putBoolean("success", true);
 		msg.setData(msgData);
 		
 		return msg;
@@ -97,20 +101,33 @@ public class HttpRequestService extends IntentService {
 	private Message doApiCall(OAuthService service, OAuthCredentials credentials, Bundle extras, Messenger messenger) {
 		Verb httpMethod = (Verb) extras.getSerializable("httpMethod");
 		String url = extras.getString("url");
-		Log.d(TAG, url);
 		Bundle params = extras.getBundle("params") != null ? extras.getBundle("params") : new Bundle();
 		String payload = extras.getString("payload") != null ? extras.getString("payload") : "";
 		
 		OAuthRequest request = buildRequest(httpMethod, url, params, payload);
 		request = signRequest(service, request, credentials);
-		Response response = request.send();
-		Log.d(TAG, response.getBody());
-		Log.d(TAG, String.valueOf(response.getCode()));
 		
-		Message msg = new Message();
+		Message msg = Message.obtain();
 		Bundle msgData = new Bundle();
-		msgData.putInt("responseCode", response.getCode());
-		msgData.putString("responseBody", response.getBody());
+		int responseCode = 0;
+		String responseBody = "";
+		int attempts = 1;
+		while (shouldRetry(responseCode) && attempts <= maxAttempts) {
+			try {
+				Response response = request.send();
+				responseCode = response.getCode();
+				responseBody = response.getBody();
+				msgData.putBoolean("success", true);
+			} catch (RuntimeException e) {
+				// The internal client is catching these messages, so whether we pass back the error message in the responseBody
+				// is questionable.
+				responseBody = e.getMessage();
+			}
+			++attempts;
+		}
+		
+		msgData.putInt("responseCode", responseCode);
+		msgData.putString("responseBody", responseBody);
 		msg.setData(msgData);
 		
 		return msg;
@@ -165,6 +182,11 @@ public class HttpRequestService extends IntentService {
 				credentials.getAccessSecret() == null ? "" : credentials.getAccessSecret());
 		service.signRequest(token, request);
 		return request;
+	}
+	
+	private boolean shouldRetry(int statusCode) {
+		if (statusCode == 0 || statusCode == 408 || statusCode >= 500) return true;
+		return false;
 	}
 
 }

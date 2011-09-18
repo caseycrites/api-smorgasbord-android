@@ -5,7 +5,8 @@ import java.io.IOException;
 import org.scribe.model.Verb;
 
 import android.os.Bundle;
-import android.os.Messenger;
+
+import com.simplegeo.android.util.SGListener;
 
 public interface Client {
 	
@@ -16,5 +17,5 @@ public interface Client {
 	}
 
 	public void executeRequest(Verb httpMethod, String url,
-			Bundle params, String payload, Messenger messenger) throws IOException;
+			Bundle params, String payload, SGListener listener) throws IOException;
 }

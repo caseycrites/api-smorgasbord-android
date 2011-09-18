@@ -12,13 +12,13 @@ import org.scribe.utils.URLUtils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Messenger;
 
 import com.simplegeo.android.types.OAuthCredentials;
+import com.simplegeo.android.util.SGListener;
 import com.simplegeo.android.util.Util;
 
 public class Foursquare extends AbstractClient {
-	public static final String TAG = "Foursquare";
+	public static final String TAG = Foursquare.class.getSimpleName();
 	
 	private static final String foursquareUrl = "https://api.foursquare.com/v2";
 	private String authorizationUrl = "https://foursquare.com/oauth2/authenticate?client_id=%s&response_type=code&redirect_uri=%s";
@@ -37,8 +37,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUser(String userId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s", URLEncoder.encode(userId)), null, null, messenger);
+	public void getUser(String userId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s", URLEncoder.encode(userId)), null, null, listener);
 	}
 	
 	/**
@@ -49,8 +49,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getLeaderboard(Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, "/users/leaderboard", params, null, messenger);
+	public void getLeaderboard(Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, "/users/leaderboard", params, null, listener);
 	}
 		
 	/**
@@ -60,8 +60,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getFriendRequests(Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, "/users/requests", null, null, messenger);
+	public void getFriendRequests(SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, "/users/requests", null, null, listener);
 	}
 		
 	/**
@@ -72,8 +72,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUsersBadges(String userId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/badges", URLEncoder.encode(userId)), null, null, messenger);
+	public void getUsersBadges(String userId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/badges", URLEncoder.encode(userId)), null, null, listener);
 	}
 	
 	/**
@@ -84,8 +84,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUsersCheckins(String userId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/checkins", URLEncoder.encode(userId)), null, null, messenger);
+	public void getUsersCheckins(String userId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/checkins", URLEncoder.encode(userId)), null, null, listener);
 	}
 	
 	/**
@@ -97,8 +97,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUsersFriends(String userId, Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/friends", URLEncoder.encode(userId)), params, null, messenger);
+	public void getUsersFriends(String userId, Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/friends", URLEncoder.encode(userId)), params, null, listener);
 	}	
 	
 	/**
@@ -109,8 +109,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUsersMayorships(String userId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/mayorships", URLEncoder.encode(userId)), null, null, messenger);
+	public void getUsersMayorships(String userId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/mayorships", URLEncoder.encode(userId)), null, null, listener);
 	}
 	
 	/**
@@ -122,8 +122,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUsersTips(String userId, Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/tips", URLEncoder.encode(userId)), params, null, messenger);
+	public void getUsersTips(String userId, Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/tips", URLEncoder.encode(userId)), params, null, listener);
 	}
 	
 	/**
@@ -135,8 +135,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUsersToDos(String userId, Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/todos", URLEncoder.encode(userId)), params, null, messenger);
+	public void getUsersToDos(String userId, Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/todos", URLEncoder.encode(userId)), params, null, listener);
 	}
 	
 	/**
@@ -148,8 +148,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getUsersVenueHistory(String userId, Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/venuehistory", URLEncoder.encode(userId)), params, null, messenger);
+	public void getUsersVenueHistory(String userId, Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/venuehistory", URLEncoder.encode(userId)), params, null, listener);
 	}
 	
 	/**
@@ -160,8 +160,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void sendFriendRequest(String userId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/request", URLEncoder.encode(userId)), null, null, messenger);
+	public void sendFriendRequest(String userId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/request", URLEncoder.encode(userId)), null, null, listener);
 	}
 	
 	/**
@@ -172,8 +172,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void unfriendUser(String userId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/unfriend", URLEncoder.encode(userId)), null, null, messenger);
+	public void unfriendUser(String userId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/unfriend", URLEncoder.encode(userId)), null, null, listener);
 	}
 	
 	/**
@@ -184,8 +184,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void approveFriendRequest(String userId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/approve", URLEncoder.encode(userId)), null, null, messenger);
+	public void approveFriendRequest(String userId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/approve", URLEncoder.encode(userId)), null, null, listener);
 	}
 	
 	/**
@@ -196,8 +196,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void denyFriendRequest(String userId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/deny", URLEncoder.encode(userId)), null, null, messenger);
+	public void denyFriendRequest(String userId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/deny", URLEncoder.encode(userId)), null, null, listener);
 	}
 	
 	/**
@@ -209,10 +209,10 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void setPings(String userId, boolean value, Messenger messenger) throws IOException {
+	public void setPings(String userId, boolean value, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putBoolean("value", value);
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/setpings", URLEncoder.encode(userId)), params, null, messenger);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/setpings", URLEncoder.encode(userId)), params, null, listener);
 	}
 	
 	// Venues endpoints
@@ -225,8 +225,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getVenue(String venueId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s", URLEncoder.encode(venueId)), null, null, messenger);
+	public void getVenue(String venueId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s", URLEncoder.encode(venueId)), null, null, listener);
 	}
 	
 	/**
@@ -239,11 +239,11 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void addVenue(String name, String latLon, Bundle params, Messenger messenger) throws IOException {
+	public void addVenue(String name, String latLon, Bundle params, SGListener listener) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("name", name);
 		params.putString("ll", latLon);
-		this.executeRequest(Verb.POST, "/venues/add", params, null, messenger);
+		this.executeRequest(Verb.POST, "/venues/add", params, null, listener);
 	}
 	
 	/**
@@ -253,8 +253,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getCategories(Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, "/venues/categories", null, null, messenger);
+	public void getCategories(SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, "/venues/categories", null, null, listener);
 	}
 	
 	/**
@@ -266,10 +266,10 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void exploreVenues(String latLon, Bundle params, Messenger messenger) throws IOException {
+	public void exploreVenues(String latLon, Bundle params, SGListener listener) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
-		this.executeRequest(Verb.GET, "/venues/explore", params, null, messenger);
+		this.executeRequest(Verb.GET, "/venues/explore", params, null, listener);
 	}
 	
 	/**
@@ -281,10 +281,10 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void searchVenues(String latLon, Bundle params, Messenger messenger) throws IOException {
+	public void searchVenues(String latLon, Bundle params, SGListener listener) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
-		this.executeRequest(Verb.GET, "/venues/explore", params, null, messenger);
+		this.executeRequest(Verb.GET, "/venues/explore", params, null, listener);
 	}
 		
 	/**
@@ -296,10 +296,10 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void trendingVenues(String latLon, Bundle params, Messenger messenger) throws IOException {
+	public void trendingVenues(String latLon, Bundle params, SGListener listener) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
-		this.executeRequest(Verb.GET, "/venues/trending", params, null, messenger);
+		this.executeRequest(Verb.GET, "/venues/trending", params, null, listener);
 	}
 	
 	/**
@@ -311,8 +311,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void hereNow(String venueId, Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/herenow", URLEncoder.encode(venueId)), params, null, messenger);
+	public void hereNow(String venueId, Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/herenow", URLEncoder.encode(venueId)), params, null, listener);
 	}
 	
 	/**
@@ -324,8 +324,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void venueTips(String venueId, Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/tips", URLEncoder.encode(venueId)), params, null, messenger);
+	public void venueTips(String venueId, Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/tips", URLEncoder.encode(venueId)), params, null, listener);
 	}
 	
 	/**
@@ -337,8 +337,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void venuePhotos(String venueId, Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/photos", URLEncoder.encode(venueId)), params, null, messenger);
+	public void venuePhotos(String venueId, Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/photos", URLEncoder.encode(venueId)), params, null, listener);
 	}
 	
 	/**
@@ -349,8 +349,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void venueLinks(String venueId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/links", URLEncoder.encode(venueId)), null, null, messenger);
+	public void venueLinks(String venueId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/links", URLEncoder.encode(venueId)), null, null, listener);
 	}
 	
 	/**
@@ -362,8 +362,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void markVenueToDo(String venueId, Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/marktodo", URLEncoder.encode(venueId)), params, null, messenger);
+	public void markVenueToDo(String venueId, Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/marktodo", URLEncoder.encode(venueId)), params, null, listener);
 	}
 		
 	/**
@@ -375,10 +375,10 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void flagVenue(String venueId, String problem, Messenger messenger) throws IOException {
+	public void flagVenue(String venueId, String problem, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("problem", problem);
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/flag", URLEncoder.encode(venueId)), params, null, messenger);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/flag", URLEncoder.encode(venueId)), params, null, listener);
 	}
 	
 	/**
@@ -390,8 +390,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void editVenue(String venueId, Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/edit", URLEncoder.encode(venueId)), params, null, messenger);
+	public void editVenue(String venueId, Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/edit", URLEncoder.encode(venueId)), params, null, listener);
 	}
 		
 	/**
@@ -403,8 +403,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void proposeEditVenue(String venueId, Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/proposeedit", URLEncoder.encode(venueId)), params, null, messenger);
+	public void proposeEditVenue(String venueId, Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/proposeedit", URLEncoder.encode(venueId)), params, null, listener);
 	}
 	
 	// Checkins endpoints
@@ -418,8 +418,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getCheckin(String checkinId, Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/checkins/%s", URLEncoder.encode(checkinId)), params, null, messenger);
+	public void getCheckin(String checkinId, Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/checkins/%s", URLEncoder.encode(checkinId)), params, null, listener);
 	}
 	
 	/**
@@ -432,11 +432,11 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void checkin(String venueId, boolean broadcast, Bundle params, Messenger messenger) throws IOException {
+	public void checkin(String venueId, boolean broadcast, Bundle params, SGListener listener) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("venueId", venueId);
 		params.putBoolean("broadcast", broadcast);
-		this.executeRequest(Verb.POST, foursquareUrl + "/checkins/add", params, null, messenger);
+		this.executeRequest(Verb.POST, foursquareUrl + "/checkins/add", params, null, listener);
 	}
 		
 	/**
@@ -449,11 +449,11 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void checkinToVenueWithoutId(String venueName, boolean broadcast, Bundle params, Messenger messenger) throws IOException {
+	public void checkinToVenueWithoutId(String venueName, boolean broadcast, Bundle params, SGListener listener) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("venue", venueName);
 		params.putBoolean("broadcast", broadcast);
-		this.executeRequest(Verb.POST, foursquareUrl + "/checkins/add", params, null, messenger);
+		this.executeRequest(Verb.POST, foursquareUrl + "/checkins/add", params, null, listener);
 	}
 		
 	/**
@@ -466,11 +466,11 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void shout(String shout, boolean broadcast, Bundle params, Messenger messenger) throws IOException {
+	public void shout(String shout, boolean broadcast, Bundle params, SGListener listener) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("shout", shout);
 		params.putBoolean("broadcast", broadcast);
-		this.executeRequest(Verb.POST, foursquareUrl + "/checkins/add", params, null, messenger);
+		this.executeRequest(Verb.POST, foursquareUrl + "/checkins/add", params, null, listener);
 	}
 	
 	/**
@@ -481,8 +481,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getRecentCheckins(Bundle params, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + "/checkins/recent", params, null, messenger);
+	public void getRecentCheckins(Bundle params, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + "/checkins/recent", params, null, listener);
 	}
 	
 	/**
@@ -494,10 +494,10 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void commentOnCheckin(String checkinId, String text, Messenger messenger) throws IOException {
+	public void commentOnCheckin(String checkinId, String text, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("text", text);
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/addcomment", URLEncoder.encode(checkinId)), params, null, messenger);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/addcomment", URLEncoder.encode(checkinId)), params, null, listener);
 	}
 	
 	/**
@@ -509,10 +509,10 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void deleteComment(String checkinId, String commentId, Messenger messenger) throws IOException {
+	public void deleteComment(String checkinId, String commentId, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("commentId", commentId);
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/deletecomment", URLEncoder.encode(checkinId)), params, null, messenger);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/deletecomment", URLEncoder.encode(checkinId)), params, null, listener);
 	}
 	
 	// Tips endpoints
@@ -525,8 +525,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getTip(String tipId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/tips/%s", URLEncoder.encode(tipId)), null, null, messenger);
+	public void getTip(String tipId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/tips/%s", URLEncoder.encode(tipId)), null, null, listener);
 	}
 	
 	/**
@@ -539,11 +539,11 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void addTip(String venueId, String text, Bundle params, Messenger messenger) throws IOException {
+	public void addTip(String venueId, String text, Bundle params, SGListener listener) throws IOException {
 		params = Util.initBundle(params, 2);
 		params.putString("venueId", venueId);
 		params.putString("text", text);
-		this.executeRequest(Verb.POST, foursquareUrl + "/tips/add", params, null, messenger);
+		this.executeRequest(Verb.POST, foursquareUrl + "/tips/add", params, null, listener);
 	}
 		
 	/**
@@ -555,10 +555,10 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void searchTips(String latLon, Bundle params, Messenger messenger) throws IOException {
+	public void searchTips(String latLon, Bundle params, SGListener listener) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
-		this.executeRequest(Verb.GET, foursquareUrl + "/tips/search", params, null, messenger);
+		this.executeRequest(Verb.GET, foursquareUrl + "/tips/search", params, null, listener);
 	}
 	
 	/**
@@ -569,8 +569,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void markTipToDo(String tipId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/marktodo", URLEncoder.encode(tipId)), null, null, messenger);
+	public void markTipToDo(String tipId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/marktodo", URLEncoder.encode(tipId)), null, null, listener);
 	}
 	
 	/**
@@ -581,8 +581,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void markTipDone(String tipId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/markdone", URLEncoder.encode(tipId)), null, null, messenger);
+	public void markTipDone(String tipId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/markdone", URLEncoder.encode(tipId)), null, null, listener);
 	}
 		
 	/**
@@ -593,8 +593,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void unmarkTip(String tipId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/unmark", URLEncoder.encode(tipId)), null, null, messenger);
+	public void unmarkTip(String tipId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/unmark", URLEncoder.encode(tipId)), null, null, listener);
 	}
 	
 	// Photos endpoints
@@ -607,8 +607,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getPhoto(String photoId, Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/photos/%s", URLEncoder.encode(photoId)), null, null, messenger);
+	public void getPhoto(String photoId, SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/photos/%s", URLEncoder.encode(photoId)), null, null, listener);
 	}
 	
 	/**
@@ -621,11 +621,11 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void addPhotoToCheckin(String checkinId, Bitmap photo, Bundle params, Messenger messenger) throws IOException {
+	public void addPhotoToCheckin(String checkinId, Bitmap photo, Bundle params, SGListener listener) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("checkinId", checkinId);
 		params.putByteArray("image", Util.bitmapToByteArray(photo));
-		this.executeRequest(Verb.POST, foursquareUrl + "/photos/add", params, null, messenger);
+		this.executeRequest(Verb.POST, foursquareUrl + "/photos/add", params, null, listener);
 	}
 		
 	/**
@@ -638,11 +638,11 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void addPhotoToVenue(String venueId, Bitmap photo, Bundle params, Messenger messenger) throws IOException {
+	public void addPhotoToVenue(String venueId, Bitmap photo, Bundle params, SGListener listener) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("venueId", venueId);
 		params.putByteArray("image", Util.bitmapToByteArray(photo));
-		this.executeRequest(Verb.POST, foursquareUrl + "/photos/add", params, null, messenger);
+		this.executeRequest(Verb.POST, foursquareUrl + "/photos/add", params, null, listener);
 	}
 		
 	/**
@@ -655,11 +655,11 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void addPhotoToTip(String tipId, Bitmap photo, Bundle params, Messenger messenger) throws IOException {
+	public void addPhotoToTip(String tipId, Bitmap photo, Bundle params, SGListener listener) throws IOException {
 		params= Util.initBundle(params, 1);
 		params.putString("tipId", tipId);
 		params.putByteArray("image", Util.bitmapToByteArray(photo));
-		this.executeRequest(Verb.POST, foursquareUrl + "/photos/add", params, null, messenger);
+		this.executeRequest(Verb.POST, foursquareUrl + "/photos/add", params, null, listener);
 	}
 	
 	// Settings endpoints
@@ -672,10 +672,10 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getSetting(String setting, Messenger messenger) throws IOException {
+	public void getSetting(String setting, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("setting_id", setting);
-		this.executeRequest(Verb.GET, foursquareUrl + "/settings/all", params, null, messenger);
+		this.executeRequest(Verb.GET, foursquareUrl + "/settings/all", params, null, listener);
 	}
 	
 	/**
@@ -685,8 +685,8 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getAllSettings(Messenger messenger) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + "/settings/all", null, null, messenger);
+	public void getAllSettings(SGListener listener) throws IOException {
+		this.executeRequest(Verb.GET, foursquareUrl + "/settings/all", null, null, listener);
 	}
 	
 	/**
@@ -697,10 +697,10 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void setSetting(String setting, String value, Messenger messenger) throws IOException {
+	public void setSetting(String setting, String value, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("value", value);
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/settings/%s/set", URLEncoder.encode(setting)), params, null, messenger);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/settings/%s/set", URLEncoder.encode(setting)), params, null, listener);
 	}
 	
 	// Specials endpoints
@@ -714,10 +714,10 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void getSpecial(String specialId, String venueId, Messenger messenger) throws IOException {
+	public void getSpecial(String specialId, String venueId, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("venueId", venueId);
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/specials/%s", URLEncoder.encode(specialId)), params, null, messenger);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/specials/%s", URLEncoder.encode(specialId)), params, null, listener);
 	}
 	
 	/**
@@ -729,10 +729,10 @@ public class Foursquare extends AbstractClient {
 	 * @{@link void}
 	 * @throws IOException 
 	 */
-	public void searchSpecials(String latLon, Bundle params, Messenger messenger) throws IOException {
+	public void searchSpecials(String latLon, Bundle params, SGListener listener) throws IOException {
 		params = Util.initBundle(params, 1);
 		params.putString("ll", latLon);
-		this.executeRequest(Verb.GET, foursquareUrl + "/specials/search", params, null, messenger);
+		this.executeRequest(Verb.GET, foursquareUrl + "/specials/search", params, null, listener);
 	}
 
 	@Override
