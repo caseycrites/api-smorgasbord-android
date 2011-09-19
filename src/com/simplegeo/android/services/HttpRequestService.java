@@ -2,6 +2,8 @@ package com.simplegeo.android.services;
 
 import java.util.Set;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.Api;
 import org.scribe.model.OAuthRequest;
@@ -117,7 +119,9 @@ public class HttpRequestService extends IntentService {
 				Response response = request.send();
 				responseCode = response.getCode();
 				responseBody = response.getBody();
-				msgData.putBoolean("success", true);
+				if (responseCode >= 200 & responseCode < 400) {
+					msgData.putBoolean("success", true);
+				}
 			} catch (RuntimeException e) {
 				// The internal client is catching these messages, so whether we pass back the error message in the responseBody
 				// is questionable.
@@ -154,6 +158,12 @@ public class HttpRequestService extends IntentService {
 			case POST:
 				if (params != null) request = addBodyParams(request, params);
 				if (!"".equals(payload) && payload != null) request.addPayload(payload);
+				try {
+					new JSONObject(payload);
+					request.addHeader("Content-type", "application/json");
+				} catch (JSONException e) {
+					request.addHeader("Content-type", "application/x-www-form-urlencoded");
+				}
 				break;
 			default:
 				break;
