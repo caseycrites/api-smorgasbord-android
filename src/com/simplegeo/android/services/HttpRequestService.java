@@ -13,9 +13,10 @@ import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
-import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
@@ -23,123 +24,179 @@ import android.util.Log;
 
 import com.simplegeo.android.clients.Client.RequestType;
 import com.simplegeo.android.types.OAuthCredentials;
+import com.simplegeo.android.util.SGListener;
 
-public class HttpRequestService extends IntentService {
+@SuppressWarnings({"unchecked", "unused"})
+public class HttpRequestService extends Service {
 	private final static String TAG = HttpRequestService.class.getSimpleName();
 	
 	private final static int maxAttempts = 3;
-	
-	public HttpRequestService() {
-		super(TAG);
-	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	protected void onHandleIntent(Intent intent) {
+	public int onStartCommand(Intent intent, int flags, int startId) {
 		Bundle extras = intent.getExtras();
-		
 		RequestType requestType = (RequestType) extras.getSerializable("requestType");
-		Messenger messenger = (Messenger) extras.get("messenger");
-		OAuthCredentials credentials = (OAuthCredentials) extras.get("credentials");
+		OAuthCredentials credentials = (OAuthCredentials) extras.getParcelable("credentials");
+		Messenger messenger = (Messenger) extras.getParcelable("messenger");
 		String redirectUrl = extras.getString("redirectUrl");
 		Class<? extends Api> clazz = (Class<? extends Api>) extras.getSerializable("clazz");
-		
+
 		OAuthService service = createOAuthService(clazz, credentials, redirectUrl);
-		
-		Message msg = null;
+
 		switch(requestType) {
 			case REQUEST_TOKEN:
-				msg = getRequestToken(service, extras);
+				getRequestToken(service, messenger);
 				break;
 			case ACCESS_TOKEN:
-				msg = getAccessToken(service, extras);
+				getAccessToken(service, extras, messenger);
 				break;
 			case API_CALL:
-				msg = doApiCall(service, credentials, extras, messenger);
+				doApiCall(service, credentials, extras, messenger);
 				break;
 			default:
 				throw new IllegalArgumentException();
 		}
 		
-		try {
-			messenger.send(msg);
-		} catch (RemoteException e) {
-			Log.e(TAG, e.getMessage(), e);
-		}
+		return Service.START_REDELIVER_INTENT;
+	}
+	
+	@Override
+	public IBinder onBind(Intent intent) {
+		return null;
 	}
 	
 	// Actual Http Requests
 	
-	private Message getAccessToken(OAuthService service, Bundle extras) {
-		
-		Token reqToken = (Token) extras.getSerializable("token");
-		String verifierCode = extras.getString("verifierCode");
-		
-		Verifier verifier = new Verifier(verifierCode);
-		
-		Token token = service.getAccessToken(reqToken, verifier);
-		
-		Message msg = Message.obtain();
-		Bundle msgData = new Bundle();
-		msgData.putSerializable("token", token);
-		msgData.putBoolean("success", true);
-		msg.setData(msgData);
-		
-		return msg;
+	public void getAccessToken(final OAuthService service, Bundle extras, final Messenger messenger) {
+		final Token reqToken = (Token) extras.getSerializable("token");
+		final Verifier verifier = new Verifier(extras.getString("verifierCode"));
+		new Thread() {
+			public void run() {
+				Token token = null;
+				String errorMessage = "";
+				try {
+					token = service.getAccessToken(reqToken, verifier);
+				} catch (RuntimeException e) {
+					errorMessage = e.getMessage();
+				}
+				Bundle values = new Bundle();
+				if (token != null) {
+					values.putSerializable("accessToken", token);
+					values.putBoolean("success", true);
+					sendMessage(values);
+				} else {
+					values.putString("errorMessage", errorMessage);
+					sendMessage(values);
+				}
+			}
+			
+			private void sendMessage(Bundle values) {
+				Message msg = Message.obtain();
+				msg.setData(values);
+				try {
+					messenger.send(msg);
+				} catch (RemoteException e) {
+					Log.wtf(TAG, e.getMessage(), e);
+				}
+			}
+
+		}.run();
+		stopSelf();
 	}
 	
-	private Message getRequestToken(OAuthService service, Bundle extras) {
-		Token token = service.getRequestToken();
-		
-		Message msg = Message.obtain();
-		Bundle msgData = new Bundle();
-		msgData.putSerializable("token", token);
-		msgData.putBoolean("success", true);
-		msg.setData(msgData);
-		
-		return msg;
+	public void getRequestToken(final OAuthService service, final Messenger messenger) {
+		new Thread() {
+			public void run() {
+				Token token = null;
+				String errorMessage = "";
+				try {
+					token = service.getRequestToken();
+				} catch (RuntimeException e) {
+					errorMessage = e.getMessage();
+				}
+				Bundle values = new Bundle();
+				if (token != null) {
+					values.putSerializable("requestToken", token);
+					values.putBoolean("success", true);
+					sendMessage(values);
+				} else {
+					values.putString("errorMessage", errorMessage);
+					sendMessage(values);
+				}
+			}
+
+			private void sendMessage(Bundle values) {
+				Message msg = Message.obtain();
+				msg.setData(values);
+				try {
+					messenger.send(msg);
+				} catch (RemoteException e) {
+					Log.wtf(TAG, e.getMessage(), e);
+				}
+			}
+
+		}.run();
+		stopSelf();
 	}
 	
-	private Message doApiCall(OAuthService service, OAuthCredentials credentials, Bundle extras, Messenger messenger) {
-		Verb httpMethod = (Verb) extras.getSerializable("httpMethod");
-		String url = extras.getString("url");
+	public void doApiCall(final OAuthService service, OAuthCredentials credentials, Bundle extras, final Messenger messenger) {
 		Bundle params = extras.getBundle("params") != null ? extras.getBundle("params") : new Bundle();
 		String payload = extras.getString("payload") != null ? extras.getString("payload") : "";
-		
-		OAuthRequest request = buildRequest(httpMethod, url, params, payload);
-		request = signRequest(service, request, credentials);
-		
-		Message msg = Message.obtain();
-		Bundle msgData = new Bundle();
-		int responseCode = 0;
-		String responseBody = "";
-		int attempts = 1;
-		while (shouldRetry(responseCode) && attempts <= maxAttempts) {
-			try {
-				Response response = request.send();
-				responseCode = response.getCode();
-				responseBody = response.getBody();
-				if (responseCode >= 200 & responseCode < 400) {
-					msgData.putBoolean("success", true);
+
+		final OAuthRequest request = signRequest(service, buildRequest((Verb) extras.getSerializable("httpMethod"), extras.getString("url"), params, payload), credentials);
+
+		new Thread() {
+			public void run() {
+				Bundle values = new Bundle();
+				values.putInt("responseCode", 0);
+				values.putString("responseBody", "");
+				boolean success = false;
+				int attempts = 1;
+				do {
+					try {
+						Response response = request.send();
+						values.putInt("responseCode", response.getCode());
+						values.putString("responseBody", response.getBody());
+						if (values.getInt("responseCode") >= 200 & values.getInt("responseCode") < 400) {
+							values.putBoolean("success", true);
+							sendMessage(values);
+							success = true;
+							break;
+						}
+					} catch (RuntimeException e) {
+						// The internal client is catching these messages, so whether we pass back the error message in the responseBody
+						// is questionable.
+						values.putString("responseBody", e.getMessage());
+					}
+					++attempts;
+				} while (shouldRetry(values.getInt("responseCode")) && attempts <= maxAttempts);
+				if (!success) {
+					sendMessage(values);
 				}
-			} catch (RuntimeException e) {
-				// The internal client is catching these messages, so whether we pass back the error message in the responseBody
-				// is questionable.
-				responseBody = e.getMessage();
 			}
-			++attempts;
-		}
-		
-		msgData.putInt("responseCode", responseCode);
-		msgData.putString("responseBody", responseBody);
-		msg.setData(msgData);
-		
-		return msg;
+
+			private void sendMessage(Bundle values) {
+				Message msg = Message.obtain();
+				msg.setData(values);
+				try {
+					messenger.send(msg);
+				} catch (RemoteException e) {
+					Log.wtf(TAG, e.getMessage(), e);
+				}
+			}
+
+		}.run();
+		stopSelf();
 	}
 	
 	// Util methods
+
+	private boolean shouldRetry(int statusCode) {
+		if (statusCode == 0 || statusCode == 408 || statusCode >= 500) return true;
+		return false;
+	}
 	
-	private OAuthService createOAuthService(Class<? extends Api> clazz, OAuthCredentials credentials, String redirectUrl) {
+	protected OAuthService createOAuthService(Class<? extends Api> clazz, OAuthCredentials credentials, String redirectUrl) {
 		ServiceBuilder builder = new ServiceBuilder()
 							.provider(clazz)
 							.apiKey(credentials.getConsumerKey())
@@ -147,7 +204,7 @@ public class HttpRequestService extends IntentService {
 		if (!"".equals(redirectUrl)) builder.callback(redirectUrl);
 		return builder.build();
 	}
-
+	
 	private OAuthRequest buildRequest(Verb httpMethod, String url, Bundle params, String payload) {
 		OAuthRequest request = new OAuthRequest(httpMethod, url);
 		switch (httpMethod) {
@@ -192,11 +249,6 @@ public class HttpRequestService extends IntentService {
 				credentials.getAccessSecret() == null ? "" : credentials.getAccessSecret());
 		service.signRequest(token, request);
 		return request;
-	}
-	
-	private boolean shouldRetry(int statusCode) {
-		if (statusCode == 0 || statusCode == 408 || statusCode >= 500) return true;
-		return false;
 	}
 
 }

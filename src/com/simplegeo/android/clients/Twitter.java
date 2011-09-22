@@ -519,7 +519,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void destroyDirectMessage(String messageId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/direct_messages/destroy/%s.json", URLEncoder.encode(messageId)), params, null, listener);
+		this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/direct_messages/destroy/%s.json", URLEncoder.encode(messageId, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -559,7 +559,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getDirectMessage(String messageId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, twitterUrl + String.format(Locale.US, "/direct_messages/%s.json", URLEncoder.encode(messageId)), null, null, listener);
+		this.executeRequest(Verb.GET, twitterUrl + String.format(Locale.US, "/direct_messages/%s.json", URLEncoder.encode(messageId, "UTF-8")), null, null, listener);
 	}
 	
 	// Favorites endpoints
@@ -597,7 +597,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void favorite(String tweetId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.POST, twitterUrl + String.format(Locale.US, "/favorites/create/%s.json", URLEncoder.encode(tweetId)), params, null, listener);
+		this.executeRequest(Verb.POST, twitterUrl + String.format(Locale.US, "/favorites/create/%s.json", URLEncoder.encode(tweetId, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -609,7 +609,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void unfavorite(String tweetId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/favorites/destroy/%s.json", URLEncoder.encode(tweetId)), params, null, listener);
+		this.executeRequest(Verb.DELETE, twitterUrl + String.format(Locale.US, "/favorites/destroy/%s.json", URLEncoder.encode(tweetId, "UTF-8")), params, null, listener);
 	}
 	
 	// Friend And Follower endpoints
@@ -1209,7 +1209,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getPlace(String placeId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/geo/id/%s.json", URLEncoder.encode(placeId)), null, null, listener);
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/geo/id/%s.json", URLEncoder.encode(placeId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -1299,7 +1299,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void showSavedSearch(String id, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/saved_searches/show/%s.json", URLEncoder.encode(id)), null, null, listener);
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/saved_searches/show/%s.json", URLEncoder.encode(id, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -1323,7 +1323,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void deleteSavedSearch(String id, SGListener listener) throws IOException {
-		this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/saved_searches/destroy/%s.json", URLEncoder.encode(id)), null, null, listener);
+		this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/saved_searches/destroy/%s.json", URLEncoder.encode(id, "UTF-8")), null, null, listener);
 	}
 	
 	// Search endpoints
@@ -1521,7 +1521,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getLocalTrends(String whereOnEarthId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/trends/%s.json", URLEncoder.encode(whereOnEarthId)), null, null, listener);
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/trends/%s.json", URLEncoder.encode(whereOnEarthId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -1589,7 +1589,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getRetweetedBy(String id, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by.json", URLEncoder.encode(id)), params, null, listener);
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by.json", URLEncoder.encode(id, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -1601,7 +1601,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getRetweetedByIds(String id, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by/ids.json", URLEncoder.encode(id)), params, null, listener);
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/%s/retweeted_by/ids.json", URLEncoder.encode(id, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -1613,7 +1613,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getRetweets(String id, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/retweets/%s.json", URLEncoder.encode(id)), params, null, listener);
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/retweets/%s.json", URLEncoder.encode(id, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -1625,7 +1625,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getTweet(String id, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/show/%s.json", URLEncoder.encode(id)), params, null, listener);
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/statuses/show/%s.json", URLEncoder.encode(id, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -1637,7 +1637,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void deleteTweet(String id, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/statuses/destroy/%s.json", URLEncoder.encode(id)), params, null, listener);
+		this.executeRequest(Verb.DELETE, String.format(Locale.US, twitterUrl + "/statuses/destroy/%s.json", URLEncoder.encode(id, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -1649,7 +1649,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void retweet(String id, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.POST, String.format(Locale.US, twitterUrl + "/statuses/retweet/%s.json", URLEncoder.encode(id)), params, null, listener);
+		this.executeRequest(Verb.POST, String.format(Locale.US, twitterUrl + "/statuses/retweet/%s.json", URLEncoder.encode(id, "UTF-8")), params, null, listener);
 	}
 		
 	/**
@@ -1702,7 +1702,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getProfileImage(String screenName, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/profile_image/%s.json", URLEncoder.encode(screenName)), params, null, listener);
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/profile_image/%s.json", URLEncoder.encode(screenName, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -1813,7 +1813,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getSuggestedUsers(String slug, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s.json", URLEncoder.encode(slug)), params, null, listener);
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s.json", URLEncoder.encode(slug, "UTF-8")), params, null, listener);
 	}
 		
 	/**
@@ -1824,7 +1824,7 @@ public class Twitter extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getSuggestedUsersWithStatus(String slug, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s/members.json", URLEncoder.encode(slug)), params, null, listener);
+		this.executeRequest(Verb.GET, String.format(Locale.US, twitterUrl + "/users/suggestions/%s/members.json", URLEncoder.encode(slug, "UTF-8")), params, null, listener);
 	}
 
 	@Override

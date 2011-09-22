@@ -38,7 +38,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getUser(String userId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s", URLEncoder.encode(userId)), null, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s", URLEncoder.encode(userId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getUsersBadges(String userId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/badges", URLEncoder.encode(userId)), null, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/badges", URLEncoder.encode(userId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -85,7 +85,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getUsersCheckins(String userId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/checkins", URLEncoder.encode(userId)), null, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/checkins", URLEncoder.encode(userId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -98,7 +98,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getUsersFriends(String userId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/friends", URLEncoder.encode(userId)), params, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/friends", URLEncoder.encode(userId, "UTF-8")), params, null, listener);
 	}	
 	
 	/**
@@ -110,7 +110,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getUsersMayorships(String userId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/mayorships", URLEncoder.encode(userId)), null, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/mayorships", URLEncoder.encode(userId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -123,7 +123,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getUsersTips(String userId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/tips", URLEncoder.encode(userId)), params, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/tips", URLEncoder.encode(userId, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -136,7 +136,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getUsersToDos(String userId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/todos", URLEncoder.encode(userId)), params, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/todos", URLEncoder.encode(userId, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -149,7 +149,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getUsersVenueHistory(String userId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/venuehistory", URLEncoder.encode(userId)), params, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/venuehistory", URLEncoder.encode(userId, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -161,7 +161,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void sendFriendRequest(String userId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/request", URLEncoder.encode(userId)), null, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/request", URLEncoder.encode(userId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -173,7 +173,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void unfriendUser(String userId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/unfriend", URLEncoder.encode(userId)), null, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/unfriend", URLEncoder.encode(userId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -185,7 +185,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void approveFriendRequest(String userId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/approve", URLEncoder.encode(userId)), null, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/approve", URLEncoder.encode(userId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void denyFriendRequest(String userId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/deny", URLEncoder.encode(userId)), null, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/deny", URLEncoder.encode(userId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -212,7 +212,7 @@ public class Foursquare extends AbstractClient {
 	public void setPings(String userId, boolean value, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putBoolean("value", value);
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/setpings", URLEncoder.encode(userId)), params, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/users/%s/setpings", URLEncoder.encode(userId, "UTF-8")), params, null, listener);
 	}
 	
 	// Venues endpoints
@@ -226,7 +226,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getVenue(String venueId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s", URLEncoder.encode(venueId)), null, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s", URLEncoder.encode(venueId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -312,7 +312,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void hereNow(String venueId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/herenow", URLEncoder.encode(venueId)), params, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/herenow", URLEncoder.encode(venueId, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -325,7 +325,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void venueTips(String venueId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/tips", URLEncoder.encode(venueId)), params, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/tips", URLEncoder.encode(venueId, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -338,7 +338,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void venuePhotos(String venueId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/photos", URLEncoder.encode(venueId)), params, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/photos", URLEncoder.encode(venueId, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -350,7 +350,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void venueLinks(String venueId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/links", URLEncoder.encode(venueId)), null, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/venues/%s/links", URLEncoder.encode(venueId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -363,7 +363,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void markVenueToDo(String venueId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/marktodo", URLEncoder.encode(venueId)), params, null, listener);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/marktodo", URLEncoder.encode(venueId, "UTF-8")), params, null, listener);
 	}
 		
 	/**
@@ -378,7 +378,7 @@ public class Foursquare extends AbstractClient {
 	public void flagVenue(String venueId, String problem, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("problem", problem);
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/flag", URLEncoder.encode(venueId)), params, null, listener);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/flag", URLEncoder.encode(venueId, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -391,7 +391,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void editVenue(String venueId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/edit", URLEncoder.encode(venueId)), params, null, listener);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/edit", URLEncoder.encode(venueId, "UTF-8")), params, null, listener);
 	}
 		
 	/**
@@ -404,7 +404,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void proposeEditVenue(String venueId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/proposeedit", URLEncoder.encode(venueId)), params, null, listener);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/venues/%s/proposeedit", URLEncoder.encode(venueId, "UTF-8")), params, null, listener);
 	}
 	
 	// Checkins endpoints
@@ -419,7 +419,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getCheckin(String checkinId, Bundle params, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/checkins/%s", URLEncoder.encode(checkinId)), params, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/checkins/%s", URLEncoder.encode(checkinId, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -497,7 +497,7 @@ public class Foursquare extends AbstractClient {
 	public void commentOnCheckin(String checkinId, String text, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("text", text);
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/addcomment", URLEncoder.encode(checkinId)), params, null, listener);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/addcomment", URLEncoder.encode(checkinId, "UTF-8")), params, null, listener);
 	}
 	
 	/**
@@ -512,7 +512,7 @@ public class Foursquare extends AbstractClient {
 	public void deleteComment(String checkinId, String commentId, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("commentId", commentId);
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/deletecomment", URLEncoder.encode(checkinId)), params, null, listener);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/checkins/%s/deletecomment", URLEncoder.encode(checkinId, "UTF-8")), params, null, listener);
 	}
 	
 	// Tips endpoints
@@ -526,7 +526,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getTip(String tipId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/tips/%s", URLEncoder.encode(tipId)), null, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/tips/%s", URLEncoder.encode(tipId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -570,7 +570,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void markTipToDo(String tipId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/marktodo", URLEncoder.encode(tipId)), null, null, listener);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/marktodo", URLEncoder.encode(tipId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -582,7 +582,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void markTipDone(String tipId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/markdone", URLEncoder.encode(tipId)), null, null, listener);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/markdone", URLEncoder.encode(tipId, "UTF-8")), null, null, listener);
 	}
 		
 	/**
@@ -594,7 +594,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void unmarkTip(String tipId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/unmark", URLEncoder.encode(tipId)), null, null, listener);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/tips/%s/unmark", URLEncoder.encode(tipId, "UTF-8")), null, null, listener);
 	}
 	
 	// Photos endpoints
@@ -608,7 +608,7 @@ public class Foursquare extends AbstractClient {
 	 * @throws IOException 
 	 */
 	public void getPhoto(String photoId, SGListener listener) throws IOException {
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/photos/%s", URLEncoder.encode(photoId)), null, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/photos/%s", URLEncoder.encode(photoId, "UTF-8")), null, null, listener);
 	}
 	
 	/**
@@ -700,7 +700,7 @@ public class Foursquare extends AbstractClient {
 	public void setSetting(String setting, String value, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("value", value);
-		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/settings/%s/set", URLEncoder.encode(setting)), params, null, listener);
+		this.executeRequest(Verb.POST, foursquareUrl + String.format(Locale.US, "/settings/%s/set", URLEncoder.encode(setting, "UTF-8")), params, null, listener);
 	}
 	
 	// Specials endpoints
@@ -717,7 +717,7 @@ public class Foursquare extends AbstractClient {
 	public void getSpecial(String specialId, String venueId, SGListener listener) throws IOException {
 		Bundle params = new Bundle(1);
 		params.putString("venueId", venueId);
-		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/specials/%s", URLEncoder.encode(specialId)), params, null, listener);
+		this.executeRequest(Verb.GET, foursquareUrl + String.format(Locale.US, "/specials/%s", URLEncoder.encode(specialId, "UTF-8")), params, null, listener);
 	}
 	
 	/**

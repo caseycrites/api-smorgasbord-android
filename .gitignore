@@ -11,3 +11,4 @@ proguard.cfg
 lib/
 bin/
 gen/
+target/
