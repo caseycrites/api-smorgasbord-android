@@ -33,8 +33,7 @@ public class Foursquare extends AbstractClient {
 	 * Get a user.
 	 * 
 	 * @param userId A String id of a user.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getUser(String userId, SGListener listener) throws IOException {
@@ -44,9 +43,8 @@ public class Foursquare extends AbstractClient {
 	/**
 	 * Get the users leaderboard.
 	 * 
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/leaderboard.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/leaderboard.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getLeaderboard(Bundle params, SGListener listener) throws IOException {
@@ -56,8 +54,7 @@ public class Foursquare extends AbstractClient {
 	/**
 	 * Get the users friend requests.
 	 * 
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getFriendRequests(SGListener listener) throws IOException {
@@ -68,8 +65,7 @@ public class Foursquare extends AbstractClient {
 	 * Get the users badges.
 	 * 
 	 * @param userId A String id of a user.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getUsersBadges(String userId, SGListener listener) throws IOException {
@@ -80,8 +76,7 @@ public class Foursquare extends AbstractClient {
 	 * Get the users checkins.
 	 * 
 	 * @param userId A String id of a user.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getUsersCheckins(String userId, SGListener listener) throws IOException {
@@ -92,9 +87,8 @@ public class Foursquare extends AbstractClient {
 	 * Get the users friends.
 	 * 
 	 * @param userId A String id of a user.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/friends.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/friends.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getUsersFriends(String userId, Bundle params, SGListener listener) throws IOException {
@@ -105,8 +99,7 @@ public class Foursquare extends AbstractClient {
 	 * Get the users mayorships.
 	 * 
 	 * @param userId A String id of a user.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getUsersMayorships(String userId, SGListener listener) throws IOException {
@@ -117,9 +110,8 @@ public class Foursquare extends AbstractClient {
 	 * Get the users tips.
 	 * 
 	 * @param userId A String id of a user.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/tips.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/tips.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getUsersTips(String userId, Bundle params, SGListener listener) throws IOException {
@@ -130,9 +122,8 @@ public class Foursquare extends AbstractClient {
 	 * Get the users to-dos.
 	 * 
 	 * @param userId A String id of a user.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/todos.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/todos.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getUsersToDos(String userId, Bundle params, SGListener listener) throws IOException {
@@ -143,9 +134,8 @@ public class Foursquare extends AbstractClient {
 	 * Get the users venue history.
 	 * 
 	 * @param userId A String id of a user.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/venuehistory.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/users/venuehistory.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getUsersVenueHistory(String userId, Bundle params, SGListener listener) throws IOException {
@@ -156,8 +146,7 @@ public class Foursquare extends AbstractClient {
 	 * Send a friend request.
 	 * 
 	 * @param userId A String id of a user whose friendship to request.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void sendFriendRequest(String userId, SGListener listener) throws IOException {
@@ -168,8 +157,7 @@ public class Foursquare extends AbstractClient {
 	 * Unfriend a user.
 	 * 
 	 * @param userId A String id of a user to unfriend.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void unfriendUser(String userId, SGListener listener) throws IOException {
@@ -180,8 +168,7 @@ public class Foursquare extends AbstractClient {
 	 * Approve a friend request.
 	 * 
 	 * @param userId A String id of a user whose friend request should be approved.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void approveFriendRequest(String userId, SGListener listener) throws IOException {
@@ -192,8 +179,7 @@ public class Foursquare extends AbstractClient {
 	 * Deny a friend request.
 	 * 
 	 * @param userId A String id of a user whose friend request should be denied.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void denyFriendRequest(String userId, SGListener listener) throws IOException {
@@ -205,8 +191,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param userId A String id of a user whose friend request should be denied.
 	 * @param value A Boolean.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void setPings(String userId, boolean value, SGListener listener) throws IOException {
@@ -221,8 +206,7 @@ public class Foursquare extends AbstractClient {
 	 * Get venue details.
 	 * 
 	 * @param venueId A String id of a venue.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getVenue(String venueId, SGListener listener) throws IOException {
@@ -234,9 +218,8 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param name A String name of the venue.
 	 * @param latLon A String of the form lat,lon.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/add.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/add.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void addVenue(String name, String latLon, Bundle params, SGListener listener) throws IOException {
@@ -249,8 +232,7 @@ public class Foursquare extends AbstractClient {
 	/**
 	 * Get a list of venue categories.
 	 * 
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getCategories(SGListener listener) throws IOException {
@@ -261,9 +243,8 @@ public class Foursquare extends AbstractClient {
 	 * Explore nearby venues.
 	 * 
 	 * @param latLon A String of the form lat,lon.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/explore.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/explore.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void exploreVenues(String latLon, Bundle params, SGListener listener) throws IOException {
@@ -276,9 +257,8 @@ public class Foursquare extends AbstractClient {
 	 * Search nearby venues.
 	 * 
 	 * @param latLon A String of the form lat,lon.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/search.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/search.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void searchVenues(String latLon, Bundle params, SGListener listener) throws IOException {
@@ -291,9 +271,8 @@ public class Foursquare extends AbstractClient {
 	 * trending venues.
 	 * 
 	 * @param latLon A String of the form lat,lon.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/trending.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/trending.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void trendingVenues(String latLon, Bundle params, SGListener listener) throws IOException {
@@ -306,9 +285,8 @@ public class Foursquare extends AbstractClient {
 	 * Retrieve who's at this venue now.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/herenow.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/herenow.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void hereNow(String venueId, Bundle params, SGListener listener) throws IOException {
@@ -319,9 +297,8 @@ public class Foursquare extends AbstractClient {
 	 * tips for a venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/tips.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/tips.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void venueTips(String venueId, Bundle params, SGListener listener) throws IOException {
@@ -332,9 +309,8 @@ public class Foursquare extends AbstractClient {
 	 * Retrieve photos of this venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/photos.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/photos.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void venuePhotos(String venueId, Bundle params, SGListener listener) throws IOException {
@@ -345,8 +321,7 @@ public class Foursquare extends AbstractClient {
 	 * Retrieve links of this venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void venueLinks(String venueId, SGListener listener) throws IOException {
@@ -357,9 +332,8 @@ public class Foursquare extends AbstractClient {
 	 * Mark this venue as a to-do and optionally set a tip.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/marktodo.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/marktodo.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void markVenueToDo(String venueId, Bundle params, SGListener listener) throws IOException {
@@ -371,8 +345,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param venueId A String id of the venue.
 	 * @param problem A String problem that's one of mislocated, closed or duplicate.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void flagVenue(String venueId, String problem, SGListener listener) throws IOException {
@@ -385,9 +358,8 @@ public class Foursquare extends AbstractClient {
 	 * Edit this venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/edit.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/edit.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void editVenue(String venueId, Bundle params, SGListener listener) throws IOException {
@@ -398,9 +370,8 @@ public class Foursquare extends AbstractClient {
 	 * Propose an edit this venue.
 	 * 
 	 * @param venueId A String id of the venue.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/proposeedit.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/venues/proposeedit.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void proposeEditVenue(String venueId, Bundle params, SGListener listener) throws IOException {
@@ -413,9 +384,8 @@ public class Foursquare extends AbstractClient {
 	 * Get checkin details.
 	 * 
 	 * @param checkinId A string id of the checkin.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/checkins.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/checkins.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getCheckin(String checkinId, Bundle params, SGListener listener) throws IOException {
@@ -427,9 +397,8 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param venueId A String id of a venue.
 	 * @param broadcast A String list telling foursquare who to tell about this checkin.  private|public|public,facebook
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/add.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/add.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void checkin(String venueId, boolean broadcast, Bundle params, SGListener listener) throws IOException {
@@ -444,9 +413,8 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param venueName A String name of a venue.
 	 * @param broadcast A String list telling foursquare who to tell about this checkin.  private|public|public,facebook
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/add.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/add.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void checkinToVenueWithoutId(String venueName, boolean broadcast, Bundle params, SGListener listener) throws IOException {
@@ -461,9 +429,8 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param shout A String of a shout.
 	 * @param broadcast A String list telling foursquare who to tell about this checkin.  private|public|public,facebook
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/add.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/add.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void shout(String shout, boolean broadcast, Bundle params, SGListener listener) throws IOException {
@@ -476,9 +443,8 @@ public class Foursquare extends AbstractClient {
 	/**
 	 * Get recent checkins from friends.
 	 * 
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/recent.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/checkins/recent.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getRecentCheckins(Bundle params, SGListener listener) throws IOException {
@@ -490,8 +456,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param checkinId A String id of a checkin.
 	 * @param text A String comment.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void commentOnCheckin(String checkinId, String text, SGListener listener) throws IOException {
@@ -505,8 +470,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param checkinId A String id of a checkin.
 	 * @param commentId A String id of a comment.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void deleteComment(String checkinId, String commentId, SGListener listener) throws IOException {
@@ -521,8 +485,7 @@ public class Foursquare extends AbstractClient {
 	 * Retrieve a tip.
 	 * 
 	 * @param tipId A String id of the tip.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getTip(String tipId, SGListener listener) throws IOException {
@@ -534,9 +497,8 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param venueId A String id of the venue.
 	 * @param text A String of the tip text.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/tips/add.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/tips/add.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void addTip(String venueId, String text, Bundle params, SGListener listener) throws IOException {
@@ -550,9 +512,8 @@ public class Foursquare extends AbstractClient {
 	 * Retrieves a list of tips near the specified location.
 	 * 
 	 * @param latLon A String of the form lat,lon
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/tips/search.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/tips/search.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void searchTips(String latLon, Bundle params, SGListener listener) throws IOException {
@@ -565,8 +526,7 @@ public class Foursquare extends AbstractClient {
 	 * Mark a tip as to-do.
 	 * 
 	 * @param tipId A String id of the tip.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void markTipToDo(String tipId, SGListener listener) throws IOException {
@@ -577,8 +537,7 @@ public class Foursquare extends AbstractClient {
 	 * Mark a tip as done.
 	 * 
 	 * @param tipId A String id of the tip.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void markTipDone(String tipId, SGListener listener) throws IOException {
@@ -589,8 +548,7 @@ public class Foursquare extends AbstractClient {
 	 * Unmark a tip.
 	 * 
 	 * @param tipId A String id of the tip.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void unmarkTip(String tipId, SGListener listener) throws IOException {
@@ -603,8 +561,7 @@ public class Foursquare extends AbstractClient {
 	 * Retrieve a photo.
 	 * 
 	 * @param photoId A String id of the photo.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getPhoto(String photoId, SGListener listener) throws IOException {
@@ -616,9 +573,8 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param checkinId A String id of a checkin.
 	 * @param photo A Bitmap of the photo.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/photos/add.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/photos/add.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void addPhotoToCheckin(String checkinId, Bitmap photo, Bundle params, SGListener listener) throws IOException {
@@ -633,9 +589,8 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param venueId A String id of a venue.
 	 * @param photo A Bitmap of the photo.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/photos/add.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/photos/add.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void addPhotoToVenue(String venueId, Bitmap photo, Bundle params, SGListener listener) throws IOException {
@@ -650,9 +605,8 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param tipId A String id of a tip.
 	 * @param photo A Bitmap of the photo.
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/photos/add.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/photos/add.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void addPhotoToTip(String tipId, Bitmap photo, Bundle params, SGListener listener) throws IOException {
@@ -668,8 +622,7 @@ public class Foursquare extends AbstractClient {
 	 * Retrieves the value for the desired setting.
 	 * 
 	 * @param setting A String of the name of the desired setting.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getSetting(String setting, SGListener listener) throws IOException {
@@ -681,8 +634,7 @@ public class Foursquare extends AbstractClient {
 	/**
 	 * Convenience method for grabbing all settings.
 	 * 
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getAllSettings(SGListener listener) throws IOException {
@@ -693,8 +645,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param setting A string name of the desired setting.
 	 * @param value A string value to set the setting to.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void setSetting(String setting, String value, SGListener listener) throws IOException {
@@ -710,8 +661,7 @@ public class Foursquare extends AbstractClient {
 	 * 
 	 * @param specialId A string of the id of the special.
 	 * @param venueId A string of the id of the venue.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void getSpecial(String specialId, String venueId, SGListener listener) throws IOException {
@@ -724,9 +674,8 @@ public class Foursquare extends AbstractClient {
 	 * Retrieves a list of specials near the specified location.
 	 * 
 	 * @param latLon A String of the form lat,lon
-	 * @param params, null A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/specials/specials.html">here</a>.
-	 * @param callback A {@link SGDelegate}.
-	 * @{@link void}
+	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://developer.foursquare.com/docs/specials/specials.html">here</a>.
+	 * @param listener A {@link SGListener}.
 	 * @throws IOException 
 	 */
 	public void searchSpecials(String latLon, Bundle params, SGListener listener) throws IOException {

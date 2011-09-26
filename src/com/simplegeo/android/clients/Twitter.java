@@ -33,7 +33,7 @@ public class Twitter extends AbstractClient {
 	 * Verify the user's credentials.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/account/verify_credentials">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException
 	 */
 	public void verifyCredentials(Bundle params, SGListener listener) throws IOException {
@@ -43,7 +43,7 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Retrieve the users rate limit status.
 	 * 
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void rateLimitStatus(SGListener listener) throws IOException {
@@ -53,7 +53,7 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Retrieve the users totals for friends, followers, updates and favorites.
 	 * 
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void totals(SGListener listener) throws IOException {
@@ -63,7 +63,7 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Retrieve the users account settings.
 	 * 
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getSettings(SGListener listener) throws IOException {
@@ -74,7 +74,7 @@ public class Twitter extends AbstractClient {
 	 * Sets the users account settings.  Use this to update a bunch of user settings at once.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/settings">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void setSettings(Bundle params, SGListener listener) throws IOException {
@@ -85,7 +85,7 @@ public class Twitter extends AbstractClient {
 	 * Set the trend location.
 	 * 
 	 * @param trendLocation A String of a @see <a href="http://developer.yahoo.com/geo/geoplanet/guide/concepts.html">Yahoo! Where On Earth ID</a> to use as the user's default trending location.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException
 	 */
 	public void setTrendLocation(String trendLocation, SGListener listener) throws IOException {
@@ -99,7 +99,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param startSleepTime An int in the range, 0-23.
 	 * @param endSleepTime An int in the range, 0-23.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void enableSleepTime(int startSleepTime, int endSleepTime, SGListener listener) throws IOException {
@@ -113,7 +113,7 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Disable sleep time.
 	 * 
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException
 	 */
 	public void disableSleepTime(SGListener listener) throws IOException {
@@ -126,7 +126,7 @@ public class Twitter extends AbstractClient {
 	 * Set time zone.
 	 * 
 	 * @param timeZone A String of one of the @see <a href="http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html">Rails Time Zone's</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException
 	 */
 	public void setTimeZone(String timeZone, SGListener listener) throws IOException {
@@ -139,7 +139,7 @@ public class Twitter extends AbstractClient {
 	 * Set language.
 	 * 
 	 * @param lang A String of one of the @see <a href="https://dev.twitter.com/docs/api/1/get/help/languages">Twitter Supported Languages.</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void setLanguage(String lang, SGListener listener) throws IOException {
@@ -153,7 +153,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param device A String of either sms or none.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_delivery_device">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateDeliveryDevice(String device, Bundle params, SGListener listener) throws IOException {
@@ -166,7 +166,7 @@ public class Twitter extends AbstractClient {
 	 * Update the user's profile.  Use this method to update a bunch of profile settings at once.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException
 	 */
 	public void updateProfile(Bundle params, SGListener listener) throws IOException {
@@ -177,7 +177,7 @@ public class Twitter extends AbstractClient {
 	 * Update the user's full name.
 	 * 
 	 * @param name A String of the user's full name. Must be 20 characters or less.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateName(String name, SGListener listener) throws IOException {
@@ -190,7 +190,7 @@ public class Twitter extends AbstractClient {
 	 * Update the user's url.
 	 * 
 	 * @param url A String of the user's url.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateUrl(String url, SGListener listener) throws IOException {
@@ -203,7 +203,7 @@ public class Twitter extends AbstractClient {
 	 * Update the user's location.
 	 * 
 	 * @param location A String of the user's location. Must be 30 characters or less.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateLocation(String location, SGListener listener) throws IOException {
@@ -216,7 +216,7 @@ public class Twitter extends AbstractClient {
 	 * Update the user's description.
 	 * 
 	 * @param description A String of the user's description. Must be 160 characters or less.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException
 	 */
 	public void updateDescription(String description, SGListener listener) throws IOException {
@@ -230,7 +230,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param image A Bitmap of the desired background image.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_background_image">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateProfileBackgroundImage(Bitmap image, Bundle params, SGListener listener) throws IOException {
@@ -243,7 +243,7 @@ public class Twitter extends AbstractClient {
 	 * Update the users's profile colors.  Use this method to update a bunch of profile colors at once.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_colors">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateProfileColors(Bundle params, SGListener listener) throws IOException {
@@ -254,7 +254,7 @@ public class Twitter extends AbstractClient {
 	 * Update the user's profile background color.
 	 * 
 	 * @param backgroundColor A String of length 3 or 6 in hexadecimal of the desired color.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateProfileBackgroundColor(String backgroundColor, SGListener listener) throws IOException {
@@ -267,7 +267,7 @@ public class Twitter extends AbstractClient {
 	 * Update the user's profile link color.
 	 * 
 	 * @param linkColor A String of length 3 or 6 in hexadecimal of the desired color.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateProfileLinkColor(String linkColor, SGListener listener) throws IOException {
@@ -280,7 +280,7 @@ public class Twitter extends AbstractClient {
 	 * Update the user's profile sidebar border color.
 	 * 
 	 * @param borderColor A String of length 3 or 6 in hexadecimal of the desired color.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateProfileSidebarBorderColor(String borderColor, SGListener listener) throws IOException {
@@ -292,8 +292,8 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Update the user's profile sidebar fill color.
 	 * 
-	 * @param borderColor A String of length 3 or 6 in hexadecimal of the desired color.
-	 * @{@link void}
+	 * @param fillColor A String of length 3 or 6 in hexadecimal of the desired color.
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateProfileSidebarFillColor(String fillColor, SGListener listener) throws IOException {
@@ -305,8 +305,8 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Update the user's profile text color.
 	 * 
-	 * @param borderColor A String of length 3 or 6 in hexadecimal of the desired color.
-	 * @{@link void}
+	 * @param textColor A String of length 3 or 6 in hexadecimal of the desired color.
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateProfileTextColor(String textColor, SGListener listener) throws IOException {
@@ -320,7 +320,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param image A Bitmap of the desired image.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_image">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateProfileImage(Bitmap image, Bundle params, SGListener listener) throws IOException {
@@ -335,7 +335,7 @@ public class Twitter extends AbstractClient {
 	 * Get a list of users that this user has blocked.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/blocking">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getBlockedUsers(Bundle params, SGListener listener) throws IOException {
@@ -346,7 +346,7 @@ public class Twitter extends AbstractClient {
 	 * Get a list of users ids that this user has blocked.
 	 * 
 	 * @param stringifyIds A boolean that tells the API whether or not to stringify the Ids it returns.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getBlockedUsersIds(Boolean stringifyIds, SGListener listener) throws IOException {
@@ -359,7 +359,7 @@ public class Twitter extends AbstractClient {
 	 * Checks to see if the authenticated user blocks the target user. Returns the user if yes, else 404's.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/exists">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void doesBlockExist(Bundle params, SGListener listener) throws IOException {
@@ -371,7 +371,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/exists">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void doesBlockExist(User user, Bundle params, SGListener listener) throws IOException {
@@ -384,7 +384,7 @@ public class Twitter extends AbstractClient {
 	 * Block the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/create">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void block(Bundle params, SGListener listener) throws IOException {
@@ -396,7 +396,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/create">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void block(User user, Bundle params, SGListener listener) throws IOException {
@@ -409,7 +409,7 @@ public class Twitter extends AbstractClient {
 	 * Unblock the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/destroy">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void unblock(Bundle params, SGListener listener) throws IOException {
@@ -421,7 +421,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/destroy">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void unblock(User user, Bundle params, SGListener listener) throws IOException {
@@ -436,7 +436,7 @@ public class Twitter extends AbstractClient {
 	 * Get the user's direct messages.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getDirectMessages(Bundle params, SGListener listener) throws IOException {
@@ -448,7 +448,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param sinceId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getDirectMessagesSince(String sinceId, Bundle params, SGListener listener) throws IOException {
@@ -462,7 +462,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param maxId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getDirectMessagesBefore(String maxId, Bundle params, SGListener listener) throws IOException {
@@ -475,7 +475,7 @@ public class Twitter extends AbstractClient {
 	 * Get the user's sent direct messages.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages/sent">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getSentDirectMessages(Bundle params, SGListener listener) throws IOException {
@@ -487,7 +487,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param sinceId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages/sent">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getSentDirectMessagesSince(String sinceId, Bundle params, SGListener listener) throws IOException {
@@ -501,7 +501,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param maxId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages/sent">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getSentDirectMessagesBefore(String maxId, Bundle params, SGListener listener) throws IOException {
@@ -515,7 +515,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param messageId A String direct message id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/destroy/%3Aid">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void destroyDirectMessage(String messageId, Bundle params, SGListener listener) throws IOException {
@@ -527,7 +527,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param text A String direct message.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/new">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void sendDirectMessage(String text, Bundle params, SGListener listener) throws IOException {
@@ -542,7 +542,7 @@ public class Twitter extends AbstractClient {
 	 * @param user A {@link User}.
 	 * @param text A String direct message.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/new">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void sendDirectMessage(User user, String text, Bundle params, SGListener listener) throws IOException {
@@ -555,7 +555,7 @@ public class Twitter extends AbstractClient {
 	 * Get a single direct message.
 	 * 
 	 * @param messageId A String direct message id.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getDirectMessage(String messageId, SGListener listener) throws IOException {
@@ -569,7 +569,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">here</a>.
 	 * @throws IOException 
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 */
 	public void getFavorites(Bundle params, SGListener listener) throws IOException {
 		this.executeRequest(Verb.GET, twitterUrl + "/favorites.json", params, null, listener);
@@ -593,7 +593,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param tweetId A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/favorites/create/%3Aid">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void favorite(String tweetId, Bundle params, SGListener listener) throws IOException {
@@ -605,7 +605,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param tweetId A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/favorites/destroy/%3Aid">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void unfavorite(String tweetId, Bundle params, SGListener listener) throws IOException {
@@ -618,7 +618,7 @@ public class Twitter extends AbstractClient {
 	 * Get a list of a user's followers ids.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getFollowersIds(Bundle params, SGListener listener) throws IOException {
@@ -630,7 +630,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getFollowersIds(User user, Bundle params, SGListener listener) throws IOException {
@@ -643,7 +643,7 @@ public class Twitter extends AbstractClient {
 	 * Get a list of a user's friends ids.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getFriendsIds(Bundle params, SGListener listener) throws IOException {
@@ -655,7 +655,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getFriendsIds(User user, Bundle params, SGListener listener) throws IOException {
@@ -668,7 +668,7 @@ public class Twitter extends AbstractClient {
 	 * Check if a friendship exists between two users.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/exists">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void doesFriendshipExist(Bundle params, SGListener listener) throws IOException {
@@ -679,7 +679,7 @@ public class Twitter extends AbstractClient {
 	 * Check if a friendship exists between two users.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/exists">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void doesFriendshipExist(User userA, User userB, Bundle params, SGListener listener) throws IOException {
@@ -693,7 +693,7 @@ public class Twitter extends AbstractClient {
 	 * Get a list of friend requests for the authenticated user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/incoming">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getIncomingFriendRequests(Bundle params, SGListener listener) throws IOException {
@@ -704,7 +704,7 @@ public class Twitter extends AbstractClient {
 	 * Get a list of friend requests made by the authenticated user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/outgoing">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getOutgoingFriendRequests(Bundle params, SGListener listener) throws IOException {
@@ -715,7 +715,7 @@ public class Twitter extends AbstractClient {
 	 * Get detailed information about a friendship.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/show">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void showFriendship(Bundle params, SGListener listener) throws IOException {
@@ -726,7 +726,7 @@ public class Twitter extends AbstractClient {
 	 * Create a friendship.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void createFriendship(Bundle params, SGListener listener) throws IOException {
@@ -738,7 +738,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void createFriendship(User user, Bundle params, SGListener listener) throws IOException {
@@ -751,7 +751,7 @@ public class Twitter extends AbstractClient {
 	 * Destroy a friendship.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/destroy">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void destroyFriendship(Bundle params, SGListener listener) throws IOException {
@@ -763,7 +763,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/destroy">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void destroyFriendship(User user, Bundle params, SGListener listener) throws IOException {
@@ -776,7 +776,7 @@ public class Twitter extends AbstractClient {
 	 * Look up the relationship between the authenticated user and the list of user ids or screen names.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/lookup">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void lookupFriendship(Bundle params, SGListener listener) throws IOException {
@@ -788,7 +788,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param users An {@link UserCollection}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/lookup">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void lookupFriendship(UserCollection users, Bundle params, SGListener listener) throws IOException {
@@ -801,7 +801,7 @@ public class Twitter extends AbstractClient {
 	 * Update what notifications should be shown for a friend.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/update">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateFriendship(Bundle params, SGListener listener) throws IOException {
@@ -812,7 +812,7 @@ public class Twitter extends AbstractClient {
 	 * Returns an array of user_ids that the currently authenticated user does not want to see retweets from..
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/get-friendshipsno_retweet_ids">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getNoRetweetIds(Bundle params, SGListener listener) throws IOException {
@@ -825,7 +825,7 @@ public class Twitter extends AbstractClient {
 	 * Get lists of the authenticated user or the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/all">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getSubscribedLists(Bundle params, SGListener listener) throws IOException {
@@ -837,7 +837,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/all">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getSubscribedLists(User user, Bundle params, SGListener listener) throws IOException {
@@ -850,7 +850,7 @@ public class Twitter extends AbstractClient {
 	 * Get statutes of the specified list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/statuses">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getListStatuses(Bundle params, SGListener listener) throws IOException {
@@ -862,7 +862,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/statuses">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getListStatuses(TwitterList list, Bundle params, SGListener listener) throws IOException {
@@ -875,7 +875,7 @@ public class Twitter extends AbstractClient {
 	 * Remove a member from a list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/destroy">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void removeMemberFromList(Bundle params, SGListener listener) throws IOException {
@@ -885,10 +885,9 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Remove a member from a list by list.
 	 * 
-	 * @param list A {@TwitterList}.
-	 * @param user A {@User}.
-	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/destroy">here</a>.
-	 * @{@link void}
+	 * @param list A {@link TwitterList}.
+	 * @param user A {@link User}.
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void removeMemberFromList(TwitterList list, User user, SGListener listener) throws IOException {
@@ -903,7 +902,7 @@ public class Twitter extends AbstractClient {
 	 * Get the lists the user is a member of.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/memberships">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getUsersListMemberships(Bundle params, SGListener listener) throws IOException {
@@ -915,7 +914,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/memberships">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getUsersListMemberships(User user, Bundle params, SGListener listener) throws IOException {
@@ -928,7 +927,7 @@ public class Twitter extends AbstractClient {
 	 * Get a lists subscribers.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscriptions">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getListSubscribers(Bundle params, SGListener listener) throws IOException {
@@ -940,7 +939,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscriptions">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getListSubscribers(TwitterList list, Bundle params, SGListener listener) throws IOException {
@@ -953,7 +952,7 @@ public class Twitter extends AbstractClient {
 	 * Subscribe the authenticated user to a list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/create">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void subscribeToList(Bundle params, SGListener listener) throws IOException {
@@ -965,7 +964,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/create">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void subscribeToList(TwitterList list, Bundle params, SGListener listener) throws IOException {
@@ -978,7 +977,7 @@ public class Twitter extends AbstractClient {
 	 * Check if the specified user is a member of the list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscribers/show">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void isUserListSubscriber(Bundle params, SGListener listener) throws IOException {
@@ -989,7 +988,7 @@ public class Twitter extends AbstractClient {
 	 * Unsubscribe the authenticated user from a list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/destroy">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void unsubscribeFromList(Bundle params, SGListener listener) throws IOException {
@@ -1001,7 +1000,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/subscribers/destroy">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void unsubscribeFromList(TwitterList list, Bundle params, SGListener listener) throws IOException {
@@ -1014,7 +1013,7 @@ public class Twitter extends AbstractClient {
 	 * Add multiple users to a list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/create_all">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void addUsersToList(Bundle params, SGListener listener) throws IOException {
@@ -1026,7 +1025,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param users An {@link UserCollection}.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void addUsersToList(TwitterList list, UserCollection users, SGListener listener) throws IOException {
@@ -1041,7 +1040,7 @@ public class Twitter extends AbstractClient {
 	 * Delete list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/destroy">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void deleteList(Bundle params, SGListener listener) throws IOException {
@@ -1053,7 +1052,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/destroy">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void deleteList(TwitterList list, Bundle params, SGListener listener) throws IOException {
@@ -1066,7 +1065,7 @@ public class Twitter extends AbstractClient {
 	 * Update a list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/update">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateList(Bundle params, SGListener listener) throws IOException {
@@ -1078,7 +1077,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/update">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void updateList(TwitterList list, Bundle params, SGListener listener) throws IOException {
@@ -1092,7 +1091,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param name A String Twitter list name.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/lists/create">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void createList(String name, Bundle params, SGListener listener) throws IOException {
@@ -1103,7 +1102,7 @@ public class Twitter extends AbstractClient {
 	 * Get lists owned by the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getUsersLists(Bundle params, SGListener listener) throws IOException {
@@ -1115,7 +1114,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getUsersLists(User user, Bundle params, SGListener listener) throws IOException {
@@ -1128,7 +1127,7 @@ public class Twitter extends AbstractClient {
 	 * Get a list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/show">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getList(Bundle params, SGListener listener) throws IOException {
@@ -1140,7 +1139,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param list A {@link TwitterList}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/lists/show">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getList(TwitterList list, Bundle params, SGListener listener) throws IOException {
@@ -1155,7 +1154,7 @@ public class Twitter extends AbstractClient {
 	 * Enables device notifications for updates from the specified user. Returns the specified user when successful.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/notifications/follow">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void followNotifications(Bundle params, SGListener listener) throws IOException {
@@ -1166,7 +1165,7 @@ public class Twitter extends AbstractClient {
 	 * Enables device notifications for updates from the specified user. Returns the specified user when successful.
 	 * 
 	 * @param user A {@link User}.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void followNotifications(User user, SGListener listener) throws IOException {
@@ -1179,7 +1178,7 @@ public class Twitter extends AbstractClient {
 	 * Disables device notifications for updates from the specified user. Returns the specified user when successful.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/notifications/follow">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void unfollowNotifications(Bundle params, SGListener listener) throws IOException {
@@ -1190,7 +1189,7 @@ public class Twitter extends AbstractClient {
 	 * Disables device notifications for updates from the specified user. Returns the specified user when successful.
 	 * 
 	 * @param user A {@link User}.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void unfollowNotifications(User user, SGListener listener) throws IOException {
@@ -1205,7 +1204,7 @@ public class Twitter extends AbstractClient {
 	 * Get all information about a place.
 	 * 
 	 * @param placeId A String id that can be retrieved from reverseGeocode.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getPlace(String placeId, SGListener listener) throws IOException {
@@ -1218,7 +1217,7 @@ public class Twitter extends AbstractClient {
 	 * @param lat A String latitude.
 	 * @param lon A String longitude.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/geo/reverse_geocode">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void reverseGeocode(String lat, String lon, Bundle params, SGListener listener) throws IOException {
@@ -1232,7 +1231,7 @@ public class Twitter extends AbstractClient {
 	 * Search nearby places.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/geo/search">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void searchNearby(Bundle params, SGListener listener) throws IOException {
@@ -1246,7 +1245,7 @@ public class Twitter extends AbstractClient {
 	 * @param lon A String longitude.
 	 * @param name A String of the name of the place.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/geo/search">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void similarPlaces(String lat, String lon, String name, Bundle params, SGListener listener) throws IOException {
@@ -1266,7 +1265,7 @@ public class Twitter extends AbstractClient {
 	 * @param lat A String latitude.
 	 * @param lon A String longitude.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/geo/place">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void createPlace(String name, String containedWithin, String token, String lat, String lon, Bundle params, SGListener listener) throws IOException {
@@ -1284,7 +1283,7 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Returns the authenticated users saved search queries.
 	 * 
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getSavedSearches(SGListener listener) throws IOException {
@@ -1295,7 +1294,7 @@ public class Twitter extends AbstractClient {
 	 * Retrieve the information for the saved search represented by the given id.
 	 * 
 	 * @param id A String id of the saved search query.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void showSavedSearch(String id, SGListener listener) throws IOException {
@@ -1306,7 +1305,7 @@ public class Twitter extends AbstractClient {
 	 * Create a new saved search.
 	 * 
 	 * @param query A String search query.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void createSavedSearch(String query, SGListener listener) throws IOException {
@@ -1319,7 +1318,7 @@ public class Twitter extends AbstractClient {
 	 * Delete a saved search.
 	 * 
 	 * @param id A String id of the saved search query.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void deleteSavedSearch(String id, SGListener listener) throws IOException {
@@ -1333,7 +1332,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param q A String search query.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/search">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void search(String q, Bundle params, SGListener listener) throws IOException {
@@ -1348,7 +1347,7 @@ public class Twitter extends AbstractClient {
 	 * Report spam and block the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/report_spam">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void reportSpam(Bundle params, SGListener listener) throws IOException {
@@ -1359,7 +1358,7 @@ public class Twitter extends AbstractClient {
 	 * Report spam and block the specified user.
 	 * 
 	 * @param user A {@link User}.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void reportSpam(User user, SGListener listener) throws IOException {
@@ -1374,7 +1373,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the most recent statuses posted by the authenticated user and the people they follow.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/home_timeline">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getTimeline(Bundle params, SGListener listener) throws IOException {
@@ -1385,7 +1384,7 @@ public class Twitter extends AbstractClient {
 	 * Get the authenticated user's most recent mentions.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/mentions">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getMentions(Bundle params, SGListener listener) throws IOException {
@@ -1396,7 +1395,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the most recent public statuses.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/public_timeline">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getPublicStatuses(Bundle params, SGListener listener) throws IOException {
@@ -1407,7 +1406,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the most recent retweets by the authenticated user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_by_me">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getRetweetedByMe(Bundle params, SGListener listener) throws IOException {
@@ -1418,7 +1417,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the most recent retweets by the people the authenticated user follows.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_me">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getRetweetedToMe(Bundle params, SGListener listener) throws IOException {
@@ -1429,7 +1428,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the most recent retweets of the authenticated user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweets_of_me">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getRetweetsOfMe(Bundle params, SGListener listener) throws IOException {
@@ -1440,7 +1439,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the most recent tweets of the authenticated user or the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/user_timeline">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getUserStatuses(Bundle params, SGListener listener) throws IOException {
@@ -1452,7 +1451,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/user_timeline">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getUserStatuses(User user, Bundle params, SGListener listener) throws IOException {
@@ -1465,7 +1464,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the most recent retweets by the people the specified user follows.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_user">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getRetweetedToUser(Bundle params, SGListener listener) throws IOException {
@@ -1477,7 +1476,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_user">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getRetweetedToUser(User user, Bundle params, SGListener listener) throws IOException {
@@ -1490,7 +1489,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the most recent retweets by the people the specified user follows.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/get/statuses/retweeted_by_user">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getRetweetedByUser(Bundle params, SGListener listener) throws IOException {
@@ -1502,7 +1501,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/get/statuses/retweeted_by_user">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getRetweetedByUser(User user, Bundle params, SGListener listener) throws IOException {
@@ -1517,7 +1516,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the top 10 trending topics for the given @see <a href="http://developer.yahoo.com/geo/geoplanet/guide/concepts.html">Yahoo! Where On Earth Id</a>.
 	 * 
 	 * @param whereOnEarthId A String Yahoo where on earth id.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getLocalTrends(String whereOnEarthId, SGListener listener) throws IOException {
@@ -1528,7 +1527,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the locations that Twitter has trending topic information for.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/available">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getAvailableTrendLocations(Bundle params, SGListener listener) throws IOException {
@@ -1538,7 +1537,7 @@ public class Twitter extends AbstractClient {
 	/**
 	 * Returns the top 10 current trending topics on Twitter.
 	 * 
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getTrends(SGListener listener) throws IOException {
@@ -1549,7 +1548,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the top 10 current trending topics on Twitter.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/current">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getCurrentTrends(Bundle params, SGListener listener) throws IOException {
@@ -1560,7 +1559,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the top 20 trending topics for each hour in a given day.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/current">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getDailyTrends(Bundle params, SGListener listener) throws IOException {
@@ -1571,7 +1570,7 @@ public class Twitter extends AbstractClient {
 	 * Returns the top 30 trending topics for each day in a given week.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/trends/current">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getWeeklyTrends(Bundle params, SGListener listener) throws IOException {
@@ -1585,7 +1584,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/%3Aid/retweeted_by">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getRetweetedBy(String id, Bundle params, SGListener listener) throws IOException {
@@ -1597,7 +1596,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/%3Aid/retweeted_by/ids">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getRetweetedByIds(String id, Bundle params, SGListener listener) throws IOException {
@@ -1609,7 +1608,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweets/%3Aid">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getRetweets(String id, Bundle params, SGListener listener) throws IOException {
@@ -1621,7 +1620,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/show/%3Aid">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getTweet(String id, Bundle params, SGListener listener) throws IOException {
@@ -1633,7 +1632,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/destroy/%3Aid">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void deleteTweet(String id, Bundle params, SGListener listener) throws IOException {
@@ -1645,7 +1644,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param id A String tweet id.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void retweet(String id, Bundle params, SGListener listener) throws IOException {
@@ -1657,7 +1656,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param status A String status.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void tweet(String status, Bundle params, SGListener listener) throws IOException {
@@ -1672,7 +1671,7 @@ public class Twitter extends AbstractClient {
 	 * up to 100 users worth of extended information, specified by either ID, screen name, or combination of the two.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/lookup">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void lookupUsers(Bundle params, SGListener listener) throws IOException {
@@ -1684,7 +1683,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param users {@link UserCollection}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/lookup">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void lookupUsers(UserCollection users, Bundle params, SGListener listener) throws IOException {
@@ -1698,7 +1697,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param screenName A String Twitter screen name.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getProfileImage(String screenName, Bundle params, SGListener listener) throws IOException {
@@ -1710,7 +1709,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param q A String search query.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void searchUsers(String q, Bundle params, SGListener listener) throws IOException {
@@ -1723,7 +1722,7 @@ public class Twitter extends AbstractClient {
 	 * the specified user.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getUser(Bundle params, SGListener listener) throws IOException {
@@ -1735,7 +1734,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getUser(User user, Bundle params, SGListener listener) throws IOException {
@@ -1748,7 +1747,7 @@ public class Twitter extends AbstractClient {
 	 * Returns an array of users that the specified user can contribute to.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributees">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getContributees(Bundle params, SGListener listener) throws IOException {
@@ -1760,7 +1759,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributees">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getContributees(User user, Bundle params, SGListener listener) throws IOException {
@@ -1773,7 +1772,7 @@ public class Twitter extends AbstractClient {
 	 * Returns an array of users who can contribute to the specified account.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributors">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getContributors(Bundle params, SGListener listener) throws IOException {
@@ -1785,7 +1784,7 @@ public class Twitter extends AbstractClient {
 	 * 
 	 * @param user A {@link User}.
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/contributors">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getContributors(User user, Bundle params, SGListener listener) throws IOException {
@@ -1798,7 +1797,7 @@ public class Twitter extends AbstractClient {
 	 * Returns Twitter's suggested user list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getSuggestedUsers(Bundle params, SGListener listener) throws IOException {
@@ -1809,7 +1808,7 @@ public class Twitter extends AbstractClient {
 	 * Returns Twitter's suggested user list.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions/%3Aslug">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getSuggestedUsers(String slug, Bundle params, SGListener listener) throws IOException {
@@ -1820,7 +1819,7 @@ public class Twitter extends AbstractClient {
 	 * the users in a given category of the Twitter suggested user list and their most recent status.
 	 * 
 	 * @param params A {@link Bundle} containing optional keys listed @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions/%3Aslug/members">here</a>.
-	 * @{@link void}
+	 * @param listener {@link SGListener}
 	 * @throws IOException 
 	 */
 	public void getSuggestedUsersWithStatus(String slug, Bundle params, SGListener listener) throws IOException {
