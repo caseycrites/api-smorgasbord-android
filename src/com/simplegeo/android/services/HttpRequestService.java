@@ -83,11 +83,11 @@ public class HttpRequestService extends Service {
 				if (token != null) {
 					values.putSerializable("accessToken", token);
 					values.putBoolean("success", true);
-					sendMessage(values);
 				} else {
-					values.putString("errorMessage", errorMessage);
-					sendMessage(values);
+					values.putString("responseBody", errorMessage);
+					values.putInt("responseCode", 0);
 				}
+				sendMessage(values);
 			}
 			
 			private void sendMessage(Bundle values) {
@@ -118,11 +118,11 @@ public class HttpRequestService extends Service {
 				if (token != null) {
 					values.putSerializable("requestToken", token);
 					values.putBoolean("success", true);
-					sendMessage(values);
 				} else {
-					values.putString("errorMessage", errorMessage);
-					sendMessage(values);
+					values.putString("responseBody", errorMessage);
+					values.putInt("responseCode", 0);
 				}
+				sendMessage(values);
 			}
 
 			private void sendMessage(Bundle values) {
